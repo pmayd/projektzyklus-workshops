@@ -1,0 +1,25 @@
+{
+    "id": "68DAE25C",
+    "path": "~/rprojects/RShinyTraining/Übung.R",
+    "project_path": "Übung.R",
+    "type": "r_source",
+    "hash": "3870347446",
+    "contents": "",
+    "dirty": false,
+    "created": 1616067033040.0,
+    "source_on_save": false,
+    "relative_order": 1,
+    "properties": {
+        "cursorPosition": "125,5",
+        "scrollLine": "116",
+        "disableDependencyDiscovery": "1"
+    },
+    "folds": "",
+    "lastKnownWriteTime": 1616141435,
+    "encoding": "UTF-8",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1616141435314,
+    "read_only": false,
+    "read_only_alternatives": []
+}
