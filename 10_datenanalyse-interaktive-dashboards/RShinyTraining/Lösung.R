@@ -27,7 +27,8 @@ install.packages(c(
   'dplyr',
   'plotly',
   'DT',
-  'here'
+  'here',
+  'ShinyFiles'
 ))
 "
 
@@ -95,7 +96,10 @@ ui <- fluidPage(
         
         ##### Übung 6a: Fügt der UI einen Radiobutton für das Beitrittsjahr hinzu. Ändert das auch im Server!
         # Tipp: Das Jahr könnt Ihr aus dem Beitrittsdatum mit dem folgenden Codesnippet extrahieren: format(mitglieder$Beitrittsdatum, "%Y"). Damit ersetzt Ihr nun das Argument choices.
-        radioButtons('beitrittsjahr', 'Wähle das Beitrittsjahr aus:', choices = sort(unique(format(mitglieder$Beitrittsdatum, "%Y"))), selected = "2012")
+        radioButtons('beitrittsjahr', 'Wähle das Beitrittsjahr aus:', choices = sort(unique(format(mitglieder$Beitrittsdatum, "%Y"))), selected = "2012"),
+        
+        # Einfügen eines Download-Buttons
+        downloadButton('downladbutton', label = "Download")
       ),
         
         # Hier kreiieren wir den Hauptteil der Applikation. 
@@ -140,6 +144,28 @@ server <- function(input, output, session){
     output$Tabelle <- DT::renderDT({
       mitglieder
     })
+    
+    # Download-Report
+    output$downloadReport <- downloadHandler(
+      filename = paste(format(Sys.Date(), '%d.%m.%Y'), 'Mitgliederzahlen'),
+      
+      content = function(file) {
+        src <- normalizePath('report.Rmd')
+        
+        # temporarily switch to the temp dir, in case you do not have write
+        # permission to the current working directory
+        owd <- setwd(tempdir())
+        on.exit(setwd(owd))
+        file.copy(src, 'report.Rmd', overwrite = TRUE)
+        
+        library(rmarkdown)
+        out <- render('report.Rmd', switch(
+          input$format,
+          PDF = pdf_document(), HTML = html_document(), Word = word_document()
+        ))
+        file.rename(out, file)
+      }
+    )
     
     
 }

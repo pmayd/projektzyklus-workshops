@@ -28,7 +28,8 @@ install.packages(c(
   'plotly',
   'DT',
   'here',
-  'knitr'
+  'knitr',
+  'shinyFiles'
 ))
 "
 
@@ -42,7 +43,8 @@ install.packages(c(
 library(shiny) # Das RShiny Package.
 library(dplyr) # Das dplyr Package, mit dem wir tolle Datenbereinigungen vornehmen können.
 library(ggplot2) # Das ggplot Package, mit dem wir die Daten visualisieren können.
-library(knitr)
+library(knitr) 
+library(shinyFiles)
 
 ##### Übung 2: Lade nun auch das Package "tidyr".
 
