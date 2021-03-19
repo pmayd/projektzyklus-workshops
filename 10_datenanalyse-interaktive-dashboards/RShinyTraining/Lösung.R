@@ -146,8 +146,8 @@ server <- function(input, output, session){
     })
     
     # Download-Report
-    output$downloadReport <- downloadHandler(
-      filename = paste(format(Sys.Date(), '%d.%m.%Y'), 'Mitgliederzahlen'),
+    output$downladbutton <- downloadHandler(
+      filename = paste0(format(Sys.Date(), '%d.%m.%Y'), '_Mitgliederzahlen', '.pdf'),
       
       content = function(file) {
         src <- normalizePath('report.Rmd')
@@ -159,15 +159,10 @@ server <- function(input, output, session){
         file.copy(src, 'report.Rmd', overwrite = TRUE)
         
         library(rmarkdown)
-        out <- render('report.Rmd', switch(
-          input$format,
-          PDF = pdf_document(), HTML = html_document(), Word = word_document()
-        ))
+        out <- render('report.Rmd', quiet = TRUE)
         file.rename(out, file)
       }
     )
-    
-    
 }
 
 ############################################
