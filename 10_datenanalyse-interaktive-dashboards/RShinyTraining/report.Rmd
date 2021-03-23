@@ -1,0 +1,33 @@
+---
+title: "Report zu Mitgliedsbeitritten"
+params:
+  ort: Berlin
+  beitrittsjahr: 2012
+date: "`r format(Sys.Date(), '%d.%m.%Y')`"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+Der Code zur Reportgenerierung ist hauptsächlich der selbe Code, mit dem Ihr Eure Applikation schreibt. Die Variablen werden über das Objekt "params" übergeben - so wird die Visualisierung entsprechend der Auswahl angepasst. Den Standardwert für die Parameter könnt Ihr oben festlegen (params: paramtername: 'Standardwert').
+
+```{r setup, include=FALSE}
+# 1) PACKAGES LADEN UND SET-UP
+### Hinweis: Falls Ihr sie noch installieren, updaten müsst, könnt Ihr diesen Code ausführen: install.packages(c('dplyr', 'ggplot2))
+knitr::opts_chunk$set(echo = FALSE)
+library(dplyr)
+library(ggplot2)
+```
+
+```{r}
+# 2) VISUALISIERUNG EINFÜGEN
+mitglieder %>%
+            filter(Wohnort == params$ort, format(mitglieder$Beitrittsdatum, "%Y") == params$beitrittsjahr) %>%  ggplot(aes(Beschäftigungsstatus, fill = Beschäftigungsstatus)) + 
+              theme_classic() + 
+              scale_fill_brewer(palette = "Greens", "Legende") + 
+              ggtitle(paste('Beschäftigungsstatus der Mitglieder (', params$ort, ' ', params$beitrittsjahr, ')', sep = '')) +
+              xlab("Beschäftigungsstatus") + 
+              ylab("Anzahl") + 
+              geom_bar() 
+```
+

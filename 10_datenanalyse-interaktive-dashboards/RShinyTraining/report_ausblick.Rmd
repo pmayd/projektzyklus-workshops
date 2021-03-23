@@ -1,0 +1,126 @@
+---
+title: "Report zu Mitgliedsbeitritten und Feedback"
+params:
+  ort: 'Alle Orte'
+  erhebungsjahr: 2020
+  frage: 'Kursangebot insgesamt'
+  autor: 'Unbekannte:r Autor:in'
+date: "`r format(Sys.Date(), '%d.%m.%Y')`"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r, include = FALSE}
+"
+Der Code zur Reportgenerierung ist hauptsächlich der selbe Code, mit dem Ihr Eure Applikation schreibt. Die Variablen werden über Parameter 'params' übergeben - so wird die Visualisierung entsprechend der Auswahl angepasst. Den Standardwert für die Parameter könnt Ihr oben festlegen (params: paramtername: 'Standardwert'). Wenn Ihr Änderungen vornehmt, muss die PDF-Datei geschlossen werden, bevor Ihr sie neu aufsetzen könnt.
+"
+```
+
+```{r setup, include=FALSE, warning = FALSE}
+# 1) PACKAGES LADEN UND SET-UP
+### Hinweis: Falls Ihr sie noch installieren, updaten müsst, könnt Ihr diesen Code ausführen: install.packages(c('dplyr', 'ggplot2))
+knitr::opts_chunk$set(echo = FALSE)
+library(dplyr)
+library(ggplot2)
+```
+
+```{r}
+# 2) DATEN LADEN
+### Hier laden wir die Datensätze, die Ihr am Besten immer in einem Ordner namens "Daten" speichert.
+mitglieder <- readxl::read_xlsx(here::here("Daten", "Mitgliederdaten.xlsx"))
+feedback <- readxl::read_xlsx(here::here("Daten", "Feedbackumfrage.xlsx"))
+
+### Hier fügen wir die Daten über die Mitglieder-ID zusammen.
+### Mehr Informationen, wie das funktioniert, gibt es hier: https://dplyr.tidyverse.org/reference/join.html
+alle_daten_short <- dplyr::full_join(mitglieder, feedback, by = "Mitglieds-ID")
+
+### Die Variablennamen sind nicht noch nicht so schön oder zu lang? Mit dem Snippet colnames(datensatz) <- c("Name1", "Name2", ...) lässt sich das ändern.
+colnames(alle_daten_short) <- c("Mitglieds-ID", "Geschlecht", "Geburtsdatum", "Wohnort",
+                               "Bundesland", "Beitrittsdatum", "Austrittsdatum", "Beschäftigungsstatus",                 
+                               "Mitgliedsbeitrag (in EUR)", "Mitgliedsbeitrag (Kategorie)", 
+                               "Kursangebot insgesamt", "An welchem Kursniveau nimmst Du teil?", "Mentor:in", "Materialien", "Anmeldung", "Beratungsstelle", "Räumlichkeiten", "Erhebungsjahr")
+                               
+############################################
+```
+
+
+```{r}
+# 4) DATEN BEREINIGEN
+### Hiermit konvertieren wir das "kurze" Datenformat, in dem pro Zeile eine Beobachtung und pro Spalte eine Variable festgesetzt ist.
+### Im "langen" Format lassen sich dann die Fragen auch als Filter verwenden - das ist später für die Visualisierung praktisch.
+### Diese Technik ist besonders bei Umfragen relevant!
+alle_daten_long <- tidyr::pivot_longer(alle_daten_short, # Datenquelle
+                    cols = c("Kursangebot insgesamt", # Spalten, die zusammengefügt werden sollen.
+                        "Mentor:in",
+                        "Materialien",
+                        "Anmeldung",
+                        "Beratungsstelle",
+                        "Räumlichkeiten"
+                        ),
+                    names_to = "Frage", # Benennung der neuen Frage-Spalte
+                    values_to = "Antwort" # Benennung der neuen Antwort-Spalte
+                    )
+
+### Hier hinterlegen wir die Option "Alle Ort" für den Wohnort-Filter
+orte <- c("Alle Orte", sort(unique(alle_daten_long$Wohnort)))
+
+### Hier hinterlegen wir das Rating
+rating <- c('Sehr schlecht', 'Schlecht', 'Okay', 'Gut', 'Sehr gut')
+
+### Hier definieren wir das gefilterte Datenset mit den Inputs aus der Applikation, die hier über params übergeben werden.
+if (params$ort != "Alle Orte"){ # Erster Fall: Ein Ort wird ausgewählt.
+      daten <- alle_daten_long %>% filter(Erhebungsjahr == params$erhebungsjahr, Wohnort == params$ort)
+      ort = paste('in', params$ort)
+    } else { # Zweiter Fall: Der/die Nutzer:in möchte alle Orte ansehen.
+      daten <- alle_daten_long %>% filter(Erhebungsjahr == params$erhebungsjahr)
+      ort = 'allen Standorten in Deutschland'
+    } 
+```
+
+```{r, include = TRUE, warning = FALSE}
+# 5) VISUALISIERUNG EINFÜGEN
+barplot <- function(daten, xvariable, farbvariable, gruppe, labelliste) {
+  ggplot(daten, aes(x = xvariable, fill = factor(farbvariable), group = gruppe)) +
+    facet_wrap(~Frage) +
+    scale_fill_brewer(palette = 'RdYlGn', name = "Legende", labels = rating) +
+    theme_classic() +
+    ggtitle(paste('Feedback', ' - ', ort, ' (', params$erhebungsjahr, ')', sep = '')) + # fügt einen Titel hinzu
+    xlab('Antwort') + 
+    ylab('Prozent der Antworten') + 
+    guides(fill = guide_legend(reverse=TRUE, labels = labelliste)) + 
+    geom_text(aes(label = scales::percent(..prop..), y = ..prop.., fill = factor(..x..)), stat= "count", vjust = - 0.3, size = 2) +
+    geom_bar(aes(y = ..prop.., fill = factor(..x..)), stat="count")
+}
+
+# Funktion anwenden
+barplot(daten, daten$Antwort, daten$Antwort, daten$Frage, rating)
+```
+
+```{r}
+# 6) TEXT GENERIEREN
+### Hinweis: In den weißen Bereich des RMarkdowns könnt Ihr Text hinzufügen. 
+liste <- daten %>%
+      select(Frage, Antwort) %>%
+      group_by(Frage) %>%
+      summarise('Bewertung: Mittelwert' = round(mean(Antwort),1)) 
+
+tabelle <- as.data.frame(liste)
+beste_bewertung <- tabelle[which.max(tabelle$'Bewertung: Mittelwert'),]
+schlechteste_bewertung <- tabelle[which.min(tabelle$'Bewertung: Mittelwert'),]
+
+```
+In `r ort` erreichten wir `r params$erhebungsjahr` über alle Kategorien eine durchschnittliche Bewertung von `r round(mean(alle_daten_long$Antwort), 2)`. Besonders gut schnitt die Kategorie `r beste_bewertung$Frage` mit `r beste_bewertung$'Bewertung: Mittelwert'` Punkten von fünf Möglichen ab. Verbesserungspotenzial ergibt sich bei der Kategorie `r schlechteste_bewertung$Frage` mit `r schlechteste_bewertung$'Bewertung: Mittelwert'` Punkten.
+
+
+```{r, include = TRUE, results = 'asis'}
+# 6) TABELLE GENERIEREN
+daten %>%
+      select(Frage, Antwort) %>%
+      group_by(Frage) %>%
+      summarise('Bewertung: Mittelwert' = round(mean(Antwort),1)) %>% 
+      knitr::kable()
+
+```
+Dieser Report wurde von `r params$autor` verfasst.
+
