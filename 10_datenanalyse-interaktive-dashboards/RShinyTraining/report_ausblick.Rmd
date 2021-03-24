@@ -23,6 +23,26 @@ Der Code zur Reportgenerierung ist hauptsächlich der selbe Code, mit dem Ihr Eu
 knitr::opts_chunk$set(echo = FALSE)
 library(dplyr)
 library(ggplot2)
+library(gridExtra)
+
+# Funktion zur Altersberechnung in Jahren - Credit: Matt Cooper
+calc_age <- function(birthDate, refDate = Sys.Date(), unit = "year") {
+  
+  require(lubridate)
+  
+  if(grepl(x = unit, pattern = "year")) {
+    as.period(interval(birthDate, refDate), unit = 'year')$year
+  } else if(grepl(x = unit, pattern = "month")) {
+    as.period(interval(birthDate, refDate), unit = 'month')$month
+  } else if(grepl(x = unit, pattern = "week")) {
+    floor(as.period(interval(birthDate, refDate), unit = 'day')$day / 7)
+  } else if(grepl(x = unit, pattern = "day")) {
+    as.period(interval(birthDate, refDate), unit = 'day')$day
+  } else {
+    print("Argument 'unit' must be one of 'year', 'month', 'week', or 'day'")
+    NA
+  }
+}
 ```
 
 ```{r}
@@ -30,16 +50,17 @@ library(ggplot2)
 ### Hier laden wir die Datensätze, die Ihr am Besten immer in einem Ordner namens "Daten" speichert.
 mitglieder <- readxl::read_xlsx(here::here("Daten", "Mitgliederdaten.xlsx"))
 feedback <- readxl::read_xlsx(here::here("Daten", "Feedbackumfrage.xlsx"))
+geocoordinaten <- readxl::read_xlsx(here::here("Daten", "Geocodierung.xlsx"))
 
 ### Hier fügen wir die Daten über die Mitglieder-ID zusammen.
 ### Mehr Informationen, wie das funktioniert, gibt es hier: https://dplyr.tidyverse.org/reference/join.html
-alle_daten_short <- dplyr::full_join(mitglieder, feedback, by = "Mitglieds-ID")
+alle_daten_short <- dplyr::full_join(left_join(mitglieder, geocoordinaten, by = 'Wohnort'), feedback, by = "Mitglieds-ID")
 
 ### Die Variablennamen sind nicht noch nicht so schön oder zu lang? Mit dem Snippet colnames(datensatz) <- c("Name1", "Name2", ...) lässt sich das ändern.
-colnames(alle_daten_short) <- c("Mitglieds-ID", "Geschlecht", "Geburtsdatum", "Wohnort",
-                               "Bundesland", "Beitrittsdatum", "Austrittsdatum", "Beschäftigungsstatus",                 
-                               "Mitgliedsbeitrag (in EUR)", "Mitgliedsbeitrag (Kategorie)", 
-                               "Kursangebot insgesamt", "An welchem Kursniveau nimmst Du teil?", "Mentor:in", "Materialien", "Anmeldung", "Beratungsstelle", "Räumlichkeiten", "Erhebungsjahr")
+colnames(alle_daten_short) <- c("Mitglieds-ID", "Geschlecht", "Geburtsdatum", "Wohnort", "Bundesland", 
+                                "Beitrittsdatum", "Austrittsdatum", "Beschäftigungsstatus", "Spende (p.a. in EUR)", "Lat", "Long", 
+                                "Kursangebot insgesamt", "An welchem Kursniveau nimmst Du teil?", "Mentor:in", 
+                                "Materialien", "Anmeldung", "Beratungsstelle", "Räumlichkeiten", "Erhebungsjahr")
                                
 ############################################
 ```
@@ -80,21 +101,16 @@ if (params$ort != "Alle Orte"){ # Erster Fall: Ein Ort wird ausgewählt.
 
 ```{r, include = TRUE, warning = FALSE}
 # 5) VISUALISIERUNG EINFÜGEN
-barplot <- function(daten, xvariable, farbvariable, gruppe, labelliste) {
-  ggplot(daten, aes(x = xvariable, fill = factor(farbvariable), group = gruppe)) +
+ggplot(daten, aes(x = daten$Antwort, fill = factor(daten$Antwort), group = daten$Frage)) +
     facet_wrap(~Frage) +
-    scale_fill_brewer(palette = 'RdYlGn', name = "Legende", labels = rating) +
+    scale_fill_brewer(palette = 'PiYG', name = "Legende", labels = rating) +
     theme_classic() +
     ggtitle(paste('Feedback', ' - ', ort, ' (', params$erhebungsjahr, ')', sep = '')) + # fügt einen Titel hinzu
     xlab('Antwort') + 
     ylab('Prozent der Antworten') + 
-    guides(fill = guide_legend(reverse=TRUE, labels = labelliste)) + 
+    guides(fill = guide_legend(reverse=TRUE, labels = rating)) + 
     geom_text(aes(label = scales::percent(..prop..), y = ..prop.., fill = factor(..x..)), stat= "count", vjust = - 0.3, size = 2) +
     geom_bar(aes(y = ..prop.., fill = factor(..x..)), stat="count")
-}
-
-# Funktion anwenden
-barplot(daten, daten$Antwort, daten$Antwort, daten$Frage, rating)
 ```
 
 ```{r}
@@ -123,4 +139,100 @@ daten %>%
 
 ```
 Dieser Report wurde von `r params$autor` verfasst.
+
+\newpage
+
+# Anhang: Überblick über die derzeitigen Mitglieder
+
+```{r}
+# ÜBERLICK MITGLIEDER EINFÜGEN
+if (params$ort != "Alle Orte"){ # Erster Fall: Ein Ort wird ausgewählt.
+  daten <- alle_daten_long %>% filter(Wohnort == params$ort)
+} else { # Zweiter Fall: Der/die Nutzer:in möchte alle Orte ansehen.
+  daten <- alle_daten_long
+}
+```
+
+
+```{r, include = TRUE, results = 'asis', warnings = FALSE, message=FALSE}
+# Tabelle kreiieren
+daten %>%
+    select(`Mitglieds-ID`, Wohnort, Beitrittsdatum, Austrittsdatum) %>% # Spalten auswählen
+    mutate('Eintritt' = 1, 'Austritt' = ifelse(is.na(Austrittsdatum), 0,1)) %>% #  Eintritt, Austritt und Aktivitätsstatus codieren
+    mutate('Aktives Mitglied' = Eintritt - Austritt) %>%
+    group_by(`Mitglieds-ID`, Wohnort) %>% # Individuelle Mitglieder heraussuchen
+    summarise('Eintritte' = sum(unique(Eintritt)), 'Austritte' = sum(unique(Austritt)), 'Aktive Mitglieder' = sum(unique(`Aktives Mitglied`))) %>% # Anzahl berechnen
+    group_by(Wohnort) %>% # Pro Ort gruppieren
+    summarise(Eintritte = sum(Eintritte), Austritte = sum(Austritte), 'Aktive Mitglieder' = sum(`Aktive Mitglieder`)) %>% # Zusammenfassung berechnen
+      knitr::kable()
+```
+
+
+```{r, include = TRUE, warnings = FALSE, message=FALSE}
+# Kreisdiagramm kreiieren
+plot_geschlecht <- daten %>%
+      select(Geschlecht) %>% # Spalte Geschlecht auswählen
+      group_by(Geschlecht) %>% # Pro Geschlecht gruppieren
+      summarise('Anzahl' = n(), 'Prozent' = n()/nrow(daten)) %>% # Bei Gruppierung Anzahlung und Prozent bestimmen
+      ggplot(aes(x='', y=Prozent, fill=Geschlecht)) +
+      geom_bar(stat="identity", width=1) + # Basislayout definieren (Hinweis: Das ist ein Barchart)
+      coord_polar("y", start=0) + # Kuchendiagramm ausrichten
+      theme_void() + # Grid entfernen
+      ggtitle('Geschlecht') + # Titel hinzügen
+      scale_fill_brewer(palette='PuBuGn') + # Farbe festlegen
+      geom_text(aes(label = paste0(round(Prozent*100), "%")), position = position_stack(vjust = 0.5)) # Beschriftungen kreiieren
+```
+
+
+```{r, include = TRUE, warnings = FALSE, message=FALSE}
+# Barplot zur Beschäftigung kreiieren
+barplot <- function(daten, xvariable, farbvariable, farbpalette, titel) {
+  ggplot(daten, aes(x = xvariable, fill = factor(farbvariable))) +
+    scale_fill_brewer(palette = farbpalette) + # Farbpalette
+    theme_classic() + # Layout
+    theme(legend.position = "none", axis.text.x = element_text(angle = 45, vjust = 0.5)) + # Legende ausblenden, da hier nicht notwendig
+    ggtitle(paste(titel)) + # fügt einen Titel hinzu
+    xlab('') + # x-Achsenbeschriftung
+    ylab('Prozent der Antworten') + #y-Achsenbeschriftung
+    scale_y_continuous(labels = scales::percent) +
+    geom_text(aes(label = scales::percent(..prop..), y = ..prop.., group = 1), stat= "count", vjust = - 0.1, size = 2) + # Beschriftung
+geom_bar(aes(y = ..prop.., fill = factor(..x..), group = 1), stat="count") # Graphtyp und y-Achse in Prozent
+}
+# Funktion anwenden
+plot_status <- barplot(daten, daten$Beschäftigungsstatus, daten$Beschäftigungsstatus, 'PuBuGn', 'Beschäftigung')
+```
+
+
+```{r, include = TRUE, warnings = FALSE, message=FALSE}
+# Verteilungsplot für Alter
+plot_alter <- daten %>% 
+  mutate('Alter' = calc_age(Geburtsdatum)) %>% # Alter berechnen (Funktion unter Daten bereinigen)
+  ggplot(aes(x=Alter)) + # Plot initialisieren
+  geom_density(fill='#027F88', color = '#027F88') + # Verteilungsplot erstellen
+  geom_vline(aes(xintercept=mean(Alter))) + # Mittelwert hinzufügen
+  theme_classic() + # Layout auswählen
+  ylab('Verteilung') +  # y-Achse beschriften
+  ggtitle('Alter') # Titel hinzufügen
+```
+
+
+```{r, include = TRUE, warnings = FALSE, message=FALSE}
+# Verteilungsplot für Spenden
+plot_spenden <- daten %>% 
+  ggplot(aes(x=`Spende (p.a. in EUR)`)) + # Plot initialisieren
+  geom_density(fill='#027F88', color = '#027F88') + # Verteilungsplot erstellen
+  geom_vline(aes(xintercept=mean(`Spende (p.a. in EUR)`))) + # Mittelwert hinzufügen
+  theme_classic() + # Layout auswählen
+  xlab('Spendenhöhe p.a. in EUR') + # x-Achse beschriften
+  ylab('Verteilung') +  # y-Achse beschriften
+  ggtitle('Spendenhöhe') # Titel hinzufügen
+```
+
+```{r, results = 'asis', warnings = FALSE, message=FALSE}
+# Visualisierungen arrangieren
+lay <- rbind(c(1,2), # Layout festlegen: Eine Zahl steht für eine Graphik (1 für die erste Graphik in grid.arrange)
+              c(3,4))
+    
+grid.arrange(plot_status, plot_geschlecht, plot_alter, plot_spenden, layout_matrix = lay) # Layout speichern
+```
 
