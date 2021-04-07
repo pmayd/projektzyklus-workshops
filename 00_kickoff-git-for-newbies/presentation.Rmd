@@ -377,15 +377,17 @@ git add file.txt
 `.gitignore` and `new_file.txt` will not be part of the commit:
 
 ![](images/command_line/git_status_after_add.png)
+---
+### Making a commit - Commit
 
-Now, we can commit:
+Now, we can commit (`-m ""` adds the commit message):
 ```bash
 git commit -m "change file.txt"
 ```
 
 ---
 
-## Making a commit - Adding all changes
+## Making a commit - Shortcuts
 
 We can add all changes with: 
 
@@ -395,8 +397,27 @@ git add .
 
 ![](images/command_line/git_status_add_all.png)
 
-(use with care though!)
+... or even commit all our changes directly without `git add`:
 
+```bash
+git commit -a -m 'directly committing all changes'
+```
+
+it's tempting but use both with care!
+
+---
+## Making a commit in RStudio
+
+.pull-left[
+- Git pane, then "Commit" button -> extra window opens
+- `git add`: tick checkboxes
+- `git commit`: commit message in box, then press commit
+]
+.pull-right[
+```{r, echo=FALSE, out.width="100%"}
+knitr::include_graphics("images/rstudio/git_commit.png")
+```
+]
 ---
 
 class: center, middle, inverse
@@ -423,6 +444,7 @@ class: center, middle, inverse
 - ... many more, see [https://www.markdownguide.org/basic-syntax/](https://www.markdownguide.org/basic-syntax/)
 
 ---
+
 
 ## Hands On 3 - make a commit
 .pull-left[
@@ -506,6 +528,14 @@ git pull
 ```bash
 git push
 ```
+
+---
+## Pull and Push - RStudio
+
+- Git pane / Git commit window
+- button down (blue): pull
+- buttom up (green): push
+
 
 ---
 class: center, middle
