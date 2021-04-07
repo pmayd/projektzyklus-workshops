@@ -213,7 +213,7 @@ class: center, middle, inverse
 
 ---
 
-## Hands On 1 - clone a repository
+## Hands On - clone a repository
 
 
 ### clone your project repository
@@ -225,7 +225,7 @@ class: center, middle, inverse
 
 ---
 
-## Hands On 2 - clone a repo with the command line
+## Hands On - clone a repo with the command line
 
 .pull-left[
 1. use `cd` in your terminal or Git bash to navigate to your target location (use the tab key for autocompletion)
@@ -239,7 +239,7 @@ class: center, middle, inverse
 ]
 
 ---
-## Hands On 2 - clone a repo with RStudio
+## Hands On - clone a repo with RStudio
 
 .pull-left[
 1. In the top right corner,  click on the dropdown and choose New project
@@ -300,7 +300,7 @@ We can have a look at a commit using `git show {hash}`
 
 ![git show](images/command_line/git_show.png)
 ---
-## Hands On 2: Investigate the commit history
+## Hands On: Investigate the commit history
 
 Investigate the commits made so far in your repository. How many are there? Who has made them? What changes did they introduce?
 
@@ -446,7 +446,7 @@ class: center, middle, inverse
 ---
 
 
-## Hands On 3 - make a commit
+## Hands On - make a commit
 .pull-left[
 ### command line
 1. Change the `README.md` somewhere and create a new file `test.py` with a simple print statement
@@ -710,7 +710,7 @@ class: center, middle, inverse
 ---
 class: center, inverse, middle 
 
-# Branches and Merge Requests
+# Branches and Pull Requests
 
 ---
 class: center, middle
@@ -779,7 +779,19 @@ git switch -c "#1-add-favorite-gif" # or git checkout -b "#1-add-favorite-gif"
 
 `r emo::ji("white_check_mark")`  You can always switch between branches using `git checkout`
 
+---
+## Branches Workflow - RStudio
 
+.pull-left[
+- Git pane, then on the right
+- creating a branch: click on purple icon
+- switch branches: click on dropdown / branch name
+]
+.pull-right[
+```{r, echo=FALSE, out.width="100%"}
+knitr::include_graphics("images/rstudio/git_branches.png")
+```
+]
 ---
 
 ## Pull Requests (PRs)
@@ -851,7 +863,7 @@ class: center
 - solve merge conflicts
 
 --
-- work with issues, branches and merge requests 
+- work with issues, branches and pull requests 
 
 ---
 class: middle, center, inverse
@@ -863,12 +875,12 @@ class: middle, center, inverse
 ## If you ever need help...contact me!
 
 ### Frie Preu
- + `r icons::fontawesome("briefcase")` data scientist / IT consultant @ [codecentric AG](https://www.codecentric.de)
+ + `r icons::fontawesome("briefcase")` COO at CorrelAid / @frie on Slack
  + `r icons::fontawesome("github")` [friep](https://github.com/friep)
  + `r icons::fontawesome("gitlab")` [friep](https://gitlab.com/friep)
  + `r icons::fontawesome("keybase")` [friep](https://keybase.io/friep)
  + `r icons::fontawesome("twitter")` [ameisen_strasse](https://twitter.com/ameisen_strasse)
- + `r icons::fontawesome("slack")` [RLadies Slack](https://rladies-community-slack.herokuapp.com/)
+ + `r icons::fontawesome("slack")` #help channel
 
 ### Resources
-Check the README of the git-newbie-playground repo for some more resources!
+Check the README of the [git-newbie-playground repo](https://github.com/CorrelAid/git-newbie-playground) for some more resources!
