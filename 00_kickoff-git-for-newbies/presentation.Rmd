@@ -435,6 +435,7 @@ class: center, middle, inverse
 ### RStudio
 1. Change the `README.md` somewhere and create a new file `test.R` with a simple print statement
 2. commit only the new file, not your changes to the README
+- go to the Git Pane 
 ]
 
 
