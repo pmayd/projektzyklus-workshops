@@ -1,0 +1,3 @@
+[submodule "00_kickoff-git-for-newbies/git-newbie-playground"]
+	path = 00_kickoff-git-for-newbies/git-newbie-playground
+	url = https://github.com/CorrelAid/git-newbie-playground
