@@ -750,7 +750,7 @@ class: center, inverse, middle
 class: center, middle
 
 
-![Gitkraken branching](images/vscode/vscode_branches.png)
+![VSCode branching](images/vscode/vscode_branches.png)
 
 ---
 class: center, middle
