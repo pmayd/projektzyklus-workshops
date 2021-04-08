@@ -7,5 +7,8 @@ Please follow the [setup instructions](https://github.com/CorrelAid/git-newbie-p
 
 The slides can be found [here](https://correlaid.github.io/projektzyklus-workshops/00_kickoff-git-for-newbies/slides.html)
 
-The material is based roughly on Frie Preu's [Git your sh*t together workshop](https://frie.codes/gost.html).
+## License
+Unless otherwise noted on individual slides, slides are licensed under a [Creative Commons Attribution 4.0 International](https://creativecommons.org/licenses/by/4.0/deed) license. Attribution can be made in the following form:
+
+[Git for Newbies Workshop Slides for the CorrelAid Project Cycle](https://correlaid.github.io/projektzyklus-workshops/00_kickoff-git-for-newbies/slides.html) by Frie Preu, licensed under [Creative Commons Attribution 4.0 International](https://creativecommons.org/licenses/by/4.0/deed)
 

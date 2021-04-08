@@ -1,10 +1,11 @@
 ---
 title: "Git for Newbies"
+subtitle: "CorrelAid Project Cycle Kickoff"
 author: "Frie Preu"
 date: "2021-03-19"
 output:
   xaringan::moon_reader:
-    css: xaringan-themer.css
+    css: ["xaringan-themer.css", "custom.css"]
     nature:
       slideNumberFormat: "%current%"
       highlightStyle: github
@@ -126,6 +127,9 @@ class: center, middle
 
 ![Help](https://media.giphy.com/media/phJ6eMRFYI6CQ/giphy.gif)
 
+.footnote[
+[Help Me Cat Gif](https://giphy.com/gifs/cat-fire-rescue-phJ6eMRFYI6CQ) via [Giphy](https://giphy.com), [original source](https://www.reddit.com/r/gifs/comments/3i5ynf/fire_cat_to_the_rescue/)
+]
 ---
 
 ## Version Control to the Rescue!
@@ -193,7 +197,12 @@ class: center, middle, inverse
 ## Cloning a Repository 
 
 ### Repository
-> A Git repository is a virtual storage of your project. It allows you to save versions of your code, which you can access when needed. ([Source](https://www.atlassian.com/git/tutorials/setting-up-a-repository))
+> A Git repository is a virtual storage of your project. It allows you to save versions of your code, which you can access when needed. <sup>1</sup>
+
+ 
+.footnote[
+[1] [Setting up a repository](https://www.atlassian.com/git/tutorials/setting-up-a-repository) by Atlassian Bitbucket, [Creative Commons Attribution 2.5 Australia License](https://creativecommons.org/licenses/by/2.5/au/)
+]
 
 --
 
@@ -206,10 +215,18 @@ class: center, middle, inverse
 ## Fork and Clone
 
 ### Fork
-> A fork is a copy of a repository. Forking a repository allows you to freely experiment with changes without affecting the original project. ([Source](https://help.github.com/articles/fork-a-repo/))
+> A fork is a copy of a repository. Forking a repository allows you to freely experiment with changes without affecting the original project. <sup>1</sup> 
 
 ### Clone 
-> Cloning a repository syncs it to your local machine. After you clone, you can add and edit files and then push and pull updates.  ([Source](https://confluence.atlassian.com/bitbucket/clone-a-repository-223217891.html))
+> When you create a repository on GitHub, it exists as a remote repository. You can clone your repository to create a local copy on your computer and sync between the two locations.  <sup>2</sup> 
+
+
+ 
+.footnote[
+[1] [Fork a repo](https://docs.github.com/en/github/getting-started-with-github/fork-a-repo) by GitHub Docs team and contributors, [Creative Commons Attribution 4.0 International](https://github.com/github/docs/blob/main/LICENSE)
+
+[2] [Cloning a repository](https://docs.github.com/en/github/creating-cloning-and-archiving-repositories/cloning-a-repository) by GitHub Docs team and contributors, [Creative Commons Attribution 4.0 International](https://github.com/github/docs/blob/main/LICENSE)
+]
 
 ---
 
@@ -262,10 +279,13 @@ class: center, middle, inverse
 ---
 ## Commit
 
-### Commit 
-> A commit is the Git equivalent of a "save".[...] Git committing is an operation that acts upon a collection of files and directories. ([Source](https://www.atlassian.com/git/tutorials/saving-changes))
+> A commit is the Git equivalent of a "save".[...] Git committing is an operation that acts upon a collection of files and directories. <sup>1</sup>
 
 --> Commit = a "save point" in Git. 
+
+.footnote[
+[1] [Saving changes](https://www.atlassian.com/git/tutorials/saving-changes) by Atlassian Bitbucket, [Creative Commons Attribution 2.5 Australia License](https://creativecommons.org/licenses/by/2.5/au/)
+]
 
 ---
 
@@ -325,11 +345,18 @@ class: center
 
 ## Making a commit involves 2 steps
 
+.pull-left[
 ![Staging Area](images/other/staging.png)
+[Staging Area illustration](https://git-scm.com/images/about/index1@2x.png), from [About - Staging Area](https://git-scm.com/about/staging-area) by Scott Chacon and contributors, licensed under [Creative Commons Attribution 3.0 Unported License](https://creativecommons.org/licenses/by/3.0/)
 
-(Source: [https://git-scm.com/about/staging-area](https://git-scm.com/about/staging-area))
+]
+.pull-right[
 
 **The "repository" is stored in the `.git` folder in your your project folder**
+
+]
+
+
 
 ---
 
@@ -543,6 +570,10 @@ class: center, middle
 # Hands On: Push!
 
 ![Push the button](https://media.giphy.com/media/139lMwJ9ow7bKE/giphy.gif)
+.footnote[
+[Go Do It Gif](https://giphy.com/gifs/ren-and-stimpy-139lMwJ9ow7bKE) via [Giphy](https://giphy.com), [original source](https://www.fanpop.com/clubs/ren-and-stimpy/images/35557868/title/ren-stimpy-photo)
+]
+
 ---
 ## Pull, Commit, Push Workflow
 1. Run `pull` before you resume your work to get the updates from your team mates that they have uploaded 
@@ -573,13 +604,6 @@ class: center, middle
 ![git google](images/other/giterrors.png)
 
 ---
-class: center, middle
-
-![xccd](https://imgs.xkcd.com/comics/git.png )
-
-https://xkcd.com/1597/ 
-
----
 
 ## When things go wrong...
 
@@ -592,7 +616,11 @@ https://xkcd.com/1597/
 
 ## Merge conflicts
 
-> Merge conflicts occur when competing changes are made to the same line of a file, or when one person edits a file and another person deletes the same file. ([Source](https://help.github.com/en/articles/resolving-a-merge-conflict-using-the-command-line))
+> Merge conflicts occur when competing changes are made to the same line of a file, or when one person edits a file and another person deletes the same file. <sup>1</sup>
+
+.footnote[
+[2] [Resolving a merge conflict using the command line](https://docs.github.com/en/github/collaborating-with-issues-and-pull-requests/resolving-a-merge-conflict-using-the-command-line) by GitHub Docs team and contributors, [Creative Commons Attribution 4.0 International](https://github.com/github/docs/blob/main/LICENSE)
+]
 
 ---
 
@@ -614,6 +642,10 @@ class: middle, center
 
 ![up to you](https://media.giphy.com/media/xUOxfcCFf8z89a6KTC/giphy.gif)
 
+.footnote[
+Source: [you decide season 5 GIF by Portlandia](https://giphy.com/gifs/portlandia-season-5-episode-4-xUOxfcCFf8z89a6KTC) via [Giphy](https://giphy.com)
+
+]
 ---
 ## Solving merge conflicts
 
@@ -725,18 +757,29 @@ class: center, middle
 
 ![Come on](https://media.giphy.com/media/HfFccPJv7a9k4/giphy.gif)
 
+.footnote[
+[Bored Come On GIF](https://giphy.com/gifs/HfFccPJv7a9k4) via [Giphy](https://giphy.com), [original source](https://imgur.com/gallery/5OI0pWP)
+
+]
 ---
 
 
 ## Branches
-
+.smaller[
 ### Branch
-> A branch represents an independent line of development. Branches serve as an abstraction for the edit/stage/commit process. You can think of them as a way to request a brand new working directory, staging area, and project history. ([Source](https://www.atlassian.com/git/tutorials/using-branches))
-
+> A branch represents an independent line of development. Branches serve as an abstraction for the edit/stage/commit process. You can think of them as a way to request a brand new working directory, staging area, and project history.<sup>1</sup>
 
 ### Checkout
 
-> The git checkout command lets you navigate between the branches created by git branch. Checking out a branch updates the files in the working directory to match the version stored in that branch, and it tells Git to record all new commits on that branch. Think of it as a way to select which line of development you’re working on. ([Source](https://www.atlassian.com/git/tutorials/using-branches/git-checkout))
+> The git checkout command lets you navigate between the branches created by git branch. Checking out a branch updates the files in the working directory to match the version stored in that branch, and it tells Git to record all new commits on that branch. Think of it as a way to select which line of development you’re working on.<sup>2</sup> 
+
+
+.footnote[
+[1] [Git Branch](https://www.atlassian.com/git/tutorials/using-branches) by Atlassian Bitbucket, [Creative Commons Attribution 2.5 Australia License](https://creativecommons.org/licenses/by/2.5/au/)
+
+[2] [Git Checkout](https://www.atlassian.com/git/tutorials/using-branches/git-checkout) by Atlassian Bitbucket, [Creative Commons Attribution 2.5 Australia License](https://creativecommons.org/licenses/by/2.5/au/)
+]
+]
 
 ---
 
@@ -753,7 +796,7 @@ class: center, middle
 - experiments: try it out in a branch
 --
 
-- example: [https://github.com/jandix/sealr/branches](https://github.com/jandix/sealr/branches)
+- example: [https://github.com/tidyverse/dplyr/branches](https://github.com/tidyverse/dplyr/branches)
 
 ---
 
@@ -798,12 +841,16 @@ knitr::include_graphics("images/rstudio/git_branches.png")
 
 ## Pull Requests (PRs)
 
-> Pull requests let you tell others about changes you've pushed to a branch in a repository on GitHub. Once a pull request is opened, you can discuss and review the potential changes with collaborators and add follow-up commits before your changes are merged into the base branch.
- ([Source](https://docs.github.com/en/github/collaborating-with-issues-and-pull-requests/about-pull-requests))
+> Pull requests let you tell others about changes you've pushed to a branch in a repository on GitHub. Once a pull request is opened, you can discuss and review the potential changes with collaborators and add follow-up commits before your changes are merged into the base branch. <sup>1</sup>
 
 
 - useful "review" and feedback functionality 
 - [GitHub Hello World](https://guides.github.com/activities/hello-world/#pr)
+
+.footnote[
+[1] [About pull requests](https://docs.github.com/en/github/collaborating-with-issues-and-pull-requests/about-pull-requests) by GitHub Docs team and contributors, [Creative Commons Attribution 4.0 International](https://github.com/github/docs/blob/main/LICENSE)
+]
+
 ---
 
 ## Hands On - branches and PRs
@@ -840,6 +887,8 @@ The special `.gitignore` file lets you exclude certain files from Git (and GitHu
 
 The `.gitignore` file is just a list of files and paths that you don't want to add to Git.
 
+--
+
 ### Accidents happen
 If you accidentally committed files to the repository: 
 
@@ -853,20 +902,30 @@ followed by a commit and adding the file to `.gitignore`. (learn more at the bot
 
 ## Git stash
 
-> git stash temporarily shelves (or stashes) changes you've made to your working copy so you can work on something else, and then come back and re-apply them later on. Stashing is handy if you need to quickly switch context and work on something else, but you're mid-way through a code change and aren't quite ready to commit. ([Source](https://www.atlassian.com/git/tutorials/saving-changes/git-stash))
+> git stash temporarily shelves (or stashes) changes you've made to your working copy so you can work on something else, and then come back and re-apply them later on. Stashing is handy if you need to quickly switch context and work on something else, but you're mid-way through a code change and aren't quite ready to commit.<sup>1</sup>
+
+
+.footnote[
+[1] [Git stash](https://www.atlassian.com/git/tutorials/saving-changes/git-stash) by Atlassian Bitbucket, [Creative Commons Attribution 2.5 Australia License](https://creativecommons.org/licenses/by/2.5/au/)
+]
 
 ---
-class: center
-
 ## Git stash
 
+.center[
 ![stash](https://media.giphy.com/media/l0HlxJfVUKhtR8Jna/giphy.gif)
+
+[Doc Savage Hiding GIF by Warner Archive](https://giphy.com/gifs/warnerarchive-warner-archive-doc-savage-l0HlxJfVUKhtR8Jna?utm_source=media-link&utm_medium=landing&utm_campaign=Media%20Links&utm_term=) via [Giphy](https://giphy.com)
+]
+
 
 - put it away for now!
 - useful for (temporarily) storing stuff not ready to commit 
 
 
+
 ---
+class: middle, center, inverse
 
 # Recap
 
