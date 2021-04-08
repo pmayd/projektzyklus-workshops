@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Git for Newbies</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Frie Preu" />
+    <meta name="date" content="2021-03-19" />
+    <script src="slides_files/header-attrs/header-attrs.js"></script>
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Git for Newbies
+### Frie Preu
+### 2021-03-19
+
+---
+
+
+
+
+
+
+
+## Who am I? 
+
+
+- Frie Preu
+- COO at CorrelAid (volunteer since 2015), before in IT consulting
+- Add me:
+    - LinkedIn: [Friedrike Preu](https://www.linkedin.com/in/friedrike-preu-a2bb46a7/)
+    - Twitter: [@ameisen_strasse](https://twitter.com/ameisen_strasse)
+    - GitHub: [friep](https://github.com/friep)
+    - GitLab: [friep](https://gitlab.com/friep)
+
+---
+
+## Agenda
+
+.pull-left[
+
+- **Motivation**: Why Git?
+- **Authentication**
+- Forking and Cloning: **"Downloading" Repositories**
+- Add and Commit: the **local workflow**
+- Push and Pull: **"Uploading" and "Downloading" Commits**
+- (Merge conflicts)
+- (GitHub issues)
+- (Working with branches)
+]
+
+
+.pull-right[
+  ![Git workflow](images/other/git_workflow_with_github_with_solution.png)
+]
+
+
+---
+## Why Git?
+
+.pull-left[
+
+### 2014/15 - My BA
+```bash
+WS2014-15/BA/R
+├── BA.R
+├── Weighting.R
+├── `droppedcode`.R
+├── edvreg_Linzer-Lewis.R
+├── edvreg_Linzer-Lewis_`modified`.R
+├── edvreg_Linzer-Lewis_modified`1`.R
+└── `final`models.R
+```
+]
+
+.pull-right[
+
+### 2017 - Hiwi job
+
+```bash
+hiwi/{prof}/eufunds/code/
+├── data_wrangling.R
+├── data_wrangling_nat.R
+├── data_wrangling_`old`.R
+├── map.R
+├── maps`2`.R
+└── plots.R
+```
+
+]
+
+---
+
+class: center, middle 
+
+![Help](https://media.giphy.com/media/phJ6eMRFYI6CQ/giphy.gif)
+
+---
+
+## Version Control to the Rescue!
+- Example: [https://github.com/CorrelAid/git-newbie-playground](https://github.com/CorrelAid/git-newbie-playground)
+- just a simple README.md for you 
+- or: use the repository of your project
+
+---
+class: center, middle, inverse
+
+# Requirements
+
+---
+
+## GitHub and Git
+- Please see the [README](https://github.com/CorrelAid/git-newbie-playground) for the requirements
+  - create GitHub account
+  - install Git
+  - introduce yourself to Git
+
+---
+class: center, middle, inverse
+
+# Authentication
+
+---
+
+
+## Authentification 
+
+**GitHub needs to know that you are you!**
+
+.pull-left[
+  ### HTTPS
+  - with GitHub username + password -&gt; easy to understand (not recommended anymore)
+  - with GitHub username + Personal Access Token (PAT) -&gt; recommended
+  - store PAT in git credential store to avoid entering over and over 
+  - clone `https://...` 
+]
+.pull-right[
+ ### SSH
+ - with a *keypair* (`id_rsa.pub` and `id_rsa`)
+ - public key, private key cryptography (see e.g. [Youtube](https://www.youtube.com/watch?v=AQDCe585Lnc))
+ - advantage: only set up once, no need to remember password
+ - clone `ssh://...`
+]
+
+---
+
+## Hands On: Authentication Setup
+
+Go to https://github.com/CorrelAid/git-newbie-playground
+and follow the instructions.
+
+Scream if something does not work!
+
+---
+
+class: center, middle, inverse
+
+# Download data - fork and clone
+
+---
+
+## Cloning a Repository 
+
+### Repository
+&gt; A Git repository is a virtual storage of your project. It allows you to save versions of your code, which you can access when needed. ([Source](https://www.atlassian.com/git/tutorials/setting-up-a-repository))
+
+--
+
+💡 a repository can live at several places:
+- **local** copy on your laptop
+- on the **remote**: GitHub / GitLab
+
+---
+
+## Fork and Clone
+
+### Fork
+&gt; A fork is a copy of a repository. Forking a repository allows you to freely experiment with changes without affecting the original project. ([Source](https://help.github.com/articles/fork-a-repo/))
+
+### Clone 
+&gt; Cloning a repository syncs it to your local machine. After you clone, you can add and edit files and then push and pull updates.  ([Source](https://confluence.atlassian.com/bitbucket/clone-a-repository-223217891.html))
+
+---
+
+## Hands On - clone a repository
+
+
+### clone your project repository
+- https://github.com/CorrelAid/{project-name}/
+- check the slack channel of your project for the exact URL (it should be at the top in the "Topic" box)
+
+### clone your own `git-tryout` repo
+- see instructions here [https://github.com/CorrelAid/git-newbie-playground](https://github.com/CorrelAid/git-newbie-playground)
+
+---
+
+## Hands On - clone a repo with the command line
+
+.pull-left[
+1. use `cd` in your terminal or Git bash to navigate to your target location (use the tab key for autocompletion)
+2. `git clone https://github.com/{username}/git-newbie-playground` or the URL of your project repository 
+
+]
+
+.pull-right[
+
+![Git clone](images/github/git_clone_https.png) 
+]
+
+---
+## Hands On - clone a repo with RStudio
+
+.pull-left[
+1. In the top right corner,  click on the dropdown and choose New project
+2. Select "Version Control"
+3. Follow the dialogue
+]
+
+.pull-right[
+
+![Git clone Rstudio](images/rstudio/project_wizard.png)
+]
+
+---
+
+class: center, middle, inverse
+
+
+# The Local Workflow - Add und Commit 
+
+---
+## Commit
+
+### Commit 
+&gt; A commit is the Git equivalent of a "save".[...] Git committing is an operation that acts upon a collection of files and directories. ([Source](https://www.atlassian.com/git/tutorials/saving-changes))
+
+--&gt; Commit = a "save point" in Git. 
+
+---
+
+## Commit
+
+- a commit stores **a full snapshot** of the current state of the repository
+- to the user, it is shown as so-called "diffs", i.e. what has changed since the last commit
+  - edits of file(s)
+  - creation of new file(s)
+  - deletion of file(s)
+  - renaming of file(s)
+
+--&gt; making a commit = taking a snapshot 
+---
+
+## Git history
+
+git stores a history of snapshots / commits in its graph. 
+
+```bash
+git graph
+```
+
+![git graph](images/command_line/git_graph.png)
+
+---
+## Git history - Show a commit
+
+the "letter 🥗" is the short version of the so called "SHA hash" or "commit hash" -&gt; it comes from "hashing" the snapshot the commit represents. 
+
+We can have a look at a commit using `git show {hash}`
+
+![git show](images/command_line/git_show.png)
+---
+## Hands On: Investigate the commit history
+
+Investigate the commits made so far in your repository. How many are there? Who has made them? What changes did they introduce?
+
+.pull-left[
+### Command line
+- use `git graph` and `git show` as described in the slides before
+- if you want to "break out" of a `git show` or `git graph` display which is too long, you can
+  - hit enter until it ends
+  - hit q 
+  - hit ctrl+c
+
+]
+.pull-right[
+### RStudio
+- open the Git pane (next to "Environment", "History", etc.)
+- click on the small clock icon 🕧 to open the history
+- close the extra window once you have investigated enough
+]
+---
+
+class: center
+
+## Making a commit involves 2 steps
+
+![Staging Area](images/other/staging.png)
+
+(Source: [https://git-scm.com/about/staging-area](https://git-scm.com/about/staging-area))
+
+**The "repository" is stored in the `.git` folder in your your project folder**
+
+---
+
+## Making a commit - Adding
+
+In the staging area, you **draft** your commit and choose which of your changes you want to "save" in Git
+
+
+**see what you have changed** 👀
+
+```bash
+git status
+```
+
+```bash
+git diff
+git diff --staged
+```
+
+**add individual files or folders**
+
+```bash
+git add {path}
+```
+
+or everything
+
+```bash
+git add .
+```
+
+---
+## Making a commit - Adding
+
+![](images/command_line/git_status_1.png)
+
+We add `file.txt` to our "commit draft": 
+
+```bash
+git add file.txt
+```
+
+---
+## Making a commit - Adding
+`.gitignore` and `new_file.txt` will not be part of the commit:
+
+![](images/command_line/git_status_after_add.png)
+---
+### Making a commit - Commit
+
+Now, we can commit (`-m ""` adds the commit message):
+```bash
+git commit -m "change file.txt"
+```
+
+---
+
+## Making a commit - Shortcuts
+
+We can add all changes with: 
+
+```
+git add .
+```
+
+![](images/command_line/git_status_add_all.png)
+
+... or even commit all our changes directly without `git add`:
+
+```bash
+git commit -a -m 'directly committing all changes'
+```
+
+it's tempting but use both with care!
+
+---
+## Making a commit in RStudio
+
+.pull-left[
+- Git pane, then "Commit" button -&gt; extra window opens
+- `git add`: tick checkboxes
+- `git commit`: commit message in box, then press commit
+]
+.pull-right[
+&lt;img src="images/rstudio/git_commit.png" width="100%" /&gt;
+]
+---
+
+class: center, middle, inverse
+
+# Detour: Markdown
+
+---
+
+## Markdown
+- a markup language
+- easy way to write...
+  - notes 
+  - texts
+  - presentations
+  - ...
+- and *render* them to good looking documents!
+- In R: RMarkdown 
+---
+
+## Markdown syntax
+- `#(###)`: make a header
+- `*` or `-`: make bullet point lists
+- `[click here](https://git-scm.com/docs/)`: add a link
+- ... many more, see [https://www.markdownguide.org/basic-syntax/](https://www.markdownguide.org/basic-syntax/)
+
+---
+
+
+## Hands On - make a commit
+.pull-left[
+### command line
+1. Change the `README.md` somewhere and create a new file `test.py` with a simple print statement
+2. commit only the new file, not your changes to the README
+3. Run `git graph` to see your commit
+]
+.pull-right[
+### RStudio
+1. Change the `README.md` somewhere and create a new file `test.R` with a simple print statement
+2. commit only the new file, not your changes to the README
+- go to the Git Pane 
+]
+
+
+---
+class: center, middle
+
+
+## Git quizzed!
+
+![Lokal](images/other/git_workflow_lokal_without_solution.png)
+
+---
+class: center, middle
+
+## Git quizzed!
+
+
+![Lokal](images/other/git_workflow_lokal_with_solution.png)
+
+---
+class: center, middle, inverse
+
+# Sync files - Push and Pull
+
+---
+
+
+## Git  Hosting
+
+- GitHub: &lt;svg viewBox="0 0 496 512" style="height:1em;fill:currentColor;position:relative;display:inline-block;top:.1em;" xmlns="http://www.w3.org/2000/svg"&gt;  &lt;path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"&gt;&lt;/path&gt;&lt;/svg&gt; 
+- GitLab: &lt;svg viewBox="0 0 512 512" style="height:1em;fill:currentColor;position:relative;display:inline-block;top:.1em;" xmlns="http://www.w3.org/2000/svg"&gt;  &lt;path d="M105.2 24.9c-3.1-8.9-15.7-8.9-18.9 0L29.8 199.7h132c-.1 0-56.6-174.8-56.6-174.8zM.9 287.7c-2.6 8 .3 16.9 7.1 22l247.9 184-226.2-294zm160.8-88l94.3 294 94.3-294zm349.4 88l-28.8-88-226.3 294 247.9-184c6.9-5.1 9.7-14 7.2-22zM425.7 24.9c-3.1-8.9-15.7-8.9-18.9 0l-56.6 174.8h132z"&gt;&lt;/path&gt;&lt;/svg&gt; 
+- Keybase: &lt;svg viewBox="0 0 448 512" style="height:1em;fill:currentColor;position:relative;display:inline-block;top:.1em;" xmlns="http://www.w3.org/2000/svg"&gt;  &lt;path d="M286.17 419a18 18 0 1 0 18 18 18 18 0 0 0-18-18zm111.92-147.6c-9.5-14.62-39.37-52.45-87.26-73.71q-9.1-4.06-18.38-7.27a78.43 78.43 0 0 0-47.88-104.13c-12.41-4.1-23.33-6-32.41-5.77-.6-2-1.89-11 9.4-35L198.66 32l-5.48 7.56c-8.69 12.06-16.92 23.55-24.34 34.89a51 51 0 0 0-8.29-1.25c-41.53-2.45-39-2.33-41.06-2.33-50.61 0-50.75 52.12-50.75 45.88l-2.36 36.68c-1.61 27 19.75 50.21 47.63 51.85l8.93.54a214 214 0 0 0-46.29 35.54C14 304.66 14 374 14 429.77v33.64l23.32-29.8a148.6 148.6 0 0 0 14.56 37.56c5.78 10.13 14.87 9.45 19.64 7.33 4.21-1.87 10-6.92 3.75-20.11a178.29 178.29 0 0 1-15.76-53.13l46.82-59.83-24.66 74.11c58.23-42.4 157.38-61.76 236.25-38.59 34.2 10.05 67.45.69 84.74-23.84.72-1 1.2-2.16 1.85-3.22a156.09 156.09 0 0 1 2.8 28.43c0 23.3-3.69 52.93-14.88 81.64-2.52 6.46 1.76 14.5 8.6 15.74 7.42 1.57 15.33-3.1 18.37-11.15C429 443 434 414 434 382.32c0-38.58-13-77.46-35.91-110.92zM142.37 128.58l-15.7-.93-1.39 21.79 13.13.78a93 93 0 0 0 .32 19.57l-22.38-1.34a12.28 12.28 0 0 1-11.76-12.79L107 119c1-12.17 13.87-11.27 13.26-11.32l29.11 1.73a144.35 144.35 0 0 0-7 19.17zm148.42 172.18a10.51 10.51 0 0 1-14.35-1.39l-9.68-11.49-34.42 27a8.09 8.09 0 0 1-11.13-1.08l-15.78-18.64a7.38 7.38 0 0 1 1.34-10.34l34.57-27.18-14.14-16.74-17.09 13.45a7.75 7.75 0 0 1-10.59-1s-3.72-4.42-3.8-4.53a7.38 7.38 0 0 1 1.37-10.34L214 225.19s-18.51-22-18.6-22.14a9.56 9.56 0 0 1 1.74-13.42 10.38 10.38 0 0 1 14.3 1.37l81.09 96.32a9.58 9.58 0 0 1-1.74 13.44zM187.44 419a18 18 0 1 0 18 18 18 18 0 0 0-18-18z"&gt;&lt;/path&gt;&lt;/svg&gt; 
+
+---
+
+## Git local and git remote
+
+... what? 
+
+- **local**: your laptop / machine
+- **remote**: in the Cloud (GitLab, GitHub...) - you typically only have one remote ("origin")
+
+```bash
+$ git remote -v
+origin	https://github.com/CorrelAid/git-newbie-playground.git (fetch)
+origin	https://github.com/CorrelAid/git-newbie-playground.git (push)
+```
+
+![Git Remote](images/command_line/git_graph_remote.png)
+---
+
+
+## Sync: Git Pull and Git Push
+
+- Git Pull: "download" new commits from GitHub
+- Git Push: "upload" the commits you made locally to GitHub
+---
+## Sync: Git Pull and Git Push
+
+"Download" from GitHub
+
+```bash
+git pull
+```
+
+"Upload" to GitHub
+
+```bash
+git push
+```
+
+---
+## Pull and Push - RStudio
+
+- Git pane / Git commit window
+- button down (blue): pull
+- buttom up (green): push
+
+
+---
+class: center, middle
+
+# Hands On: Push!
+
+![Push the button](https://media.giphy.com/media/139lMwJ9ow7bKE/giphy.gif)
+---
+## Pull, Commit, Push Workflow
+1. Run `pull` before you resume your work to get the updates from your team mates that they have uploaded 
+2. `commit` whenever you feel like you have achieved something or you want to "save" some intermediate code snippets (commit often!)
+3. `push` every other commit
+---
+class: center, middle
+
+## Git quizzed!
+
+![Push Pull](images/other/git_workflow_with_github_without_solution.png)
+
+---
+
+
+## Git quizzed!
+
+![Push Pull](images/other/git_workflow_with_github_with_solution.png)
+
+---
+class: center, middle, inverse
+
+# When things go wrong...
+
+---
+class: center, middle
+
+![git google](images/other/giterrors.png)
+
+---
+class: center, middle
+
+![xccd](https://imgs.xkcd.com/comics/git.png )
+
+https://xkcd.com/1597/ 
+
+---
+
+## When things go wrong...
+
+1. as long nothing is pushed, all is (kind of) ok -&gt; don't push if things are messed up!
+2. if things are really messed up: save your code somewhere else and clone again
+3. read the error messages, they can be quite useful!
+4. if in doubt, ask the other team members or reach out to me. :) 
+
+---
+
+## Merge conflicts
+
+&gt; Merge conflicts occur when competing changes are made to the same line of a file, or when one person edits a file and another person deletes the same file. ([Source](https://help.github.com/en/articles/resolving-a-merge-conflict-using-the-command-line))
+
+---
+
+## Merge conflicts
+1. you commit changes 
+--
+
+2. you pull to get the newest updates
+--
+
+3. your coworker has changed something that clashes with your changes
+--
+
+4. git: 
+
+
+---
+class: middle, center
+
+![up to you](https://media.giphy.com/media/xUOxfcCFf8z89a6KTC/giphy.gif)
+
+---
+## Solving merge conflicts
+
+- **you** need to solve merge conflicts on your machine -&gt; decide which version / changes you keep
+- options:
+  - edit files manually and look out for *conflict markers* (explanation [here](https://docs.github.com/en/github/collaborating-with-issues-and-pull-requests/resolving-a-merge-conflict-using-the-command-line#competing-line-change-merge-conflicts))
+  - use a merge conflict tool in the command line (`git mergetool --tool-help`)
+  - VSCode has an integrated [merge conflict tool](https://www.youtube.com/watch?v=kBIMGOxqqnk) which is very nice 
+  - other Git GUIs also might have one
+  - RStudio does not have a merge conflict tool :( -&gt; have to resolve manually
+```
+&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+i added this line in Rstudio without knowing that someone else edited it
+=======
+introduce a merge conflict, hihihihiihi
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; 6185e4e97db38d774fdcd2e41a31788362856d51
+```
+
+⚠️: a file can have **multiple** conflicts!
+---
+## Solving merge conflicts
+
+```
+&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+i added this line in Rstudio without knowing that someone else edited it
+=======
+introduce a merge conflict, hihihihiihi
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; 6185e4e97db38d774fdcd2e41a31788362856d51
+```
+
+- `&lt;&lt;&lt;&lt;&lt;&lt;&lt;`: my current changes (HEAD)
+- `=======`: seperates my changes from the "incoming" changes
+- `&gt;&gt;&gt;&gt;&gt;&gt;&gt;`: end of "incoming" changes, shows the commit hash or the branch name (more on this later)
+
+my new version:
+```md
+merge conflicts might be a bit frightening but you can do it! :) 
+```
+
+**save, add, and commit!**
+
+
+---
+
+## Hands On: Merge conflicts
+
+1. edit `README.md` **on GitHub** in a certain line
+2. edit `README.md` locally on your machine **in the same line** (edit it differently!)
+3. commit your own changes (don't push yet!)
+4. `pull` 
+5. solve the merge conflict locally and push your own version. 👿
+
+
+
+---
+class: center, middle, inverse
+
+# Work with GitHub
+
+---
+class: center, middle, inverse
+
+# Issues
+
+---
+
+## Issues
+
+
+- issues: todos / bugs / ideas
+- each issue has a number 
+- \#issueno in commit message associates commit with issue
+
+- example: [https://github.com/CorrelAid/hugo-website/issues](https://github.com/CorrelAid/hugo-website/issues) 
+
+---
+
+## Hands On: Issues
+
+
+1. create an issue "add a GIF" 
+2. go to [giphy.com](giphy.com), find a funny gif and add it to the README  (-&gt; copy link)
+3. add + commit. link the issue number in the commit message (#issueno)
+4. push
+5. reload the issue page (ctrl + r) 
+
+---
+
+## Recap issues
+
+- very useful for project organization 
+- discussion is centralized (**but**: don't put sensitive information in GitHub)
+- Tip: create a GitHub *board* for process tracking
+
+
+---
+class: center, inverse, middle 
+
+# Branches and Pull Requests
+
+---
+class: center, middle
+
+
+![Gitkraken branching](images/vscode/vscode_branches.png)
+
+---
+class: center, middle
+
+![Come on](https://media.giphy.com/media/HfFccPJv7a9k4/giphy.gif)
+
+---
+
+
+## Branches
+
+### Branch
+&gt; A branch represents an independent line of development. Branches serve as an abstraction for the edit/stage/commit process. You can think of them as a way to request a brand new working directory, staging area, and project history. ([Source](https://www.atlassian.com/git/tutorials/using-branches))
+
+
+### Checkout
+
+&gt; The git checkout command lets you navigate between the branches created by git branch. Checking out a branch updates the files in the working directory to match the version stored in that branch, and it tells Git to record all new commits on that branch. Think of it as a way to select which line of development you’re working on. ([Source](https://www.atlassian.com/git/tutorials/using-branches/git-checkout))
+
+---
+
+## Why branches?
+
+- stability: only have working code on "main" branch 
+  - e.g. CI/CD directly to dev
+  - users download your code from GitHub / GitHub (e.g. `devtools::install_github()`)
+--
+
+- collaboration: independent development of code ("feature branches") 
+--
+
+- experiments: try it out in a branch
+--
+
+- example: [https://github.com/jandix/sealr/branches](https://github.com/jandix/sealr/branches)
+
+---
+
+## Branches Workflow
+
+1. create a branch in Git with a meaningful name (e.g. issue1-add-favorite-gif)
+```
+git switch -c "#1-add-favorite-gif" # or git checkout -b "#1-add-favorite-gif"
+```
+--
+
+2. checkout branch: branch is automatically checked out (check with `git graph`: `HEAD` points to `#1-add-favorite-gif`)
+
+--
+
+3. continue working as usual (pull-commit-push cycles)
+--
+
+4. (optional): merge other branches into your branch to get their updates: `git merge {branch_name}`
+
+--
+
+5. merge your branch into the main branch (checkout main, then see 4.)
+
+
+✅  You can always switch between branches using `git checkout`
+
+---
+## Branches Workflow - RStudio
+
+.pull-left[
+- Git pane, then on the right
+- creating a branch: click on purple icon
+- switch branches: click on dropdown / branch name
+]
+.pull-right[
+&lt;img src="images/rstudio/git_branches.png" width="100%" /&gt;
+]
+---
+
+## Pull Requests (PRs)
+
+&gt; Pull requests let you tell others about changes you've pushed to a branch in a repository on GitHub. Once a pull request is opened, you can discuss and review the potential changes with collaborators and add follow-up commits before your changes are merged into the base branch.
+ ([Source](https://docs.github.com/en/github/collaborating-with-issues-and-pull-requests/about-pull-requests))
+
+
+- useful "review" and feedback functionality 
+- [GitHub Hello World](https://guides.github.com/activities/hello-world/#pr)
+---
+
+## Hands On - branches and PRs
+
+1. create a new issue (think of something!)
+2. create a branch called `issue2-{description}` locally
+3. work on issue 2
+4. push the branch 
+5. open a pull request 
+6. merge the PR
+---
+
+## Real life: Branches and Pull Requests 
+- branches
+  - very useful when developing R packages / applications / shiny apps in a team: feature branches
+  - relevance for data analysis projects: enables working in parallel on several methods, keep main clean of non-working code, backup (!)
+- merge requests
+  - centralize discussion
+  - code review stage
+
+
+---
+
+class: center, middle, inverse
+# Miscellaneous
+
+---
+
+## .gitignore
+The special `.gitignore` file lets you exclude certain files from Git (and GitHub). This is especially useful for...
+
+- sensitive data (e.g. GDPR data that should not be uploaded to GitHub)
+- user configuration files (e.g. `.Rproj.user`)
+
+The `.gitignore` file is just a list of files and paths that you don't want to add to Git.
+
+### Accidents happen
+If you accidentally committed files to the repository: 
+
+```
+git rm --cached [file path]
+```
+
+followed by a commit and adding the file to `.gitignore`. (learn more at the bottom of the page [here](https://git-scm.com/book/en/v2/Git-Basics-Recording-Changes-to-the-Repository))
+
+---
+
+## Git stash
+
+&gt; git stash temporarily shelves (or stashes) changes you've made to your working copy so you can work on something else, and then come back and re-apply them later on. Stashing is handy if you need to quickly switch context and work on something else, but you're mid-way through a code change and aren't quite ready to commit. ([Source](https://www.atlassian.com/git/tutorials/saving-changes/git-stash))
+
+---
+class: center
+
+## Git stash
+
+![stash](https://media.giphy.com/media/l0HlxJfVUKhtR8Jna/giphy.gif)
+
+- put it away for now!
+- useful for (temporarily) storing stuff not ready to commit 
+
+
+---
+
+# Recap
+
+---
+
+## What we learned today
+
+- Fork and clone a GitHub repository
+--
+
+- make a commit in the command line
+--
+
+- pull and push commits from / to GitHub
+--
+- solve merge conflicts
+
+--
+- work with issues, branches and pull requests 
+
+---
+class: middle, center, inverse
+
+# That's it! 
+
+---
+
+## If you ever need help...contact me!
+
+### Frie Preu
+ + &lt;svg viewBox="0 0 512 512" style="height:1em;fill:currentColor;position:relative;display:inline-block;top:.1em;" xmlns="http://www.w3.org/2000/svg"&gt;  &lt;path d="M320 336c0 8.84-7.16 16-16 16h-96c-8.84 0-16-7.16-16-16v-48H0v144c0 25.6 22.4 48 48 48h416c25.6 0 48-22.4 48-48V288H320v48zm144-208h-80V80c0-25.6-22.4-48-48-48H176c-25.6 0-48 22.4-48 48v48H48c-25.6 0-48 22.4-48 48v80h512v-80c0-25.6-22.4-48-48-48zm-144 0H192V96h128v32z"&gt;&lt;/path&gt;&lt;/svg&gt; COO at CorrelAid / @frie on Slack
+ + &lt;svg viewBox="0 0 496 512" style="height:1em;fill:currentColor;position:relative;display:inline-block;top:.1em;" xmlns="http://www.w3.org/2000/svg"&gt;  &lt;path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"&gt;&lt;/path&gt;&lt;/svg&gt; [friep](https://github.com/friep)
+ + &lt;svg viewBox="0 0 512 512" style="height:1em;fill:currentColor;position:relative;display:inline-block;top:.1em;" xmlns="http://www.w3.org/2000/svg"&gt;  &lt;path d="M105.2 24.9c-3.1-8.9-15.7-8.9-18.9 0L29.8 199.7h132c-.1 0-56.6-174.8-56.6-174.8zM.9 287.7c-2.6 8 .3 16.9 7.1 22l247.9 184-226.2-294zm160.8-88l94.3 294 94.3-294zm349.4 88l-28.8-88-226.3 294 247.9-184c6.9-5.1 9.7-14 7.2-22zM425.7 24.9c-3.1-8.9-15.7-8.9-18.9 0l-56.6 174.8h132z"&gt;&lt;/path&gt;&lt;/svg&gt; [friep](https://gitlab.com/friep)
+ + &lt;svg viewBox="0 0 448 512" style="height:1em;fill:currentColor;position:relative;display:inline-block;top:.1em;" xmlns="http://www.w3.org/2000/svg"&gt;  &lt;path d="M286.17 419a18 18 0 1 0 18 18 18 18 0 0 0-18-18zm111.92-147.6c-9.5-14.62-39.37-52.45-87.26-73.71q-9.1-4.06-18.38-7.27a78.43 78.43 0 0 0-47.88-104.13c-12.41-4.1-23.33-6-32.41-5.77-.6-2-1.89-11 9.4-35L198.66 32l-5.48 7.56c-8.69 12.06-16.92 23.55-24.34 34.89a51 51 0 0 0-8.29-1.25c-41.53-2.45-39-2.33-41.06-2.33-50.61 0-50.75 52.12-50.75 45.88l-2.36 36.68c-1.61 27 19.75 50.21 47.63 51.85l8.93.54a214 214 0 0 0-46.29 35.54C14 304.66 14 374 14 429.77v33.64l23.32-29.8a148.6 148.6 0 0 0 14.56 37.56c5.78 10.13 14.87 9.45 19.64 7.33 4.21-1.87 10-6.92 3.75-20.11a178.29 178.29 0 0 1-15.76-53.13l46.82-59.83-24.66 74.11c58.23-42.4 157.38-61.76 236.25-38.59 34.2 10.05 67.45.69 84.74-23.84.72-1 1.2-2.16 1.85-3.22a156.09 156.09 0 0 1 2.8 28.43c0 23.3-3.69 52.93-14.88 81.64-2.52 6.46 1.76 14.5 8.6 15.74 7.42 1.57 15.33-3.1 18.37-11.15C429 443 434 414 434 382.32c0-38.58-13-77.46-35.91-110.92zM142.37 128.58l-15.7-.93-1.39 21.79 13.13.78a93 93 0 0 0 .32 19.57l-22.38-1.34a12.28 12.28 0 0 1-11.76-12.79L107 119c1-12.17 13.87-11.27 13.26-11.32l29.11 1.73a144.35 144.35 0 0 0-7 19.17zm148.42 172.18a10.51 10.51 0 0 1-14.35-1.39l-9.68-11.49-34.42 27a8.09 8.09 0 0 1-11.13-1.08l-15.78-18.64a7.38 7.38 0 0 1 1.34-10.34l34.57-27.18-14.14-16.74-17.09 13.45a7.75 7.75 0 0 1-10.59-1s-3.72-4.42-3.8-4.53a7.38 7.38 0 0 1 1.37-10.34L214 225.19s-18.51-22-18.6-22.14a9.56 9.56 0 0 1 1.74-13.42 10.38 10.38 0 0 1 14.3 1.37l81.09 96.32a9.58 9.58 0 0 1-1.74 13.44zM187.44 419a18 18 0 1 0 18 18 18 18 0 0 0-18-18z"&gt;&lt;/path&gt;&lt;/svg&gt; [friep](https://keybase.io/friep)
+ + &lt;svg viewBox="0 0 512 512" style="height:1em;fill:currentColor;position:relative;display:inline-block;top:.1em;" xmlns="http://www.w3.org/2000/svg"&gt;  &lt;path d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"&gt;&lt;/path&gt;&lt;/svg&gt; [ameisen_strasse](https://twitter.com/ameisen_strasse)
+ + &lt;svg viewBox="0 0 448 512" style="height:1em;fill:currentColor;position:relative;display:inline-block;top:.1em;" xmlns="http://www.w3.org/2000/svg"&gt;  &lt;path d="M94.12 315.1c0 25.9-21.16 47.06-47.06 47.06S0 341 0 315.1c0-25.9 21.16-47.06 47.06-47.06h47.06v47.06zm23.72 0c0-25.9 21.16-47.06 47.06-47.06s47.06 21.16 47.06 47.06v117.84c0 25.9-21.16 47.06-47.06 47.06s-47.06-21.16-47.06-47.06V315.1zm47.06-188.98c-25.9 0-47.06-21.16-47.06-47.06S139 32 164.9 32s47.06 21.16 47.06 47.06v47.06H164.9zm0 23.72c25.9 0 47.06 21.16 47.06 47.06s-21.16 47.06-47.06 47.06H47.06C21.16 243.96 0 222.8 0 196.9s21.16-47.06 47.06-47.06H164.9zm188.98 47.06c0-25.9 21.16-47.06 47.06-47.06 25.9 0 47.06 21.16 47.06 47.06s-21.16 47.06-47.06 47.06h-47.06V196.9zm-23.72 0c0 25.9-21.16 47.06-47.06 47.06-25.9 0-47.06-21.16-47.06-47.06V79.06c0-25.9 21.16-47.06 47.06-47.06 25.9 0 47.06 21.16 47.06 47.06V196.9zM283.1 385.88c25.9 0 47.06 21.16 47.06 47.06 0 25.9-21.16 47.06-47.06 47.06-25.9 0-47.06-21.16-47.06-47.06v-47.06h47.06zm0-23.72c-25.9 0-47.06-21.16-47.06-47.06 0-25.9 21.16-47.06 47.06-47.06h117.84c25.9 0 47.06 21.16 47.06 47.06 0 25.9-21.16 47.06-47.06 47.06H283.1z"&gt;&lt;/path&gt;&lt;/svg&gt; #help channel
+
+### Resources
+Check the README of the [git-newbie-playground repo](https://github.com/CorrelAid/git-newbie-playground) for some more resources!
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"slideNumberFormat": "%current%",
+"highlightStyle": "github",
+"highlightLines": true,
+"ratio": "16:9",
+"countIncrementalSlides": true
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
