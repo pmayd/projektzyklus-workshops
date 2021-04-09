@@ -163,7 +163,6 @@ class: middle, center, inverse
 ---
 ## Einen Veracrypt Container erstellen
 
-###  Installation
 - installiere [VeraCrypt](https://www.veracrypt.fr/en/Downloads.html) und starte es 
 
 --
@@ -205,6 +204,8 @@ Wir haben die folgenden Szenarien noch nicht exzessiv in der Praxis getestet.
 - jede:r Analyst:in hat einen eigenen Veracrypt Container `r emo::ji("white_check_mark")`
 - das ganze Repository ist im Container
 - (Roh)daten / nicht anonymisierte Daten werden nicht über GitHub synchronisiert (`.gitignore`)!
+
+--
 
 #### Vorteile
 - unkompliziertes Arbeiten in Verbindung mit RStudio Projekten (oder vgl. in Python): Container mounten, Doppelklick auf `.Rproj`, let's go

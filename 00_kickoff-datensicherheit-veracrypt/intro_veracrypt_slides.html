@@ -133,7 +133,6 @@ class: middle, center, inverse
 ---
 ## Einen Veracrypt Container erstellen
 
-###  Installation
 - installiere [VeraCrypt](https://www.veracrypt.fr/en/Downloads.html) und starte es 
 
 --
@@ -176,6 +175,8 @@ Wir haben die folgenden Szenarien noch nicht exzessiv in der Praxis getestet.
 - das ganze Repository ist im Container
 - (Roh)daten / nicht anonymisierte Daten werden nicht über GitHub synchronisiert (`.gitignore`)!
 
+--
+
 #### Vorteile
 - unkompliziertes Arbeiten in Verbindung mit RStudio Projekten (oder vgl. in Python): Container mounten, Doppelklick auf `.Rproj`, let's go
 - Pfade zum Lesen der Daten bleiben relativ
@@ -202,7 +203,7 @@ Wir haben die folgenden Szenarien noch nicht exzessiv in der Praxis getestet.
 ---
 ## Szenario 3: wenig / ohne Code, CorrelCloud
 - Projekte ohne Code / mit wenig Code, aber mit DSVGO-relevanten Daten, können ausschließlich über die CorrelCloud synchronisiert werden
-- die Kombination mit Veracrypt ist allerdings **ziemlich unpraktisch**. 😿
+- die Kombination mit Veracrypt ist allerdings **ziemlich unpraktisch**. 😞
 
 ### Option 1
 - Der CorrelCloud-Ordner muss lokal in dem durch VeraCrypt eingebundenen Laufwerk angelegt werden
