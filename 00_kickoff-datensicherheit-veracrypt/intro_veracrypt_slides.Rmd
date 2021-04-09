@@ -1,0 +1,307 @@
+---
+title: "CorrelAid Projektinfrastruktur"
+subtitle: Einführung in Veracrypt
+output: 
+  xaringan::moon_reader:
+      css: ["xaringan-themer.css", "custom.css"]
+      nature:
+        slideNumberFormat: "%current%"
+        highlightStyle: github
+        highlightLines: true
+        ratio: 16:9
+        countIncrementalSlides: true
+---
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(
+  fig.width=9, fig.height=3.5, fig.retina=3,
+  out.width = "100%",
+  cache = FALSE,
+  echo = TRUE,
+  message = FALSE, 
+  warning = FALSE,
+  fig.show = TRUE,
+  hiline = TRUE
+)
+```
+
+```{r xaringan-themer, include=FALSE, warning=FALSE}
+library(xaringanthemer)
+ca_blue <- "#3863a2"
+ca_blue2 <- "#3c61aa"
+ca_dark_blue <- "#2d3b5a"
+ca_green <- "#96c342"
+gray <- "#3c3c3b"
+black <- "#000000"
+style_duo_accent(
+  primary_color = ca_blue,
+  secondary_color = ca_green,
+  header_color = ca_blue,
+  text_color = gray,
+  code_inline_color = colorspace::lighten(black),
+  text_bold_color = colorspace::lighten(black),
+  link_color = ca_blue,
+  title_slide_text_color = "#FFFFFF",
+  inverse_header_color = "#FFFFFF",
+  text_font_size = "1.2rem",
+  header_font_google = google_font("Roboto", "300"),
+          text_font_google = google_font("Roboto"),
+          code_font_google = google_font("Fira Mono")
+)
+```
+
+
+
+## Unsere Projektinfrastruktur 
+
+- Kommunikation
+![](images/slack.png) 
+
+- **Verschlüsselung**
+![](images/veracrypt.png)
+
+- **Dateiaustausch**
+![](images/nextcloud.png)
+
+---
+## Verpflichtungserklärung Datenschutz
+
+- solltest du vorab erhalten haben (z.B. über Slack), sonst siehe [hier](https://correlcloud.org/index.php/s/7PSskX9yN7RKmoi?path=%2Ftemplate_data_privacy)
+- Definiert verschiedene Szenarien, die nicht alle auf euer Projekt zutreffen müssen
+  - für alle: Verschwiegenheit  / Datengeheimnis
+  - Anforderungen an die Datensicherheit können variieren
+
+---
+class: middle, center, inverse 
+
+# Datensicherheit / Verschlüsselung
+
+---
+
+## Personenbezogene Daten
+
+personenbezogene Projektdaten sollten _nie dauerhaft unverschlüsselt_ auf eurem Rechner gespeichert werden.
+
+--
+
+`r emo::ji("warning")` auch pseudonymisierte Daten (z.B. ohne Namen / Email-Adressen) sind meistens noch personenbezogene Daten<sup>1</sup>
+
+--
+
+Ausnahmen: 
+- synthetische ("fake") Daten: können unverschlüsselt bleiben
+- initialer Datentransfer via CorrelCloud: Daten sind temporär unverschlüsselt (im `Downloads` Ordner) -> so schnell wie möglich verschlüsseln / verschieben<sup>2</sup>
+
+.footnote[
+[1] Die DSVGO stellt sehr hohe Anforderungen an die Anonymisierung von Daten.
+
+[2] Mehr zum initialen Datenaustausch heute Mittag
+]
+
+---
+## Verschlüsselung
+
+**Optionen**: verschlüsseltes Heimverzeichnis oder VeraCrypt
+
+| verschlüsseltes Heimverzeichnis                         | kein verschlüsseltes Heimverzeichnis                    |
+|---------------------------------------------------------|---------------------------------------------------------|
+| VeraCrypt wird nicht benötigt                           | VeraCrypt wird benötigt                                 |
+| anschließende Löschung der Daten | anschließende Löschung der Daten |
+
+---
+## Verschüsseltes Heimverzeichnis
+
+- Möglich bei
+    - Windows Pro und Enterprise -> leider nicht verfügbar für Home
+    - manchen Windows 10 Home Geräten: [Device Encryption](https://support.microsoft.com/de-de/windows/ger%C3%A4teverschl%C3%BCsselung-in-windows-10-ad5dcf4b-dbe0-2331-228f-7925c2a3012d)
+    - Mac OS ab Mac-OS X 10.4: [FileVault](https://support.apple.com/en-us/HT204837)
+    - den meisten Linux-Distributionen<sup>1</sup>
+- **Das Adminkonto des Rechners muss ebenfalls passwortgeschützt sein**
+
+.footnote[
+[1] es ist bei den meisten Distributionen nicht möglich, nachträglich Verschlüsselung zu aktivieren. Falls deine Festplatte nicht verschlüsselt ist, benutze bitte Veracrypt.
+]
+
+---
+class: middle, center, inverse
+
+# 5 Minuten Check, ob eine der built-in Optionen für euch verfügbar ist
+
+---
+## VeraCrypt
+- Verschlüsselungsprogramm und TrueCrypt Nachfolger
+- Ein VeraCrypt Container ist eine passwortgeschützte _Datei_ auf dem Rechner, die nur von VeraCrypt nach Passworteingabe gelesen werden kann
+- VeraCrypt bindet (nach Passworteingabe) die Datei als _Laufwerk_ im Betriebsystem ein  ("Mount")
+- So können alle andere Programme auf die Daten im Container zugreifen
+- Dieses Laufwerk ist nur so lange verfügbar, wie auch VeraCrypt läuft
+
+---
+## VeraCrypt Funktionsweise
+.center[
+]
+
+.center[
+**Container Datei**
+
+![VeraCrypt Container](images/veracrypt_container.png)
+
+`r emo::ji("arrow_down")`
+
+![Veracrypt logo](images/veracrypt.png)
+
+`r emo::ji("arrow_down")`
+
+**Container ist als Laufwerk gemounted und Dateien können benutzt werden**
+
+![Veracrypt mounted](images/veracrypt_drive.png)
+![Veracrypt files inside container](images/veracrypt_files_inside_container.png)
+
+]
+
+
+---
+## Einen Veracrypt Container erstellen
+
+###  Installation
+- installiere [VeraCrypt](https://www.veracrypt.fr/en/Downloads.html) und starte es 
+
+--
+
+### Neuen Container erstellen
+
+- wenn nicht anders angegeben die Standardeinstellungen bestätigen
+  - verschlüsselte **file container** (nicht Partition!)
+- Ort und Namen für Container bestimmen (muss im Heimverzeichnis liegen) -> **lege die Datei dort ab wo du sonst den Projektordner ablegen würdest** (z.B. `home/frie/correlaid/projekte/`)
+- Dateigröße eingeben  (1GB (1024 MB) sollte ausreichen)
+- Passwort setzen: benutzt einen Passwort, welches von eurem Passwortmanager<sup>1</sup> erstellt wurde oder benutzt eine [Passphrase](https://www.useapassphrase.com/) mit mindestens vier Wörtern 
+
+.footnote[
+[1] z.B. hat [bitwarden](https://bitwarden.com) einen kostenlosen Plan.
+]
+
+
+---
+## Veracrypt Container einbinden / mounten
+- Wähle die Containerdatei aus
+- Wähle einen der Laufwerksbuchstaben (Windows) bzw. Slots (Mac/Linux) aus
+    - wähle in Zukunft immer den gleichen, warum also nicht einfach den allerersten
+- "Dismount" wenn du nicht mehr mit den Projektdaten arbeiten willst
+
+---
+class: inverse, center, middle
+
+# Was machen wir jetzt mit dem Container?
+---
+## Disclaimer
+
+Wir haben die folgenden Szenarien noch nicht exzessiv in der Praxis getestet. 
+
+**Feedback ist gerne willkommen!**
+
+---
+## Szenario 1: GitHub, ganzes Repo in Container
+
+- jede:r Analyst:in hat einen eigenen Veracrypt Container `r emo::ji("white_check_mark")`
+- das ganze Repository ist im Container
+- (Roh)daten / nicht anonymisierte Daten werden nicht über GitHub synchronisiert (`.gitignore`)!
+
+#### Vorteile
+- unkompliziertes Arbeiten in Verbindung mit RStudio Projekten (oder vgl. in Python): Container mounten, Doppelklick auf `.Rproj`, let's go
+- Pfade zum Lesen der Daten bleiben relativ
+
+#### Nachteile
+- Container muss immer gemountet werden, selbst wenn nicht mit Daten gearbeitet wird
+
+---
+## Szenario 2: GitHub, nur DSGVO-Daten im Container
+
+- jede:r Analyst:in hat einen eigenen Veracrypt Container `r emo::ji("white_check_mark")`
+- die Container Datei liegt im Repository Ordner `data` 
+  - container enthält Ordner `raw`, `cleaned`, etc. 
+  - ausreichend aggregierte Daten können außerhalb des Veracrypt Containers abgelegt werden
+- Container ist im `.gitignore` und wird nicht über GitHub synchronisiert
+
+--
+
+#### Vorteile
+- ab einem gewissen Punkt des Projekts kann ggf. auf Veracrypt verzichtet werden (wenn Daten soweit aggregiert)
+
+#### Nachteile
+- Pfade zu Daten sind absolut (z.B. `/Volumes/TESTPROJECT/test_project/data/raw/rawdata.csv`) und ggf. unterschiedlich je Analyst:in (Windows <-> Mac) -> **schlechtere Reproduzierbarkeit** / zusätzlicher Coding-Aufwand
+---
+## Szenario 3: wenig / ohne Code, CorrelCloud
+- Projekte ohne Code / mit wenig Code, aber mit DSVGO-relevanten Daten, können ausschließlich über die CorrelCloud synchronisiert werden
+- die Kombination mit Veracrypt ist allerdings **ziemlich unpraktisch**. `r emo::ji("sad")`
+
+### Option 1
+- Der CorrelCloud-Ordner muss lokal in dem durch VeraCrypt eingebundenen Laufwerk angelegt werden
+- D.h. du musst VeraCrypt immer starten bevor du NextCloud startest und dabei den gleichen Laufwerksbuchstaben wie immer zuweisen - sonst findet NextCloud den Ordner nicht
+- `r emo::ji("question_mark")` `r emo::ji("question_mark")`
+
+--
+
+### Option 2
+- Ablage der Container Datei in der CorrelCloud -> nur praktisch, wenn alleine / asynchron gearbeitet wird
+
+
+---
+## Szenario 3, Option 2: Konfiguration NextCloud 
+
+- *Auf [https://correlcloud.org](https://correlcloud.org/) einloggen*
+    - *Passwort ändern*
+    - *NextCloud-Client herunterladen*
+- NextCloud installieren
+- Account einrichten
+    - obige URL eingeben
+    - Namen und Passwort eingeben
+    - Bei "Local Folder" einen Ort im verschlüsselten Heimverzeichnis oder im durch VeraCrypt eingebundenen virtuellen Laufwerk auswählen
+- Warten bis NextCloud synchronisiert
+- Prüfen, ob alle Ordner synchronisiert wurden
+    - sehr große Ordner müssen nochmal explizit bestätigt werden
+
+
+---
+## Workflow 
+
+1. In dem für das Projekt angelegten Account auf deinem PC einloggen
+2. *VeraCrypt starten und Container als Laufwerk einbinden*
+    - Warte bis der Container als Laufwerk eingebunden wurde
+3. **Szenario 3**: NextCloud starten und warten bis die NextCloud synchronisiert hat
+4. Arbeiten, arbeiten, arbeiten ... und dabei natürlich Spaß haben  ;-)
+5. **Szenario 3**: Warten bis die NextCloud synchronisiert hat
+6. **Szenario 3**: NextCloud stoppen
+7. VeraCrypt: "Dismount"
+8. VeraCrypt schließen
+9. Andere Programme schließen und abmelden und herunterfahren
+10. Feierabend
+
+---
+## Fazit
+
+- Für Projekte mit Code ist Szenario 1 Szenario 2 vorzuziehen wegen der besseren Reproduzierbarkeit
+- Für Projekte ohne / mit wenig Code kann die CorrelCloud verwendet werden, am besten die Container Datei ablegen (Option 2)
+  - dies ist bis jetzt nur für kleine Teams geeignet
+
+
+---
+## Hands On: Projektsetup
+
+setzt euer Projekt im Container auf 
+- Code (Szenario 1): 
+  - Container mounten 
+  - git clone 
+- wenig / kein Code (Szenario 3, Option 2)
+  - ggf. NextCloud einrichten
+  - Container Datei in CorrelCloud Ordner verschieben
+  - Container mounten
+  - Dateien in Container verschieben
+
+---
+## Fragen?
+
+Fragen!
+
+- Wenn bei der Nutzung der Software Fragen auftauchen, du unsicher bist wie du vorgehen sollst wende dich an deine:n Projektleiter:in oder Projektkoordinator:in
+- gerne an Frie: andere Toolideen (betriebssystemübergreifend), Feedback / konstruktive Kritik zur Benutzerfreundlichkeit der Szenarien `r emo::ji("eyes")`
+- *Probiere nichts einfach aus was möglicherweise die Sicherheit der Daten oder deines System gefährden könnte*
