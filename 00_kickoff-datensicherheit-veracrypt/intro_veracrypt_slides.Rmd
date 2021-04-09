@@ -292,6 +292,7 @@ setzt euer Projekt im Container auf
 - Code (Szenario 1): 
   - Container mounten 
   - git clone 
+  - später: Rohdaten in `data/raw` kopieren
 - wenig / kein Code (Szenario 3, Option 2)
   - ggf. NextCloud einrichten
   - Container Datei in CorrelCloud Ordner verschieben
