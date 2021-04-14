@@ -5,6 +5,7 @@ Die begleitenden Workshops sind aufgeteilt in drei Module: Datenstrategie, Daten
 
 Zu jedem Modul gibt es einen **interaktiven Live-Grundlagenworkshop** (natürlich online) sowie **2-3 Webinare** zu Anwendungsfällen. Letzere werden als Aufzeichnung verfügbar sein, die ihr euch individuell oder in der dementsprechenden Watch Party, die wir organisieren, zu Gemüte führen könnt. :tv:
 Zu jedem Webinar gibt es **Übungsaufgaben** sowie ein einstündiges **live Q&A** mit dem:der Workshopleiter:in eine Woche nach der Watch Party, in dem ihr offene Fragen zu der Aufzeichnung klären, Feedback zu euren Übungslösungen bekommen oder euch einfach nur untereinander austauschen könnt.
+
 ### Termine Q2 2021
 Registrierung für die April Termine ist bereits möglich über unseren [Pretix Shop](https://pretix.eu/correlaid/projektzyklus-21q2/)!
 
@@ -57,6 +58,7 @@ Material folgt
 ## Grundlagen Datenmanagement (live)
 - Referent:in: TBA
 - 6. Mai 2021, 17-19 Uhr
+
 ## Anwendungsfall 1: Gestaltung eines Surveys (Umfrage) (aufgezeichnet)
 - Referent:in: [Arndt Leininger](https://aleininger.eu/)
 - Aufzeichnung: TBA
