@@ -1,8 +1,6 @@
-### Änderungen:
-### Übernahme Layout von ggplot
-### Alle Orte raus? Zu kompliziert?
-### Umbenennung Fragen raus? Zu viel?
-### Nur ein Datenset? Einfacher?
+### To-Do:
+### Debug - leider keine Idee, was da alles nicht stimmt
+### Warnung abstellen?
 
 
 
@@ -76,17 +74,18 @@ library(leaflet) # Das ermöglicht das Erstellen von Karten
 ### Hier laden wir die Datensätze, die Ihr am Besten immer in einem Ordner namens "Daten" speichert.
 mitglieder <- readxl::read_xlsx(here::here("Daten", "Mitgliederdaten.xlsx"))
 feedback <- readxl::read_xlsx(here::here("Daten", "Feedbackumfrage.xlsx"))
+geocoordinaten <- readxl::read_xlsx(here::here("Daten", "Geocodierung.xlsx"))
 
 ### Hier fügen wir die Daten über die Mitglieder-ID zusammen.
 ### Mehr Informationen, wie das funktioniert, gibt es hier: https://dplyr.tidyverse.org/reference/join.html
-alle_daten_short <- dplyr::full_join(mitglieder, feedback, by = "Mitglieds-ID")
+alle_daten_short <- dplyr::full_join(left_join(mitglieder, geocoordinaten, by = 'Wohnort'), feedback, by = "Mitglieds-ID")
 
 ### Die Variablennamen sind nicht noch nicht so schön oder zu lang? Mit dem Snippet colnames(datensatz) <- c("Name1", "Name2", ...) lässt sich das ändern.
 colnames(alle_daten_short) <- c("Mitglieds-ID", "Geschlecht", "Geburtsdatum", "Wohnort", "Bundesland", 
-                                "Beitrittsdatum", "Austrittsdatum", "Beschäftigungsstatus", "Spende (p.a. in EUR)", 
-                               "Kursangebot insgesamt", "An welchem Kursniveau nimmst Du teil?", "Mentor:in", 
-                               "Materialien", "Anmeldung", "Beratungsstelle", "Räumlichkeiten", "Erhebungsjahr")
-                               
+                                "Beitrittsdatum", "Austrittsdatum", "Beschäftigungsstatus", "Spende (p.a. in EUR)", "Lat", "Long", 
+                                "Kursangebot insgesamt", "An welchem Kursniveau nimmst Du teil?", "Mentor:in", 
+                                "Materialien", "Anmeldung", "Beratungsstelle", "Räumlichkeiten", "Erhebungsjahr")
+
 ############################################
 
 # 4) DATEN BEREINIGEN
@@ -107,6 +106,25 @@ alle_daten_long <- tidyr::pivot_longer(alle_daten_short, # Datenquelle
 
 ### Hier hinterlegen wir die Option "Alle Ort" für den Wohnort-Filter
 orte <- c("Alle Orte", sort(unique(alle_daten_long$Wohnort)))
+
+### Funktion zur Berechnung des Alters - einfach bei Bedarf kopieren
+calc_age <- function(birthDate, refDate = Sys.Date(), unit = "year") {
+  
+  require(lubridate)
+  
+  if(grepl(x = unit, pattern = "year")) {
+    as.period(interval(birthDate, refDate), unit = 'year')$year
+  } else if(grepl(x = unit, pattern = "month")) {
+    as.period(interval(birthDate, refDate), unit = 'month')$month
+  } else if(grepl(x = unit, pattern = "week")) {
+    floor(as.period(interval(birthDate, refDate), unit = 'day')$day / 7)
+  } else if(grepl(x = unit, pattern = "day")) {
+    as.period(interval(birthDate, refDate), unit = 'day')$day
+  } else {
+    print("Argument 'unit' must be one of 'year', 'month', 'week', or 'day'")
+    NA
+  }
+}
 
 ############################################
 
@@ -142,10 +160,12 @@ ui <- fluidPage(
     mainPanel(
       # Wir haben uns für das Layout mit Tabs (zu dt. Reitern) entschieden.
       tabsetPanel(
-        # # Tab mit Mitglieder-Visualisierung einfügen. Das Package plotly sorgt für die Interaktivität der Visualisierung.
-        tabPanel('Mitglieder', splitLayout(cellWidths = c("50%", "50%"), plotly::plotlyOutput('Mitglieder'), plotly::plotlyOutput('Beitrag'))),
+        # # Tab mit Mitglieder-Visualisierung einfügen. 
+        tabPanel('Mitglieder', plotOutput('Mitglieder')),
         # Tab mit Feedback-Visualisierung einfügen. Das Package plotly sorgt für die Interaktivität der Visualisierung.
         tabPanel('Feedback', plotly::plotlyOutput('Feedback')),
+        # Tab mit Karte einfügen. Wir nutzen das Package Leaflet.
+        tabPanel('Standorte', leafletOutput('Karte')),
         # Tab mit Tabelle und allen Daten einfügen. Das Package DT macht die Datentabelle durchsuch- und navigierbar.
         tabPanel('Daten', DT::DTOutput('Daten'))
       ),
@@ -162,7 +182,7 @@ barplot <- function(daten, xvariable, farbvariable, farbpalette, titel) {
   ggplot(daten, aes(x = xvariable, fill = factor(farbvariable))) +
     scale_fill_brewer(palette = farbpalette) + # Farbpalette
     theme_classic() + # Layout
-    theme(legend.position = "none", axis.text.x = element_text(angle = 45)) + # Legende ausblenden, da hier nicht notwendig
+    theme(legend.position = "none", axis.text.x = element_text(angle = 45, vjust = 0.1)) + # Legende ausblenden, da hier nicht notwendig
     ggtitle(paste(titel)) + # fügt einen Titel hinzu
     xlab('') + # x-Achsenbeschriftung
     ylab('Prozent der Antworten') + #y-Achsenbeschriftung
@@ -174,34 +194,75 @@ barplot <- function(daten, xvariable, farbvariable, farbpalette, titel) {
 ### Tabs gestalten
 server <- function(input, output, session){
   # Mitglieder-Visualisierung gestalten
-  # Beschäftigung
   mitglieder_plot_ergebnisse <- reactive({ # Hier können wir unseren Output reaktiv gestalten.
     if (input$ort != "Alle Orte"){ # Erster Fall: Ein Ort wird ausgewählt.
       daten <- alle_daten_long %>% filter(Wohnort == input$ort)
     } else { # Zweiter Fall: Der/die Nutzer:in möchte alle Orte ansehen.
       daten <- alle_daten_long
-    } 
-    barplot(daten, daten$Beschäftigungsstatus, daten$Beschäftigungsstatus, 'PuBuGn', 'Beschäftigung')
+    }
+    # Tabelle kreiieren
+    liste <- daten %>%
+      select(`Mitglieds-ID`, Wohnort, Beitrittsdatum, Austrittsdatum) %>% # Spalten auswählen
+      mutate('Eintritt' = 1, 'Austritt' = ifelse(is.na(Austrittsdatum), 0,1)) %>% #  Eintritt, Austritt und Aktivitätsstatus codieren
+      mutate('Aktives Mitglied' = Eintritt - Austritt) %>%
+      group_by(`Mitglieds-ID`, Wohnort) %>% # Individuelle Mitglieder heraussuchen
+      summarise('Eintritte' = sum(unique(Eintritt)), 'Austritte' = sum(unique(Austritt)), 'Aktive Mitglieder' = sum(unique(`Aktives Mitglied`))) %>% # Anzahl berechnen
+      group_by(Wohnort) %>% # Pro Ort gruppieren
+      summarise(Eintritte = sum(Eintritte), Austritte = sum(Austritte), 'Aktive Mitglieder' = sum(`Aktive Mitglieder`)) # Zusammenfassung berechnen
+    
+    df <- data.frame(matrix(unlist(liste), nrow=length(unique(daten$Wohnort)), byrow=FALSE)) # in DataFrame konvertieren (notwendige für den Grid)
+    colnames(df) <- c('Ort', 'Beitritte', 'Austritte', 'Aktive Mitglieder') # Spaltennamen anpassen
+    tabelle <- tableGrob(df, rows = NULL, theme = ttheme_minimal()) # Layout gestalten und speichern
+    
+    # Kreisdiagramm kreiieren
+    plot_geschlecht <- daten %>%
+      select(Geschlecht) %>% # Spalte Geschlecht auswählen
+      group_by(Geschlecht) %>% # Pro Geschlecht gruppieren
+      summarise('Anzahl' = n(), 'Prozent' = n()/nrow(daten)) %>% # Bei Gruppierung Anzahlung und Prozent bestimmen
+      ggplot(aes(x='', y=Prozent, fill=Geschlecht)) +
+      geom_bar(stat="identity", width=1) + # Basislayout definieren (Hinweis: Das ist ein Barchart)
+      coord_polar("y", start=0) + # Kuchendiagramm ausrichten
+      theme_void() + # Grid entfernen
+      ggtitle('Geschlecht') + # Titel hinzügen
+      scale_fill_brewer(palette='PuBuGn') + # Farbe festlegen
+      geom_text(aes(label = paste0(round(Prozent*100), "%")), position = position_stack(vjust = 0.5)) # Beschriftungen kreiieren
+    
+    # Barplot zur Beschäftigung kreiieren
+    plot_status <- barplot(daten, daten$Beschäftigungsstatus, daten$Beschäftigungsstatus, 'PuBuGn', 'Beschäftigung')
+    
+    # Verteilungsplot für Alter
+    plot_alter <- daten %>% 
+      mutate('Alter' = calc_age(Geburtsdatum)) %>% # Alter berechnen (Funktion unter Daten bereinigen)
+      ggplot(aes(x=Alter)) + # Plot initialisieren
+      geom_density(fill='#027F88', color = '#027F88') + # Verteilungsplot erstellen
+      geom_vline(aes(xintercept=mean(Alter))) + # Mittelwert hinzufügen
+      theme_classic() + # Layout auswählen
+      ylab('Verteilung') +  # y-Achse beschriften
+      ggtitle('Alter') # Titel hinzufügen
+    
+    # Verteilungsplot für Spenden
+    plot_spenden <- daten %>% 
+      ggplot(aes(x=daten$`Spende (p.a. in EUR)`)) + # Plot initialisieren
+      geom_density(fill='#027F88', color = '#027F88') + # Verteilungsplot erstellen
+      geom_vline(aes(xintercept=mean(daten$`Spende (p.a. in EUR)`))) + # Mittelwert hinzufügen
+      theme_classic() + # Layout auswählen
+      xlab('Spendenhöhe p.a. in EUR') + # x-Achse beschriften
+      ylab('Verteilung') +  # y-Achse beschriften
+      ggtitle('Spendenhöhe') # Titel hinzufügen
+    
+    # Plots arrangieren
+    lay <- rbind(c(1,1,5,5,5,5), # Layout festlegen: Eine Zahl steht für eine Graphik (1 für die erste Graphik in grid.arrange)
+                 c(1,1,5,5,5,5),
+                 c(2,2,3,3,4,4),
+                 c(2,2,3,3,4,4))
+    
+    p = grid.arrange(plot_status, plot_geschlecht, plot_alter, plot_spenden, tabelle, layout_matrix = lay) # Layout speichern
+    print(p) # Layout drucken
   })
   
-  # Einfügen der Beschäftigungs-Visualisierung in die Applikation
-  output$Mitglieder <- plotly::renderPlotly({
+  # Einfügen der Mitglieder-Visualisierung in die Applikation
+  output$Mitglieder <- renderPlot({
     mitglieder_plot_ergebnisse()
-  })
-  
-  # Beiträge
-  beitrag_plot_ergebnisse <- reactive({ # Hier können wir unseren Output reaktiv gestalten.
-    if (input$ort != "Alle Orte"){ # Erster Fall: Ein Ort wird ausgewählt.
-      daten <- alle_daten_long %>% filter(Wohnort == input$ort) 
-    } else { # Zweiter Fall: Der/die Nutzer:in möchte alle Orte ansehen.
-      daten <- alle_daten_long
-    } 
-    barplot(daten, daten$Geschlecht, daten$Geschlecht, 'Greys', 'Geschlecht')
-  })
-  
-  # Einfügen der Beschäftigungs-Visualisierung in die Applikation
-  output$Beitrag <- plotly::renderPlotly({
-    beitrag_plot_ergebnisse()
   })
   
   # Feedback-Visualisierung gestalten
@@ -211,7 +272,24 @@ server <- function(input, output, session){
     } else { # Zweiter Fall: Der/die Nutzer:in möchte alle Orte ansehen.
       daten <- alle_daten_long %>% filter(Frage == input$frage, Erhebungsjahr == input$erhebungsjahr)
     } 
-    barplot(daten, daten$Antwort, daten$Antwort, 'RdYlGn', '')
+    barplot(daten, daten$Antwort, daten$Antwort, 'PiYG', '')
+  })
+  
+  # Karte visualisieren 
+  output$Karte <- renderLeaflet({
+    if (input$ort != "Alle Orte"){ # Erster Fall: Ein Ort wird ausgewählt.
+      daten <- alle_daten_long %>% filter(Wohnort == input$ort)
+    } else { # Zweiter Fall: Der/die Nutzer:in möchte alle Orte ansehen.
+      daten <- alle_daten_long
+    }
+    
+    # Karte erstellen
+    karte <- daten %>%
+    mutate(Lat = as.numeric(Lat), Long = as.numeric(Long)) %>%
+    leaflet() %>% 
+    addProviderTiles(providers$CartoDB.DarkMatter) %>% # Layout wählen
+    setView(10.4541194, 51.1642292, zoom = 5.25) %>% # Standard-Zoom festsetzen
+    addCircles(~Long, ~Lat, popup= daten$Wohnort, weight = 3, radius= 40, color="#67A9CF", stroke = TRUE, fillOpacity = 0.8)
   })
   
   # Einfügen der Feedback-Visualisierung in die Applikation
@@ -226,10 +304,17 @@ server <- function(input, output, session){
   
   # Einfügen der Tabelle in in die Applikation
   output$Daten <- DT::renderDT({
-    alle_daten_short %>%
-      mutate(Geburtsdatum = format(Geburtsdatum, "%d.%m.%Y")) %>% # Formatieren des Datums
-      mutate(Beitrittsdatum = format(Beitrittsdatum, "%d.%m.%Y")) %>%
-      mutate(Austrittsdatum = format(Austrittsdatum, "%d.%m.%Y"))
+    if (input$ort != "Alle Orte"){ # Erster Fall: Ein Ort wird ausgewählt.
+      daten <- alle_daten_short %>% filter(Wohnort == input$ort) %>%
+        mutate(Geburtsdatum = format(Geburtsdatum, "%d.%m.%Y")) %>% # Formatieren des Datums
+        mutate(Beitrittsdatum = format(Beitrittsdatum, "%d.%m.%Y")) %>%
+        mutate(Austrittsdatum = format(Austrittsdatum, "%d.%m.%Y"))
+    } else { # Zweiter Fall: Der/die Nutzer:in möchte alle Orte ansehen.
+      daten <- alle_daten_short %>%
+        mutate(Geburtsdatum = format(Geburtsdatum, "%d.%m.%Y")) %>% # Formatieren des Datums
+        mutate(Beitrittsdatum = format(Beitrittsdatum, "%d.%m.%Y")) %>%
+        mutate(Austrittsdatum = format(Austrittsdatum, "%d.%m.%Y"))
+    }
   })
   
   # Download-Report
