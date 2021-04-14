@@ -55,36 +55,24 @@ Registrierung für die April Termine ist bereits möglich über unseren [Pretix 
 Material folgt
 
 # Datenmanagement 
-## Grundlagen Datenmanagement (live)
-- Referent:in: TBA
-- 6. Mai 2021, 17-19 Uhr
+## Grundlagen Datenmanagement 
 
-## Anwendungsfall 1: Gestaltung eines Surveys (Umfrage) (aufgezeichnet)
-- Referent:in: [Arndt Leininger](https://aleininger.eu/)
-- Aufzeichnung: TBA
-- Watch Party: 13. Mai 2021, 19-20 Uhr
-- Q&A: 18. Mai 2021, 18-19 Uhr
 
-## Anwedungsfall 2: Daten aus dem Web (aufgezeichnet)
-- Referent:in: [Jan Dix](https://www.linkedin.com/in/jan-dix-30550314a/?originalSubdomain=de)
-- Aufzeichnung: TBA
-- Watch Party: 18. Mai 2021, 19-20 Uhr
-- Q&A: 25. Mai 2021, 18-19 Uhr
+## Anwendungsfall 1: Gestaltung eines Surveys (Umfrage) 
 
-## Anwendungsfall 3: Erstellen einer Datenbank (aufgezeichnet)
-- Referent:in: TBA
-- Aufzeichnung: TBA
-- Watch Party: 25. Mai 2021, 19-20 Uhr
-- Q&A: 31. Mai 2021, 18-19 Uhr
 
+## Anwedungsfall 2: Daten aus dem Web 
+
+
+## Anwendungsfall 3: Erstellen einer Datenbank 
 # Modul Datenanalyse
-## Grundlagen Datenanalyse (live); 
+## Grundlagen Datenanalyse 
 
-## Anwendungsfall 1: interaktive Dashboards (aufgezeichnet)
-## Anwendungsfall 2: Automatisieren von Reports (Berichten)(aufgezeichnet)
+## Anwendungsfall 1: interaktive Dashboards 
+## Anwendungsfall 2: Automatisieren von Reports (Berichten)
 
-## Anwendungsfall 3: Weitere Beispiele (aufgezeichnet)
+## Anwendungsfall 3: Weitere Beispiele 
 
 
-## Einführung in die Wartung von Data4Good Lösungen (live)
+## Einführung in die Wartung von Data4Good Lösungen 
 
