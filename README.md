@@ -5,6 +5,10 @@ Material / Folien für die Workshops des CorrelAid Projektzyklus
 ## Git for Newbies
 
 - [Slides](https://projektzyklus.correlaid.org/00_kickoff-git-for-newbies)
+
+## CorrelAid Projects
+- [Slides](https://projektzyklus.correlaid.org/01_kickoff-correlaid-projects/correlaid-projects.pdf)
+
 ## Veracrypt
 - [Folien](https://projektzyklus.correlaid.org/00_kickoff-datensicherheit-veracrypt)
 
