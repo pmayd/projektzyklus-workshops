@@ -15,7 +15,7 @@ Registrierung für die April Termine ist bereits möglich über unseren [Pretix 
 
 **Referentin**: Frie Preu
 
-- [Folien](https://projektzyklus.correlaid.org/00_kickoff-git-for-newbies/index.html)
+- [Folien](https://projektzyklus.correlaid.org/00_kickoff-git-for-newbies/slides.html)
 - [Setup-Anleitung, Lizeninformationen](https://projektzyklus.correlaid.org/00_kickoff-git-for-newbies)
 
 ## CorrelAid Projects
@@ -34,7 +34,7 @@ Registrierung für die April Termine ist bereits möglich über unseren [Pretix 
 **Referentin**: Frie Preu
 
 
-- [Folien](https://projektzyklus.correlaid.org/00_kickoff-datensicherheit-veracrypt/index.html)
+- [Folien](https://projektzyklus.correlaid.org/00_kickoff-datensicherheit-veracrypt/intro_veracrypt_slides.html)
 - [Lizenzinformationen](https://projektzyklus.correlaid.org/00_kickoff-datensicherheit-veracrypt/)
 
 # Datenstrategie
