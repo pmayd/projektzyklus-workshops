@@ -6,6 +6,6 @@
 
 Folien sind lizensiert unter [Creative Commons Attribution 4.0 International](https://creativecommons.org/licenses/by/4.0/legalcode.de). Attribution ist in der folgenden Form erfolgen:
 
-"Datenschutz und Datenethik", verfügbar unter [Link zu den Folien], Nina Hauser, lizensiert unter [Creative Commons Attribution 4.0 International](https://creativecommons.org/licenses/by/4.0/legalcode.de).
+"Datenschutz und Datenethik", verfügbar unter [Link zu den Folien], Nina Hauser, Head of Data Literacy bei CorrelAid, lizensiert unter [Creative Commons Attribution 4.0 International](https://creativecommons.org/licenses/by/4.0/legalcode.de).
 
 Alternativ kann der Link zu den Folien auch als Hyperlink dem Titel hinzugefügt werden.
