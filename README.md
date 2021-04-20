@@ -44,15 +44,20 @@ Registrierung für die April Termine ist bereits möglich über unseren [Pretix 
 **Referentin**: Nina Hauser
 
 - [Folien](https://projektzyklus.correlaid.org/03_strategie-datenschutz-datenethik/datenschutz_und_datenethik.pdf)
+- [Folien (pptx)](https://projektzyklus.correlaid.org/03_strategie-datenschutz-datenethik/datenschutz_und_datenethik.pptx)
 - [Quiz](https://projektzyklus.correlaid.org/03_strategie-datenschutz-datenethik/datenschutz_und_datenethik_quiz.pdf)
 - [Quiz Lösung](https://projektzyklus.correlaid.org/03_strategie-datenschutz-datenethik/datenschutz_und_datenethik_quiz.pdf)
 - [Lizenzinformationen](https://projektzyklus.correlaid.org/03_strategie-datenschutz-datenethik/)
 
 
-## Theorie des Wandels / Wirkungsmessung und Wirkungsindikatoren
+## Wirkungsmanagement
 **Referentin**: Nina Hauser
 
-Material folgt
+- [Folien](https://projektzyklus.correlaid.org/04_strategie-wirkungsmanagement/wirkungsmanagement.pdf)
+- [Folien (pptx)](https://projektzyklus.correlaid.org/04_strategie-wirkungsmanagement/wirkungsmanagement.pptx)
+- [Quiz](https://projektzyklus.correlaid.org/04_strategie-wirkungsmanagement/wirkungsmanagement_quiz.docx)
+- [Quiz Lösung](https://projektzyklus.correlaid.org/04_strategie-wirkungsmanagement/wirkungsmanagement_quiz.docx)
+- [Lizenzinformationen](https://projektzyklus.correlaid.org/04_strategie-wirkungsmanagement/)
 
 # Datenmanagement 
 ## Grundlagen Datenmanagement 
