@@ -61,6 +61,10 @@ Registrierung für die April Termine ist bereits möglich über unseren [Pretix 
 
 # Datenmanagement 
 ## Grundlagen Datenmanagement 
+**Referentinnen**: Nina Hauser & Frie Preu
+
+- [Lizenzinformationen](https://projektzyklus.correlaid.org/05_grundlagen-datenmanagement/)
+
 
 
 ## Anwendungsfall 1: Gestaltung eines Surveys (Umfrage) 
