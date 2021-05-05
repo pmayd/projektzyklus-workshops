@@ -65,6 +65,16 @@ Registrierung für die April Termine ist bereits möglich über unseren [Pretix 
 
 - [Lizenzinformationen](https://projektzyklus.correlaid.org/05_grundlagen-datenmanagement/)
 
+### Inhaltlicher Input
+- [Folien](https://projektzyklus.correlaid.org/05_grundlagen-datenmanagement/grundlagen_datenmanagement.pdf)
+- [Folien (pptx)](https://projektzyklus.correlaid.org/05_grundlagen-datenmanagement/grundlagen_datenmanagement.pptx)
+
+### Praktische Übung
+- [Folien zur Übung](https://projektzyklus.correlaid.org/05_grundlagen-datenmanagement/grundlagen_datenmanagement_uebung_excel.pdf)
+- [Folien zur Übung (pptx)](https://projektzyklus.correlaid.org/05_grundlagen-datenmanagement/grundlagen_datenmanagement_uebung_excel.pptx)
+- [Übungsdatei (xlsx)](https://projektzyklus.correlaid.org/05_grundlagen-datenmanagement/grundlagen_datenmanagement_uebung_excel.xlsx) (Passwort wird im Workshop mitgeteilt)
+
+
 
 
 ## Anwendungsfall 1: Gestaltung eines Surveys (Umfrage) 
