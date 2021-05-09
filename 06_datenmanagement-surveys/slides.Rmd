@@ -1,0 +1,996 @@
+---
+title: "Gestaltung eines Surveys (Umfrage)"
+subtitle: "CorrelAid Projektzyklus"
+author: "Arndt Leininger"
+date: "2021-05-12"
+output:
+  xaringan::moon_reader:
+    css: ["xaringan-themer.css", "custom.css"]
+    nature:
+      slideNumberFormat: "%current%"
+      highlightStyle: github
+      highlightLines: true
+      ratio: 16:9
+      countIncrementalSlides: false
+      beforeInit: "macros.js"
+---
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(
+  fig.width=9, fig.height=3.5, fig.retina=3,
+  #out.width = "100%",
+  cache = FALSE,
+  echo = FALSE,
+  eval = TRUE,
+  message = FALSE, 
+  warning = FALSE,
+  fig.show = TRUE,
+  hiline = TRUE
+)
+
+library(tidyverse)
+```
+
+```{r xaringan-themer, include=FALSE, warning=FALSE}
+library(xaringanthemer)
+ca_blue <- "#3863a2"
+ca_blue2 <- "#3c61aa"
+ca_dark_blue <- "#2d3b5a"
+ca_green <- "#96c342"
+gray <- "#3c3c3b"
+black <- "#000000"
+style_duo_accent(
+  primary_color = ca_blue,
+  secondary_color = ca_green,
+  header_color = ca_blue,
+  text_color = gray,
+  code_inline_color = colorspace::lighten(black),
+  text_bold_color = colorspace::lighten(black),
+  link_color = ca_blue,
+  title_slide_text_color = "#FFFFFF",
+  inverse_header_color = "#FFFFFF",
+  text_font_size = "1.2rem",
+  header_font_google = google_font("Roboto", "300"),
+          text_font_google = google_font("Roboto"),
+          code_font_google = google_font("Fira Mono")
+)
+
+extra_css <- list(
+  ".small" = list("font-size" = "90%"),
+  ".full-width" = list(
+    display = "flex",
+    width   = "100%",
+    flex    = "1 1 auto"
+  )
+)
+
+style_extra_css(css = extra_css, outfile = "custom.css")
+```
+
+```{r, load_refs, include=FALSE, cache=FALSE}
+library(RefManageR)
+BibOptions(check.entries = FALSE,
+           bib.style = "authoryear",
+           cite.style = "authoryear",
+           style = "markdown",
+           hyperlink = TRUE,
+           dashed = FALSE,
+           max.names = 3
+           # bibpunct = c("(",")","(",")",";",",")
+           )
+myBib <- ReadBib("ca_survey.bib", check = FALSE)
+
+```
+
+
+## Wer bin ich? 
+
+.pull-left[
+![:scale 50%](images/2W7B0358_V2_300dpi_sRGB_med.png)
+]
+
+.pull-right[
+
+- Gründungsmitglied von CorrelAid
+- seit April 2021 Juniorprofessor für Politikwissenschaftliche Forschungsmethoden an der TU Chemnitz
+- zuvor Wissenschaftlicher Mitarbeiter an der FU Berlin, Uni Mainz und Hertie School
+- Erfahrung mit Umfragen in Forschung und Lehre
+
+- `r icons::fontawesome("twitter")`: [@a_leininger](https://twitter.com/a_leininger)
+- `r icons::fontawesome("researchgate")`: [Arndt Leininger](https://www.researchgate.net/profile/Arndt-Leininger)
+- `r icons::fontawesome("github")`: [aleininger](https://github.com/aleininger)
+- `r icons::fontawesome("gitlab")`: [arndtl](https://gitlab.com/arndtl)
+- `r icons::fontawesome("slack")`: @arndt
+]
+
+---
+
+##  Was sind Umfragen?
+
+.pull-left[
+
+Umfragen (auch geschlossene oder quantitative Befragungen) ...
+
+zeichnen sich aus durch:
+
+- (möglichst) große Zahl an Befragten
+- hohen Grad der Standardisierung
+	- alle Befragten erhalten (größtenteils) die gleichen Fragen <!-- Wahlentscheidung  Wahlteilnahme --->
+	- geschlossene Fragen mit/durch vorgegebene/n Antwortmöglichkeiten, um Antworten in numerische Werte zu übersetzen <!-- Wie oft lesen sie den Newsletter immer bis nie Zahlenwerte-->
+]
+
+--
+
+.pull-right[
+im Unterschied zu
+
+offenen oder qualitativen Befragungen.
+
+Diese zeichnen sich aus durch:
+
+- kleine(re) Zahl an Gesprächspartner:innen
+- geringe Standardisierung
+	- Fragen auf Befragte zugeschnitten sowie Nachfragen im Gespräch
+	- Aufnahmen und Transkription des Gesprächs
+]
+
+---
+
+
+## Agenda
+
+1. Definition der Grundgesamtheit
+2. Stichprobenziehung
+3. Fragebogenkonstruktion
+4. Datenschutz
+5. Durchführung der Datenerhebung
+6. Datenbereinigung und -auswertung <!-- Bereinigung; Missings codieren, codebasiert; Gewichte, anonymisierung -->
+
+---
+class: inverse, center, middle
+
+# Definition der Grundgesamtheit
+
+---
+
+## Die Grundgesamtheit
+
+**Über welchen Personenkreis möchte ich eine Aussage treffen?**
+
+*Grundgesamtheit*<sup>1</sup>: Der Begriff bezieht sich auf die Gesamtzahl aller Personen<sup>2</sup>, die an einer Befragung teilnehmen könnten und somit durch diese beschrieben werden können.
+
+*Vollerhebung*: Befragung aller Personen der Grundgesamtheit.
+
+.footnote[
+[1] Auch *Population* oder *Zielpopulation*.
+
+[2] Tatsächlich können damit in anderen Anwendungen auch andere sog. Merkmalsträger gemeint sein.
+]
+
+---
+class: inverse, center, middle
+
+# Stichprobenziehung
+
+---
+
+## Übersicht 
+
+**Wenn eine Vollerhebung nicht möglich oder praktikabel ist, muss man eine Stichprobe ziehen.**
+
+.pull-left[
+**Probabilistische Auswahlmethoden**
+
+1. Einfache Zufallsstichprobe/auswahl
+2. Systematische Zufallsauswahl
+3. Geschichtete Zufallsstichprobe
+4. Klumpenstichprobe
+5. Mehrstufige Zufallsstichprobe
+]
+
+--
+
+.pull-right[
+**Nicht-probabilistische Auswahlmethoden**
+    
+1. Willkürliche Auswahl
+2. Quotenstichprobe
+]
+
+---
+
+## Einfache Zufallsstichprobe
+
+```{r, out.width="70%"}
+knitr::include_graphics('images/doring_bortz_2016_abb9-3_einfache_zufallsstichprobe.png')
+```
+
+
+`r Citep(myBib, 'doring_stichprobenziehung_2016', after = ', S. 312')`
+
+Anwendungsbeispiel: Mitarbeiter:innenbefragung einer großen Stiftung
+
+---
+
+## Systematische Zufallauswahl
+
+Stichprobenintervall $k = \frac{Groesse~der~Auswahlgesamtheit}{Groesse~der~Stichprobe}$
+
+Zufällige Auswahl des Startpunkts im Intervall [1, k], dann Auswahl jedes k-ten Elements der Auswahlgesamtheit.
+
+Anwendungsbeispiel: Face-to-Face-Bevölkerungsumfragen (Interviewer:in klingelt ab Startpunkt an jeder x-ten Tür)
+
+---
+
+## Geschichtete Zufallsstichprobe
+
+```{r, out.width="50%"}
+knitr::include_graphics('images/doring_bortz_2016_abb9-4_geschichtete_zufallsstichprobe.png')
+```
+
+
+`r Citep(myBib, 'doring_stichprobenziehung_2016', after = ', S. 313')`
+
+Anwendungsbeispiel: Sozialwissenschaftliche Befragung zu 30 Jahren Wiedervereinigung, die überproportional viele Menschen in Ostdeutschland befragt
+
+---
+
+## Klumpenstichprobe
+
+```{r, out.height="10%"}
+knitr::include_graphics('images/doring_bortz_2016_abb9-5_klumpenstichprobe.png')
+```
+
+`r Citep(myBib, 'doring_stichprobenziehung_2016', after = ', S. 315')`
+
+Anwendungsbeispiel: Befragung von Schüler:innen in Schulklassen
+
+---
+
+## Mehrstufige Zufallsstichprobe
+
+```{r, out.width="50%"}
+knitr::include_graphics('images/doring_bortz_2016_abb9-6_zweistufige_zufallsstichprobe.png')
+```
+
+`r Citep(myBib, 'doring_stichprobenziehung_2016', after = ', S. 316')`
+
+Anwendungsbeispiel: Deutsche Wahlstudie (GLES), die in zufällig ausgewählten Gemeinden, Interviewer:innen nach systematischer Zufallsauswahl durch die jeweilige Gemeinde schickt
+
+---
+
+
+## Zielsetzung bei der Stichprobenziehung
+
+... per Zufallsauswahl.
+
+**Wenn wir eine Stichprobe aus einer Grundgesamtheit ziehen, möchten wir einen kleineren Datensatz erhalten, der die gleichen statistischen Informationen wie die Grundgesamtheit enthält.** Das heißt Sample-Statistiken wie Mittel- oder Anteilswerte, etc. sollen möglichst genau den Populationparametern entsprechen.
+
+**Problem: Die Populationsparameter sind unbekannt.** Wären Sie bekannt, würde sich die Stichprobenziehung erübrigen. 
+
+Es geht daher um ein methodisches Vorgehen, um Bias und Varianz in den Statistiken so gering wie möglich zu halten (auch wenn der Grad der Zielerreichung letztlich nicht quantifizierbar ist).
+
+---
+
+## Willkürliche Auswahl
+
+- Befragung in der Fußgängerzone
+- Umfrage auf Website
+- Verteilung einer Umfrage in sozialen Medien
+
+---
+
+## Quotenstichprobe
+
+- In der *Quotenstichprobe* werden Interviewer:innen Vorgaben zu den prozentualen Anteilen (Quoten) für bestimmte Merkmale vorgegeben, z.B. 30% der Interviewten sollen weibliche langjährige Vereinsmitglieder sein, 20% männliche Neumitglieder, ...
+- Verteilung orientiert sich an bekannten Randverteilungen in Grundgesamtheit
+- Aber Vorsicht: Verteilung anderer Merkmale und Merkmalskombinationen muss nicht der Verteilung in Grundgesamtheit entsprechen
+- Interviewer:innen wählen Befragte aus
+- Oder Befragte selektieren sich selbst in die Befragung
+
+---
+
+## Die Verfahren im Überblick
+
+.pull-left[
+
+- Vollerhebung
+
+- Einfache Zufallsauswahl
+- Systematische Zufallsauswahl
+- Geschichtete Zufallsstichprobe
+- Klumpenauswahlen
+- Mehrstufige Zufallsstichprobe
+
+
+- Willkürliche Auswahl
+- Quotenstichprobe
+
+]
+
+--
+
+.pull-right[
+**Welches Verfahren wählen?**
+
+- *Vollerhebung* kommt nur in Fragen, wenn Populationsliste (z.B. Mitgliederverzeichnis vorliegt)
+- *Mehrstufige Zufallsstichprobe* oder *Klumpenstichprobe*, wenn Zugang zu Befragten nur über sog. *Primary Sampling Units* möglich ist.
+- *Stichprobe* statt *Vollerhebung*, wenn mit dem möglichen logistischen Aufwand (personell oder finanziell) nicht alle befragt werden können
+
+]
+
+---
+
+## Repräsentativität
+
+.small[
+"**In der Marktforschung und in der empirischen Sozialforschung wird manchmal eine repräsentative Stichprobe als ein verkleinertes Abbild der Grundgesamtheit definiert. Typischerweise wird verlangt, dass personenbezogene Merkmale wie z.B. Alter, Geschlecht, Bildung und Berufstätigkeit in der Stichprobe eine möglichst ähnliche Verteilung haben wie in der Grundgesamtheit.** Diese Forderung hat den Vorteil, dass sie in der Praxis einfach zu überprüfen ist, wenn die entsprechenden Anteile in der Grundgesamtheit bekannt sind. **Allerdings ist dadurch noch nicht gesichert, dass bezüglich der interessierenden Variablen die Ergebnisse der Stichprobe auf die Grundgesamtheit übertragbar sind.**" `r Citep(myBib, 'kauermann_stichproben_2011', after = ", S. 9")`
+
+"**An dieser Stelle wird Repräsentativität als Synonym für eine Zufallsauswahl verstanden, da nur hierfür Verallgemeinerungen von Stichprobenkennwerten auf Parameter der Grundgesamtheit inferenzstatistisch fundiert erklärt sind.** Es bleibt allerdings festzuhalten, dass sich für den Begriff 'Repräsentativität' keine eigentliche mathematische Definition finden lässt[.]" (Ebenda, S. 337)
+
+"Einer empirischen Studie darf also nur dann gerechtfertigt die 'mangelnde Repräsentativität' ihrer Stichprobe(n) als Qualitätsmangel vorgeworfen werden, wenn sie als deskriptive Studie tatsächlich das primäre Erkenntnisziel der Populationsbeschreibung verfolgt [...] und/oder wenn ihre Ergebnisse unzulässig auf die Allgemeinheit bezogen werden." `r Citep(myBib, 'doring_stichprobenziehung_2016', after = ", S. 300")`
+
+**Repräsentativität ist weder eine notwendige noch eine hinreichende Bedingung für eine wissenschaftlich hochwertige Arbeit.**
+]
+
+
+---
+
+## Eine gute Stichprobenziehung...
+
+zeichnet sich aus durch:
+
+1. Exakte Definition der Grundgesamtheit
+2. Diskussion möglicher Abweichungen zwischen Studienpopulation und Grundgesamtheit
+3. (Wenn möglich) Liste aller Merkmalsträger der Grundgesamtheit
+4. Exakt definiertes und vollständig reproduzierbares zufallsgesteuertes Auswahlverfahren
+5. Transparente Dokumentation der Erhebung
+6. (Berücksichtigung des Stichprobendesigns bei der Datenauswertung)
+
+`r Citep(myBib, 'hartmann_hypothesen_2015', after = ", S. 19")`
+
+---
+class: center
+
+## Von der Zielpopulation zur Stichprobe 
+
+*Beispiel aus der Wahlforschung*
+
+<!-- Merkmalsträger einbauen -->
+
+<!-- Studienpopulation (**) umfasst beide folgenden Punkte? -->
+
+
+Grundgesamtheit / Population / Zielpopulation  (*Alle Deutschen über 18 Jahre*)
+
+`r icons::fontawesome("arrow-down")`
+
+Auswahlpopulation / -gesamtheit (*Alle in Deutschland an festem Wohnsitz lebenden Deutschen über 18 Jahre*)
+
+`r icons::fontawesome("arrow-down")`
+
+Bruttostichprobe (durch mehrstufige Zufallsauswahl)
+
+`r icons::fontawesome("arrow-down")`
+
+Nettostichprobe (*tatsächliche realisierte Interviews*)
+
+
+---
+class: inverse
+
+## Ressourcen zur Stichprobenziehung
+
+```{r bib_stichprobenziehung, results='asis'}
+cat('<p>')
+print(myBib['doring_stichprobenziehung_2016'], 
+      .opts = list(style = 'html'))
+cat('</p>')
+
+cat('<p>')
+print(myBib['gehring_stichprobenziehung_2010'], 
+      .opts = list(style = 'html'))
+cat('</p>')
+
+cat('<p>')
+print(myBib['hader_stichproben_2014'], 
+      .opts = list(style = 'html'))
+cat('</p>')
+
+cat('<p>')
+print(myBib['planing_stichproben_nodate'], 
+      .opts = list(style = 'html'))
+cat('</p>')
+
+
+# , , 'hader_stichprobenziehung_2019', 'planing'
+```
+
+---
+class: inverse
+
+## Softwarelösungen zur Stichprobenziehung
+
+**R**
+
+- `slice_sample()` in `dplyr`
+- `pps` für geschichtete Stichproben
+- `sampler` für einfache und geschichtete Stichproben sowie Stichprobengrößenberechnung
+- `sampling` für einfache und geschichtete Stichproben sowie Berechnung von Gewichten und einige Analysen
+- `samplingbook` in `r Citep(myBib, 'kauermann_stichproben_2011')` beschriebene Funktionen
+- `survey` für geschichtete Stichproben sowie vielfältigen Auswertungsmethoden
+
+**Stata**
+
+`sample`, `svyset` und `svy` 
+
+**Excel**
+
+[XLSTAT](https://www.xlstat.com/de/)
+
+---
+
+## Bestimmung der Stichprobengröße
+
+**Kosten vs. Nutzen**
+
+.center[
+
+Möglichst hohe Genauigkeit der Statistiken  $\rightarrow$ N `r icons::fontawesome("arrow-up")`
+
+vs.
+
+Möglichst geringe Kosten $\rightarrow$ N `r icons::fontawesome("arrow-down")`
+]
+
+Optimale Stichprobengröße: Wenn die Grenzkosten der Erhebung eines zusätzlichen Merkmalsträgers, den Grenznutzen eines zusätzlichen Merkmalsträgers übersteigen.
+
+Zeit, die in die Datenerhebung und Codierung gesteckt wird, steht nicht für Datenauswertung und Anfertigen des Berichts zur Verfügung.
+
+---
+
+## Konfidenzintervall in Abhängigkeit von der Stichprobengröße
+
+$p = .5$, $se_p = \sqrt{\frac{p\times(1-p)}{n}}$, $ci = \pm 1,96 \times se_p$
+
+```{r, warning=FALSE, fig.height=5}
+p <- .5
+n <- 10:1000
+
+ci <- 1.96 * sqrt((p * (1-p)) / n) * 100
+
+dfig <- tibble(n, ci)
+
+ggplot(dfig, aes(x = n, y = ci)) +
+    geom_line() +
+    ylab("%-Punkte") +
+    theme_bw(base_size = 18)
+
+```
+
+---
+class: inverse
+
+## Software für die *Power Calculation*
+
+.pull-left[
+- Berechnungen zum Stichprobenumfang und Teststärkeberechnungen (*Power Calculation*)
+- Entsprechende Berechnungen können für vielerlei Tests mittels Software berechnet werden
+    - z.B: [G\*Power](https://www.psychologie.hhu.de/arbeitsgruppen/allgemeine-psychologie-und-arbeitspsychologie/gpower.html) (verfügbar für Mac und Windows) oder [Stichprobenrechner von SurveyMonkey](https://www.surveymonkey.de/mp/sample-size-calculator/)
+    - Stata: Befehl [`power`](https://www.stata.com/features/power-and-sample-size/)
+    - R: Die [Pakete `pwr` oder `WebPower`](https://med.und.edu/daccota/_files/pdfs/berdc_resource_pdfs/sample_size_r_module.pdf)
+    ]
+
+.pull-right[
+$e$ Fehler, $1,96 \times e$ 95%-Konfidenzintervall
+
+Mit Korrektur für finite Populationen:
+
+$n \geq \frac{S^2}{\frac{e^2}{z^2_{1-\alpha/2}} + \frac{S^2}{N}}$
+
+Für infinite/sehr große Grundgesamtheiten:
+
+$n \geq z^2_{1-\alpha/2} \times \frac{S^2}{e^2}$
+
+Bei Anteilen gilt $S^2 = p \times (1 - p)$ und dass die Varianz für $p=0.5$ maximal ist.
+]
+
+---
+class: inverse, center, middle
+
+# Fragebogenkonstruktion
+
+---
+
+## Faustregeln für die Frageformulierung
+
+![](images/schnell_2019_abb1-1.png)
+
+`r Citep(myBib, 'schnell_survey-interviews_2019', after = ', S. 21')`
+
+- Fragen sollten einfach (ohne Fach- oder Fremdwörter), kurz und konkret formuliert sein. <!--Promotion: Doktorarbeit vs. Werbung-->
+- Suggestivfragen und 'tendenziöse' Begriffe vermeiden <!-- "Bürokrat", "Freiheit" -->
+- Keine doppelten Verneinungen verwenden.
+- Fragen sollten sich nur auf einen Sachverhalt beziehen. <!-- Wie finden Sie unseren Newsletter und Homepage -->
+- Keine hypothetischen Fragen verwenden.
+- Befragte nicht überfordern. <!-- Wieviel Geld geben Sie pro Monat für Essen außer Haus aus-->
+- Fragen sollten balanciert sein. <!-- Sollte unser Verein Mitglieder, die mehrere Monatsbeiträge schulden ausschließen oder sollte er das nicht tun? -->
+
+Konkrete Empfehlungen zur Gestaltung von Fragen mit Beispielen finden sich bei `r Citet(myBib, 'lenzner_frageformulierung_2015')`. 
+
+---
+
+## Antworten
+
+.pull-left[
+- Fragebogen sollte überwiegend aus geschlossenen Fragen bestehen
+- Antwortvorgaben müssen alle möglichen Antworten umfassen und diese sich gegenseitig ausschließen <!--  -->
+- **Wann immer möglich auf etablierte Items zurückgreifen**
+- [search.gesis.org](https://search.gesis.org/)
+]
+.pull-right[
+![:scale 70%](images/schnell_2019_abb4-4.png)
+]
+
+
+---
+
+## Weiß nicht
+
+Nicht-substanzielle Antworten (wird in der Regel von Software übernommen):
+
+- Frage wurde nicht gestellt (z.B. bei Filterung)
+- Trifft nicht zu
+- "Weiß nicht" (empfehlenswert, um Raten zu vermeiden)
+- Antwortverweigerung
+
+`r Citep(myBib, 'schnell_survey-interviews_2019', after = ', S. 46f')`
+
+
+---
+
+## Fragebogen
+
+.pull-left[
+- Der Fragebogen sollte nicht zu lang sein (Befragungsdauer $\leq$ 15 bis 30 Minuten)
+    - Stark von Zielgruppe, Erhebungsmodus und Thema abhängig
+- Was nicht ausgewertet wird, gehört nicht in den Fragebogen
+- Fragen, die nur für Subsamples relevant sind, ausfiltern <!-- Welcher Studiengang, nur bei Studierenden -->
+- Fragen in thematische Frageblöcke sortieren
+- Mit einer interessanten "ice breaker"-Frage beginnen
+- Demographische und sensible Fragen am Ende
+- **Unbedingt einen Pretest durchführen**
+
+`r Citep(myBib, 'schnell_survey-interviews_2019', before = 'vgl. ', after = ', Kap. 5')`
+]
+.pull-right[
+![:scale 60%](images/schnell_2019_abb5-2.png)
+]
+
+---
+
+## Pretest
+
+.pull-left[
+**Funktioniert mein Fragebogen?**
+
+Prestests dienen der Überprüfung von...
+
+- Dauer der Befragung
+- Funktionalität (Schreibfehler, fehlende Antwortkategorien, fehlerhafte Filterführung)
+- Verständnis der Fragen durch Befragte
+]
+
+--
+
+.pull-right[
+- **Mindestens mit Kolleg:innen, Bekannten oder Freund:innen durchführen**
+- Besser mit Mitgliedern der Zielgruppe
+
+Ich führe meistens zwei 'Pretests' durch:
+
+1. Kolleg:innen geben Feedback zu Textfassung
+2. Kolleg:innen, Bekannte und Freund:innen klicken sich durch Fragebogen und geben Feedback
+
+]
+
+---
+class: inverse
+
+## Ressourcen zur Fragebogenkonstruktion
+
+"Meet the Experts: Prof. Dr. Michael Braun, Dr. Jette Schröder: Entwicklung eines Fragebogens" auf [YouTube](https://youtu.be/iQ3exEP5I2c)
+
+```{r bib_fragebogen, results='asis'}
+
+cat('<p>')
+print(myBib['lenzner_frageformulierung_2015'], 
+      .opts = list(style = 'html'))
+cat('</p>')
+
+cat('<p>')
+print(myBib['schnell_survey-interviews_2019', after = ', Kap. 2, 4-6'], 
+      .opts = list(style = 'html'))
+cat('</p>')
+
+
+# , , 'hader_stichprobenziehung_2019', 'planing'
+```
+
+
+---
+class: inverse, center, middle
+
+# Datenschutz
+
+---
+
+## Datenschutz
+
+- Es geht um den Schutz der informationellen Selbstbestimmung eurer (potentiellen) Befragten
+- Personenbezogene Daten sind Informationen, die eine eindeutige Identifikation einer Person zulassen
+- Anonymisierte Daten sind keine personenbezogenen Daten
+- Gesetzliche Grundlagen
+    - Datenschutzgrundverordnung ([DSGVO](https://eur-lex.europa.eu/legal-content/DE/TXT/?uri=CELEX%3A32016R0679))
+    - Bundesdatenschutzgesetz ([BDSG](https://www.gesetze-im-internet.de/bdsg_2018/))
+    - Jeweiliges Landesdatenschutzgesetz
+- Ihr...
+    - habt eine Informations- und Auskunftspflicht gegenüber Befragten
+    - seid verpflichtet personenbezogene Daten auf Wunsch der Betroffenen zu löschen
+
+
+---
+
+## Datenschutz in Befragungen
+
+**Bei der Kontaktaufnahme**
+
+- Darf ich mir zur Verfügung stehende Daten zur Kontaktaufnahme für eine Befragung nutzen?
+- DSGVO sieht hier gewisse Privilegien für wissenschaftliche Forschung vor, die für Befragungen im Auftrag von Non-Profits wahrscheinlich nicht greifen dürften.
+
+--
+
+**Bei der Einwilligung zur Teilnahme**
+
+- Es braucht ggf. eine explizite Einwiligung der Teilnehmenden zur Datenverarbeitung (`opt-in`)
+- Teilnehmer:inneninformationen gemäß Art 13 DSGVO, siehe z.b. die der [Jugendwahlstudie 2019](https://www.polsoz.fu-berlin.de/polwiss/forschung/systeme/empsoz/forschung/informationen_zum_datenschutz_art13.pdf)
+
+--
+
+**Bei der Speicherung und Auswertung der Daten**
+
+- Personenbezogene Daten und Befragungsdaten getrennt speichern und nicht zusammenführen
+- Personenbezogene Daten müssen vor Zugriff Dritter geschützt werden
+- Teilnehmende können Auskunft über und Löschung personenbezogener Daten einfordern
+    - Das betrifft nicht anonymisierte Befragungsdaten
+
+---
+class: inverse
+
+## Ressourcen zum Datenschutz
+
+[Jugendwahlstudie 2019: Informationen zum Datenschutz gemäß Art. 13 DSGVO](https://www.polsoz.fu-berlin.de/polwiss/forschung/systeme/empsoz/forschung/informationen_zum_datenschutz_art13.pdf)
+
+"CorrelAid Projektzyklus: Datenschutz und Datenethik" auf [YouTube](https://youtu.be/bnLceww8qRg)
+
+```{r bib_datenschutz, results='asis'}
+
+cat('<p>')
+print(myBib['ratswd_datenerhebung_2020'], 
+      .opts = list(style = 'html'))
+cat('</p>')
+
+
+# , , 'hader_stichprobenziehung_2019', 'planing'
+```
+
+---
+class: inverse, center, middle
+
+# Durchführung der Datenerhebung
+
+---
+
+## Erhebungsmodi
+
+- Persönliche Interviews („Face-to-Face“-Befragungen)
+- Telefonische Befragungen
+- Schriftlich-postalische Befragung („Mail-Surveys“ / „Pen-and-paper“)
+- Web-Surveys
+
+---
+
+## Mündliche Befragungen
+
+.small[
+- Befragung wird mündlich durch (professionelle) Interviewer:in persönlich (CAPI<sup>1</sup>) oder per Telefon (CATI<sup>2</sup>) durchgeführt
+- Interviewer:in liest Fragen und mögliche Antworten vor und notiert Antworten
+]
+
+--
+
+.small[
+- "Face to Face"
+    - "Goldstandard", da größte Erreichbarkeit und höchste Teilnahmebereitschaft
+    - Allerdings größeres Potential für Interviewer:inneneffekte und soziale Erwünschtheit
+    - Sehr zeit- und personalintensiv und damit auch teuer
+]
+
+--
+
+.small[
+- Telefonische Befragung
+    - Obige Punkte gelten in abgeschwächter Form
+    - Immer mehr Haushalte, die über kein Festnetz verfügen
+-<!-- Sind Adressen oder Nummern bekannt, dürfen diese für Befragung genutzt werden? -->
+
+.footnote[
+[1] Computer Assisted Personal Interview
+
+[2] Computer Assisted Telephone Interview
+]
+]
+
+
+
+---
+
+## Schriftlich
+
+.small[
+
+- Befragte 'kreuzen' ausgedruckten Fragebogen in der Regel zu Hause
+- Setzt keine Technik auf Seiten der Befragten voraus
+- Geringere soziale Erwünschtheit
+]
+
+--
+
+.small[
+- Stellt hohe Anforderungen an Gestaltung
+- Filterführung schwieriger (Anweisungen an Befragte)
+- Fragebögen müssen anschließend digitalisiert
+- Hoher Organisationsaufwand
+
+]
+
+---
+
+
+## Online-Befragung
+
+
+- Schnell und kostengünstig umsetzbar
+- Bilder, Audio und Video können eingebunden werden
+- Einladung per E-Mail kann direkt aus Befragungssoftware heraus geschehen
+- Automatische Generierung von Paradaten (z.B. Befragungsdauer, etc.)
+- Setzt Internetzugang und Endgerät in Zielgruppe voraus
+
+
+--
+
+
+- Verschiedene Anbieter prüfen
+    - Im Blick haben: wie viele (gleichzeitige) Befragungen (insgesamt) sind möglich?
+- DSGVO-Konformität prüfen
+
+
+--
+
+
+- Erzwungene Antworten sehr sparsam verwenden
+- Beim Pre-Test unterschiedlichste Endgeräte und Browser testen
+
+
+---
+
+## "Total Design Method"
+
+„Minimiere die subjektiven Kosten für den Befragten“ `r Citep(myBib, 'schnell_survey-intervies_2019', after = ', Kap. 9.4')`
+
+Unter anderem:
+
+- personalisiertes Anschreiben
+- Ankündigung, Befragung inkl. "Begleitschreiben", ggf. Erinnerung
+- Fragen von interessant (für Befragte!) nach weniger interessant sortieren
+- bei postalischer Befragung: frankierte Rückumschläge
+
+---
+class: inverse
+
+## Lösungen für Online-Befragungen
+
+- [Limesurvey](https://www.limesurvey.org/de)
+- [Unipark](https://www.unipark.com/)
+- [Soscisurvey](https://www.soscisurvey.de/)
+- Google Forms
+
+
+---
+class: inverse
+
+## Ressourcen zur Datenerhebung
+
+```{r bib_datenerhebung, results='asis'}
+
+cat('<p>')
+print(myBib['schnell_survey-interviews_2019', after = ', Kap. 8-12'], 
+      .opts = list(style = 'html'))
+cat('</p>')
+
+cat('<p>')
+print(myBib['wagner-schelewsky_online-befragung_2019'], 
+      .opts = list(style = 'html'))
+cat('</p>')
+
+# , , 'hader_stichprobenziehung_2019', 'planing'
+```
+
+Konsultiert das Handbuch der von euch verwendeten Software!
+
+---
+class: inverse, center, middle
+
+# Datenbereinigung und -auswertung
+
+---
+
+## Datensicherung
+
+- Befragungsdaten nach Abschluss der Befragung herunterladen und Sicherungskopie anlegen
+    - in allen gängigen Formaten
+- Personenbezogene Daten und Befragungsdaten separat speichern
+- Sicherstellen, dass alle benötigten Daten auch gespeichert werden
+    - Werden Paradaten benötigt?
+    - Statuscodes gespeichert?
+- Codebuch abspeichern
+
+---
+
+## Datenqualität prüfen und Recodierung
+
+- Überblick über Unit- und Item-Non-Response sowie Abbrüche verschaffen
+- Unplausible Werte identifizieren
+- 'Speeder' anhand der Paradaten identifizieren 
+- Codes für *missing values* (Antwort verweigert, Frage nicht gestellt, oft auch 'Weiß nicht') durch von Statistiksoftware dafür genutzten Werte (R: `NA`, Stata: `.`) ersetzen
+- Items, wo nötig, invertieren
+
+---
+
+
+
+## Gewichtung
+
+**Designgewichte**
+
+Gleichen aus, dass bestimmte Segmente der Grundgesamtheit werden bewusst über oder unter ihrem Anteil an der Grundgesamtheit gesamplet (disproportional geschichtete Stichprobe).
+
+**Kalibrierungs- und Anpassungsgewichte**
+
+Im Prozess der Datenerhebung kommt es durch Unit- oder Item-Nonresponse oder andere Fehlerquellen zu Abweichungen zwischen Verteilungen in Grundgesamtheit und Nettostichprobe. Dafür kann ex-post korrigiert werden.
+
+`r Citep(myBib, c('baur_gewichtung_2019', 'sand_gewichtung_2020'), before = "vgl. ")`
+
+---
+
+## Gewichtung
+
+.pull-left[
+$Population \% = Schicht \% \times Gewicht$
+
+$Gewicht = \frac{Population \%}{Schicht \%} =$ $d_h^* = \frac{N_h}{N}\frac{n}{n_h}$<sup>*</sup>
+
+
+
+]
+
+.pull-right[
+.small[
+Äquivalent:
+
+$d_i = \frac{1}{\pi_i}$, wobei $\pi_i = \frac{n_h}{N_h}$ für $i$ aus Schicht $h$
+
+$d_i^* = \frac{d_i}{\sum_{i=1}^nd_i} \times n$
+]]
+
+.small[
+.small[
+- Merkmalsträger die einer Schicht angehören, die in der Stichprobe unterrepräsentiert ist, erhalten ein Gewicht > 1.
+- Merkmalsträger die einer Schicht angehören, die in der Stichprobe überrepräsentiert ist, erhalten ein Gewicht < 1.
+- Die Summe der normierten Gewichte entspricht der Fallzahl $n$ der Stichprobe.
+
+Designgewichte lassen sich einfach händisch oder mittels Packages in `R`, `Stata` berechnen, das ggf. schon zur Stichprobenziehung zum Einsatz kam.
+]]
+
+.footnote[.small[
+[*] $N$ steht für Fallzahlen in der Population und $n$ in der Stichprobe; Subskript $h$ steht für eine Schicht.
+]]
+
+---
+class: inverse
+
+## Praktische Anwendung (normierter) Gewichte
+
+Aus
+
+$\bar{y} = \frac{1}{n}\sum_{i=1}^n x_i$
+
+wird
+
+$\bar{y} = \frac{1}{n}\sum_{i=1}^n d_i x_i$
+
+wobei $d_i$ die individuelle Gewichtung eines Merkmalsträgers abbildet, die kleiner, gleich oder größer 1 ist.
+
+- Anwendung von Gewichten ist in Stata (über Option [weight]) und R (über eigenen Funktionen wie `weighted.mean()` oder zusätzliche Argumente wie `weights` in `lm()`) direkt implementierbar
+- Außerdem über `svyset` und verbundene Kommandos in Stata sowie bspw. das Paket `survey` in R
+
+---
+
+## Dokumentation
+
+Dokumentation sollte von Beginn des Projekts an mitlaufen.
+
+Die Dokumentation sollte enthalten:
+
+- Forschungsinteresse
+- Durchführende und Finanzierung
+- Zielpopulation und Stichprobenziehung
+- Art der Erhebung, Feldzeit, 
+- Bruttostichprobe, Ausfälle, Nettostichprobe, Rücklaufquote
+- Fragebogen
+- Datenbearbeitung
+
+Siehe [GESIS Survey Guidelines > Open Science > Dokumentation Feldarbeit](
+Survey Guidelines)
+
+Beispiel: [Studienbeschreibung "Vorwahl-Querschnitt (GLES 2017)"](https://dbk.gesis.org/dbksearch/download.asp?id=64488) 
+
+---
+class: inverse, center, middle
+
+# Ressourcen zum Nachschlagen
+
+---
+
+
+## Online-Ressourcen
+
+*[GESIS](https://www.gesis.org/home) ist die Antwort auf alle eure Fragen. ;)*
+
+["GESIS Survey Guidelines"](https://www.gesis.org/gesis-survey-guidelines/home) Sammlung verschiedener Handreichungen von GESIS rund um das Thema Bevölkerungsbefragungen.
+
+["Meet the Experts: Best-Practice-Methoden in Umfrageforschung"](https://www.youtube.com/playlist?list=PLv4AV-dc1b8WxulTcakAeKX8HdKz3mNcn) Video-Reihe auf YouTube von GESIS
+
+[search.gesis.org](https://search.gesis.org) Datenbank von GESIS, welche Fragebögen, Codebücher, Befragungsdaten, Messinstrumente etc. tausender Befragungen umfasst
+
+---
+
+## Literatur
+
+- Baur, Nina, und Jörg Blasius, Hrsg. 2019. Handbuch Methoden der empirischen Sozialforschung. Wiesbaden: Springer Fachmedien.
+- Döring, Nicola, und Jürgen Bortz, Hrsg. 2016. Forschungsmethoden und Evaluation in den Sozial- und Humanwissenschaften. Wiesbaden: Springer.
+    - insbesondere Kapitel 9 (Stichprobenziehung)
+- Lavrakas, Paul, Hrsg. 2008. Encyclopedia of Survey Research Methods. 2455 Teller Road, Thousand Oaks: Sage Publications. https://doi.org/10.4135/9781412963947.
+- Schnell, Rainer. 2019. Survey-Interviews: Methoden standardisierter Befragungen. Studienskripten zur Soziologie. Wiesbaden: Springer Fachmedien Wiesbaden. https://doi.org/10.1007/978-3-531-19901-6.
+
+---
+class: inverse, center, middle
+
+#Literaturnachweise
+
+---
+
+## Literaturnachweise
+
+```{r references, results='asis'}
+PrintBibliography(myBib, start = 1, end = 3)
+```
+
+---
+
+## Literaturnachweise
+
+```{r references2, results='asis'}
+PrintBibliography(myBib, start = 4)
+```

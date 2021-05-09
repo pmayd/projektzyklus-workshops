@@ -1,0 +1,1123 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Gestaltung eines Surveys (Umfrage)</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Arndt Leininger" />
+    <meta name="date" content="2021-05-12" />
+    <script src="slides_files/header-attrs/header-attrs.js"></script>
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+    <link rel="stylesheet" href="custom.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Gestaltung eines Surveys (Umfrage)
+## CorrelAid Projektzyklus
+### Arndt Leininger
+### 2021-05-12
+
+---
+
+
+
+
+
+
+
+
+
+## Wer bin ich? 
+
+.pull-left[
+![:scale 50%](images/2W7B0358_V2_300dpi_sRGB_med.png)
+]
+
+.pull-right[
+
+- Gründungsmitglied von CorrelAid
+- seit April 2021 Juniorprofessor für Politikwissenschaftliche Forschungsmethoden an der TU Chemnitz
+- zuvor Wissenschaftlicher Mitarbeiter an der FU Berlin, Uni Mainz und Hertie School
+- Erfahrung mit Umfragen in Forschung und Lehre
+
+- &lt;svg viewBox="0 0 512 512" style="height:1em;position:relative;display:inline-block;top:.1em;" xmlns="http://www.w3.org/2000/svg"&gt;  &lt;path d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"&gt;&lt;/path&gt;&lt;/svg&gt;: [@a_leininger](https://twitter.com/a_leininger)
+- &lt;svg viewBox="0 0 448 512" style="height:1em;position:relative;display:inline-block;top:.1em;" xmlns="http://www.w3.org/2000/svg"&gt;  &lt;path d="M0 32v448h448V32H0zm262.2 334.4c-6.6 3-33.2 6-50-14.2-9.2-10.6-25.3-33.3-42.2-63.6-8.9 0-14.7 0-21.4-.6v46.4c0 23.5 6 21.2 25.8 23.9v8.1c-6.9-.3-23.1-.8-35.6-.8-13.1 0-26.1.6-33.6.8v-8.1c15.5-2.9 22-1.3 22-23.9V225c0-22.6-6.4-21-22-23.9V193c25.8 1 53.1-.6 70.9-.6 31.7 0 55.9 14.4 55.9 45.6 0 21.1-16.7 42.2-39.2 47.5 13.6 24.2 30 45.6 42.2 58.9 7.2 7.8 17.2 14.7 27.2 14.7v7.3zm22.9-135c-23.3 0-32.2-15.7-32.2-32.2V167c0-12.2 8.8-30.4 34-30.4s30.4 17.9 30.4 17.9l-10.7 7.2s-5.5-12.5-19.7-12.5c-7.9 0-19.7 7.3-19.7 19.7v26.8c0 13.4 6.6 23.3 17.9 23.3 14.1 0 21.5-10.9 21.5-26.8h-17.9v-10.7h30.4c0 20.5 4.7 49.9-34 49.9zm-116.5 44.7c-9.4 0-13.6-.3-20-.8v-69.7c6.4-.6 15-.6 22.5-.6 23.3 0 37.2 12.2 37.2 34.5 0 21.9-15 36.6-39.7 36.6z"&gt;&lt;/path&gt;&lt;/svg&gt;: [Arndt Leininger](https://www.researchgate.net/profile/Arndt-Leininger)
+- &lt;svg viewBox="0 0 496 512" style="height:1em;position:relative;display:inline-block;top:.1em;" xmlns="http://www.w3.org/2000/svg"&gt;  &lt;path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"&gt;&lt;/path&gt;&lt;/svg&gt;: [aleininger](https://github.com/aleininger)
+- &lt;svg viewBox="0 0 512 512" style="height:1em;position:relative;display:inline-block;top:.1em;" xmlns="http://www.w3.org/2000/svg"&gt;  &lt;path d="M105.2 24.9c-3.1-8.9-15.7-8.9-18.9 0L29.8 199.7h132c-.1 0-56.6-174.8-56.6-174.8zM.9 287.7c-2.6 8 .3 16.9 7.1 22l247.9 184-226.2-294zm160.8-88l94.3 294 94.3-294zm349.4 88l-28.8-88-226.3 294 247.9-184c6.9-5.1 9.7-14 7.2-22zM425.7 24.9c-3.1-8.9-15.7-8.9-18.9 0l-56.6 174.8h132z"&gt;&lt;/path&gt;&lt;/svg&gt;: [arndtl](https://gitlab.com/arndtl)
+- &lt;svg viewBox="0 0 448 512" style="height:1em;position:relative;display:inline-block;top:.1em;" xmlns="http://www.w3.org/2000/svg"&gt;  &lt;path d="M94.12 315.1c0 25.9-21.16 47.06-47.06 47.06S0 341 0 315.1c0-25.9 21.16-47.06 47.06-47.06h47.06v47.06zm23.72 0c0-25.9 21.16-47.06 47.06-47.06s47.06 21.16 47.06 47.06v117.84c0 25.9-21.16 47.06-47.06 47.06s-47.06-21.16-47.06-47.06V315.1zm47.06-188.98c-25.9 0-47.06-21.16-47.06-47.06S139 32 164.9 32s47.06 21.16 47.06 47.06v47.06H164.9zm0 23.72c25.9 0 47.06 21.16 47.06 47.06s-21.16 47.06-47.06 47.06H47.06C21.16 243.96 0 222.8 0 196.9s21.16-47.06 47.06-47.06H164.9zm188.98 47.06c0-25.9 21.16-47.06 47.06-47.06 25.9 0 47.06 21.16 47.06 47.06s-21.16 47.06-47.06 47.06h-47.06V196.9zm-23.72 0c0 25.9-21.16 47.06-47.06 47.06-25.9 0-47.06-21.16-47.06-47.06V79.06c0-25.9 21.16-47.06 47.06-47.06 25.9 0 47.06 21.16 47.06 47.06V196.9zM283.1 385.88c25.9 0 47.06 21.16 47.06 47.06 0 25.9-21.16 47.06-47.06 47.06-25.9 0-47.06-21.16-47.06-47.06v-47.06h47.06zm0-23.72c-25.9 0-47.06-21.16-47.06-47.06 0-25.9 21.16-47.06 47.06-47.06h117.84c25.9 0 47.06 21.16 47.06 47.06 0 25.9-21.16 47.06-47.06 47.06H283.1z"&gt;&lt;/path&gt;&lt;/svg&gt;: @arndt
+]
+
+---
+
+##  Was sind Umfragen?
+
+.pull-left[
+
+Umfragen (auch geschlossene oder quantitative Befragungen) ...
+
+zeichnen sich aus durch:
+
+- (möglichst) große Zahl an Befragten
+- hohen Grad der Standardisierung
+	- alle Befragten erhalten (größtenteils) die gleichen Fragen &lt;!-- Wahlentscheidung  Wahlteilnahme ---&gt;
+	- geschlossene Fragen mit/durch vorgegebene/n Antwortmöglichkeiten, um Antworten in numerische Werte zu übersetzen &lt;!-- Wie oft lesen sie den Newsletter immer bis nie Zahlenwerte--&gt;
+]
+
+--
+
+.pull-right[
+im Unterschied zu
+
+offenen oder qualitativen Befragungen.
+
+Diese zeichnen sich aus durch:
+
+- kleine(re) Zahl an Gesprächspartner:innen
+- geringe Standardisierung
+	- Fragen auf Befragte zugeschnitten sowie Nachfragen im Gespräch
+	- Aufnahmen und Transkription des Gesprächs
+]
+
+---
+
+
+## Agenda
+
+1. Definition der Grundgesamtheit
+2. Stichprobenziehung
+3. Fragebogenkonstruktion
+4. Datenschutz
+5. Durchführung der Datenerhebung
+6. Datenbereinigung und -auswertung &lt;!-- Bereinigung; Missings codieren, codebasiert; Gewichte, anonymisierung --&gt;
+
+---
+class: inverse, center, middle
+
+# Definition der Grundgesamtheit
+
+---
+
+## Die Grundgesamtheit
+
+**Über welchen Personenkreis möchte ich eine Aussage treffen?**
+
+*Grundgesamtheit*&lt;sup&gt;1&lt;/sup&gt;: Der Begriff bezieht sich auf die Gesamtzahl aller Personen&lt;sup&gt;2&lt;/sup&gt;, die an einer Befragung teilnehmen könnten und somit durch diese beschrieben werden können.
+
+*Vollerhebung*: Befragung aller Personen der Grundgesamtheit.
+
+.footnote[
+[1] Auch *Population* oder *Zielpopulation*.
+
+[2] Tatsächlich können damit in anderen Anwendungen auch andere sog. Merkmalsträger gemeint sein.
+]
+
+---
+class: inverse, center, middle
+
+# Stichprobenziehung
+
+---
+
+## Übersicht 
+
+**Wenn eine Vollerhebung nicht möglich oder praktikabel ist, muss man eine Stichprobe ziehen.**
+
+.pull-left[
+**Probabilistische Auswahlmethoden**
+
+1. Einfache Zufallsstichprobe/auswahl
+2. Systematische Zufallsauswahl
+3. Geschichtete Zufallsstichprobe
+4. Klumpenstichprobe
+5. Mehrstufige Zufallsstichprobe
+]
+
+--
+
+.pull-right[
+**Nicht-probabilistische Auswahlmethoden**
+    
+1. Willkürliche Auswahl
+2. Quotenstichprobe
+]
+
+---
+
+## Einfache Zufallsstichprobe
+
+&lt;img src="images/doring_bortz_2016_abb9-3_einfache_zufallsstichprobe.png" width="70%" /&gt;
+
+
+&lt;a name=cite-doring_stichprobenziehung_2016&gt;&lt;/a&gt;([Döring and Bortz, 2016a](#bib-doring_stichprobenziehung_2016), S. 312)
+
+Anwendungsbeispiel: Mitarbeiter:innenbefragung einer großen Stiftung
+
+---
+
+## Systematische Zufallauswahl
+
+Stichprobenintervall `\(k = \frac{Groesse~der~Auswahlgesamtheit}{Groesse~der~Stichprobe}\)`
+
+Zufällige Auswahl des Startpunkts im Intervall [1, k], dann Auswahl jedes k-ten Elements der Auswahlgesamtheit.
+
+Anwendungsbeispiel: Face-to-Face-Bevölkerungsumfragen (Interviewer:in klingelt ab Startpunkt an jeder x-ten Tür)
+
+---
+
+## Geschichtete Zufallsstichprobe
+
+&lt;img src="images/doring_bortz_2016_abb9-4_geschichtete_zufallsstichprobe.png" width="50%" /&gt;
+
+
+([Döring and Bortz, 2016a](#bib-doring_stichprobenziehung_2016), S. 313)
+
+Anwendungsbeispiel: Sozialwissenschaftliche Befragung zu 30 Jahren Wiedervereinigung, die überproportional viele Menschen in Ostdeutschland befragt
+
+---
+
+## Klumpenstichprobe
+
+&lt;img src="images/doring_bortz_2016_abb9-5_klumpenstichprobe.png" width="543" height="10%" /&gt;
+
+([Döring and Bortz, 2016a](#bib-doring_stichprobenziehung_2016), S. 315)
+
+Anwendungsbeispiel: Befragung von Schüler:innen in Schulklassen
+
+---
+
+## Mehrstufige Zufallsstichprobe
+
+&lt;img src="images/doring_bortz_2016_abb9-6_zweistufige_zufallsstichprobe.png" width="50%" /&gt;
+
+([Döring and Bortz, 2016a](#bib-doring_stichprobenziehung_2016), S. 316)
+
+Anwendungsbeispiel: Deutsche Wahlstudie (GLES), die in zufällig ausgewählten Gemeinden, Interviewer:innen nach systematischer Zufallsauswahl durch die jeweilige Gemeinde schickt
+
+---
+
+
+## Zielsetzung bei der Stichprobenziehung
+
+... per Zufallsauswahl.
+
+**Wenn wir eine Stichprobe aus einer Grundgesamtheit ziehen, möchten wir einen kleineren Datensatz erhalten, der die gleichen statistischen Informationen wie die Grundgesamtheit enthält.** Das heißt Sample-Statistiken wie Mittel- oder Anteilswerte, etc. sollen möglichst genau den Populationparametern entsprechen.
+
+**Problem: Die Populationsparameter sind unbekannt.** Wären Sie bekannt, würde sich die Stichprobenziehung erübrigen. 
+
+Es geht daher um ein methodisches Vorgehen, um Bias und Varianz in den Statistiken so gering wie möglich zu halten (auch wenn der Grad der Zielerreichung letztlich nicht quantifizierbar ist).
+
+---
+
+## Willkürliche Auswahl
+
+- Befragung in der Fußgängerzone
+- Umfrage auf Website
+- Verteilung einer Umfrage in sozialen Medien
+
+---
+
+## Quotenstichprobe
+
+- In der *Quotenstichprobe* werden Interviewer:innen Vorgaben zu den prozentualen Anteilen (Quoten) für bestimmte Merkmale vorgegeben, z.B. 30% der Interviewten sollen weibliche langjährige Vereinsmitglieder sein, 20% männliche Neumitglieder, ...
+- Verteilung orientiert sich an bekannten Randverteilungen in Grundgesamtheit
+- Aber Vorsicht: Verteilung anderer Merkmale und Merkmalskombinationen muss nicht der Verteilung in Grundgesamtheit entsprechen
+- Interviewer:innen wählen Befragte aus
+- Oder Befragte selektieren sich selbst in die Befragung
+
+---
+
+## Die Verfahren im Überblick
+
+.pull-left[
+
+- Vollerhebung
+
+- Einfache Zufallsauswahl
+- Systematische Zufallsauswahl
+- Geschichtete Zufallsstichprobe
+- Klumpenauswahlen
+- Mehrstufige Zufallsstichprobe
+
+
+- Willkürliche Auswahl
+- Quotenstichprobe
+
+]
+
+--
+
+.pull-right[
+**Welches Verfahren wählen?**
+
+- *Vollerhebung* kommt nur in Fragen, wenn Populationsliste (z.B. Mitgliederverzeichnis vorliegt)
+- *Mehrstufige Zufallsstichprobe* oder *Klumpenstichprobe*, wenn Zugang zu Befragten nur über sog. *Primary Sampling Units* möglich ist.
+- *Stichprobe* statt *Vollerhebung*, wenn mit dem möglichen logistischen Aufwand (personell oder finanziell) nicht alle befragt werden können
+
+]
+
+---
+
+## Repräsentativität
+
+.small[
+"**In der Marktforschung und in der empirischen Sozialforschung wird manchmal eine repräsentative Stichprobe als ein verkleinertes Abbild der Grundgesamtheit definiert. Typischerweise wird verlangt, dass personenbezogene Merkmale wie z.B. Alter, Geschlecht, Bildung und Berufstätigkeit in der Stichprobe eine möglichst ähnliche Verteilung haben wie in der Grundgesamtheit.** Diese Forderung hat den Vorteil, dass sie in der Praxis einfach zu überprüfen ist, wenn die entsprechenden Anteile in der Grundgesamtheit bekannt sind. **Allerdings ist dadurch noch nicht gesichert, dass bezüglich der interessierenden Variablen die Ergebnisse der Stichprobe auf die Grundgesamtheit übertragbar sind.**" &lt;a name=cite-kauermann_stichproben_2011&gt;&lt;/a&gt;([Kauermann and Küchenhoff, 2011](#bib-kauermann_stichproben_2011), S. 9)
+
+"**An dieser Stelle wird Repräsentativität als Synonym für eine Zufallsauswahl verstanden, da nur hierfür Verallgemeinerungen von Stichprobenkennwerten auf Parameter der Grundgesamtheit inferenzstatistisch fundiert erklärt sind.** Es bleibt allerdings festzuhalten, dass sich für den Begriff 'Repräsentativität' keine eigentliche mathematische Definition finden lässt[.]" (Ebenda, S. 337)
+
+"Einer empirischen Studie darf also nur dann gerechtfertigt die 'mangelnde Repräsentativität' ihrer Stichprobe(n) als Qualitätsmangel vorgeworfen werden, wenn sie als deskriptive Studie tatsächlich das primäre Erkenntnisziel der Populationsbeschreibung verfolgt [...] und/oder wenn ihre Ergebnisse unzulässig auf die Allgemeinheit bezogen werden." ([Döring and Bortz, 2016a](#bib-doring_stichprobenziehung_2016), S. 300)
+
+**Repräsentativität ist weder eine notwendige noch eine hinreichende Bedingung für eine wissenschaftlich hochwertige Arbeit.**
+]
+
+
+---
+
+## Eine gute Stichprobenziehung...
+
+zeichnet sich aus durch:
+
+1. Exakte Definition der Grundgesamtheit
+2. Diskussion möglicher Abweichungen zwischen Studienpopulation und Grundgesamtheit
+3. (Wenn möglich) Liste aller Merkmalsträger der Grundgesamtheit
+4. Exakt definiertes und vollständig reproduzierbares zufallsgesteuertes Auswahlverfahren
+5. Transparente Dokumentation der Erhebung
+6. (Berücksichtigung des Stichprobendesigns bei der Datenauswertung)
+
+&lt;a name=cite-hartmann_hypothesen_2015&gt;&lt;/a&gt;([Hartmann and Lois, 2015b](#bib-hartmann_hypothesen_2015), S. 19)
+
+---
+class: center
+
+## Von der Zielpopulation zur Stichprobe 
+
+*Beispiel aus der Wahlforschung*
+
+&lt;!-- Merkmalsträger einbauen --&gt;
+
+&lt;!-- Studienpopulation (**) umfasst beide folgenden Punkte? --&gt;
+
+
+Grundgesamtheit / Population / Zielpopulation  (*Alle Deutschen über 18 Jahre*)
+
+&lt;svg viewBox="0 0 448 512" style="height:1em;position:relative;display:inline-block;top:.1em;" xmlns="http://www.w3.org/2000/svg"&gt;  &lt;path d="M413.1 222.5l22.2 22.2c9.4 9.4 9.4 24.6 0 33.9L241 473c-9.4 9.4-24.6 9.4-33.9 0L12.7 278.6c-9.4-9.4-9.4-24.6 0-33.9l22.2-22.2c9.5-9.5 25-9.3 34.3.4L184 343.4V56c0-13.3 10.7-24 24-24h32c13.3 0 24 10.7 24 24v287.4l114.8-120.5c9.3-9.8 24.8-10 34.3-.4z"&gt;&lt;/path&gt;&lt;/svg&gt;
+
+Auswahlpopulation / -gesamtheit (*Alle in Deutschland an festem Wohnsitz lebenden Deutschen über 18 Jahre*)
+
+&lt;svg viewBox="0 0 448 512" style="height:1em;position:relative;display:inline-block;top:.1em;" xmlns="http://www.w3.org/2000/svg"&gt;  &lt;path d="M413.1 222.5l22.2 22.2c9.4 9.4 9.4 24.6 0 33.9L241 473c-9.4 9.4-24.6 9.4-33.9 0L12.7 278.6c-9.4-9.4-9.4-24.6 0-33.9l22.2-22.2c9.5-9.5 25-9.3 34.3.4L184 343.4V56c0-13.3 10.7-24 24-24h32c13.3 0 24 10.7 24 24v287.4l114.8-120.5c9.3-9.8 24.8-10 34.3-.4z"&gt;&lt;/path&gt;&lt;/svg&gt;
+
+Bruttostichprobe (durch mehrstufige Zufallsauswahl)
+
+&lt;svg viewBox="0 0 448 512" style="height:1em;position:relative;display:inline-block;top:.1em;" xmlns="http://www.w3.org/2000/svg"&gt;  &lt;path d="M413.1 222.5l22.2 22.2c9.4 9.4 9.4 24.6 0 33.9L241 473c-9.4 9.4-24.6 9.4-33.9 0L12.7 278.6c-9.4-9.4-9.4-24.6 0-33.9l22.2-22.2c9.5-9.5 25-9.3 34.3.4L184 343.4V56c0-13.3 10.7-24 24-24h32c13.3 0 24 10.7 24 24v287.4l114.8-120.5c9.3-9.8 24.8-10 34.3-.4z"&gt;&lt;/path&gt;&lt;/svg&gt;
+
+Nettostichprobe (*tatsächliche realisierte Interviews*)
+
+
+---
+class: inverse
+
+## Ressourcen zur Stichprobenziehung
+
+&lt;p&gt;&lt;p&gt;&lt;cite&gt;&lt;a id='bib-doring_stichprobenziehung_2016'&gt;&lt;/a&gt;&lt;a href="#cite-doring_stichprobenziehung_2016"&gt;Döring, N. and J. Bortz&lt;/a&gt;
+(2016).
+&amp;ldquo;Stichprobenziehung&amp;rdquo;.
+De.
+In: 
+&lt;em&gt;Forschungsmethoden und Evaluation in den Sozial- und Humanwissenschaften&lt;/em&gt;.
+Ed. by N. Döring and J. Bortz.
+Springer-Lehrbuch.
+Berlin, Heidelberg: Springer, pp. 291&amp;ndash;319.
+ISBN: 978-3-642-41089-5.
+DOI: &lt;a href="https://doi.org/10.1007/978-3-642-41089-5_9"&gt;10.1007/978-3-642-41089-5_9&lt;/a&gt;.
+URL: &lt;a href="https://doi.org/10.1007/978-3-642-41089-5_9"&gt;https://doi.org/10.1007/978-3-642-41089-5_9&lt;/a&gt; (visited on Dec. 25, 2020).&lt;/cite&gt;&lt;/p&gt;
+&lt;/p&gt;&lt;p&gt;&lt;p&gt;&lt;cite&gt;Gehring, U. W. and C. Weins
+(2010).
+&amp;ldquo;Stichprobenziehung&amp;rdquo;.
+De.
+In: 
+&lt;em&gt;Grundkurs Statistik für Politologen und Soziologen&lt;/em&gt;.
+Ed. by U. W. Gehring and C. Weins.
+Wiesbaden: VS Verlag für Sozialwissenschaften, pp. 193&amp;ndash;222.
+ISBN: 978-3-531-91879-2.
+DOI: &lt;a href="https://doi.org/10.1007/978-3-531-91879-2_9"&gt;10.1007/978-3-531-91879-2_9&lt;/a&gt;.
+URL: &lt;a href="https://doi.org/10.1007/978-3-531-91879-2_9"&gt;https://doi.org/10.1007/978-3-531-91879-2_9&lt;/a&gt; (visited on Dec. 25, 2020).&lt;/cite&gt;&lt;/p&gt;
+&lt;/p&gt;&lt;p&gt;&lt;p&gt;&lt;cite&gt;Häder, S.
+(2014).
+&amp;ldquo;Stichproben in der Praxis&amp;rdquo;.
+De.
+In: &lt;em&gt;SDM Survey Guidelines&lt;/em&gt;.
+DOI: &lt;a href="https://doi.org/10.15465/SDM-SG_014"&gt;10.15465/SDM-SG_014&lt;/a&gt;.
+URL: &lt;a href="https://www.gesis.org/gesis-survey-guidelines/statistics/gewichtung-in-der-praxis-1"&gt;https://www.gesis.org/gesis-survey-guidelines/statistics/gewichtung-in-der-praxis-1&lt;/a&gt; (visited on May. 08, 2021).&lt;/cite&gt;&lt;/p&gt;
+&lt;/p&gt;&lt;p&gt;&lt;p&gt;&lt;cite&gt;Planing, P.
+(2021).
+&amp;ldquo;Stichproben&amp;rdquo;.
+De.
+In: 
+&lt;em&gt;Statistik Grundlagen&lt;/em&gt;.
+Patrick Planing.
+URL: &lt;a href="https://statistikgrundlagen.de/ebook/chapter/stichproben/"&gt;https://statistikgrundlagen.de/ebook/chapter/stichproben/&lt;/a&gt; (visited on May. 06, 2021).&lt;/cite&gt;&lt;/p&gt;
+&lt;/p&gt;
+
+---
+class: inverse
+
+## Softwarelösungen zur Stichprobenziehung
+
+**R**
+
+- `slice_sample()` in `dplyr`
+- `pps` für geschichtete Stichproben
+- `sampler` für einfache und geschichtete Stichproben sowie Stichprobengrößenberechnung
+- `sampling` für einfache und geschichtete Stichproben sowie Berechnung von Gewichten und einige Analysen
+- `samplingbook` in ([Kauermann and Küchenhoff, 2011](#bib-kauermann_stichproben_2011)) beschriebene Funktionen
+- `survey` für geschichtete Stichproben sowie vielfältigen Auswertungsmethoden
+
+**Stata**
+
+`sample`, `svyset` und `svy` 
+
+**Excel**
+
+[XLSTAT](https://www.xlstat.com/de/)
+
+---
+
+## Bestimmung der Stichprobengröße
+
+**Kosten vs. Nutzen**
+
+.center[
+
+Möglichst hohe Genauigkeit der Statistiken  `\(\rightarrow\)` N &lt;svg viewBox="0 0 448 512" style="height:1em;position:relative;display:inline-block;top:.1em;" xmlns="http://www.w3.org/2000/svg"&gt;  &lt;path d="M34.9 289.5l-22.2-22.2c-9.4-9.4-9.4-24.6 0-33.9L207 39c9.4-9.4 24.6-9.4 33.9 0l194.3 194.3c9.4 9.4 9.4 24.6 0 33.9L413 289.4c-9.5 9.5-25 9.3-34.3-.4L264 168.6V456c0 13.3-10.7 24-24 24h-32c-13.3 0-24-10.7-24-24V168.6L69.2 289.1c-9.3 9.8-24.8 10-34.3.4z"&gt;&lt;/path&gt;&lt;/svg&gt;
+
+vs.
+
+Möglichst geringe Kosten `\(\rightarrow\)` N &lt;svg viewBox="0 0 448 512" style="height:1em;position:relative;display:inline-block;top:.1em;" xmlns="http://www.w3.org/2000/svg"&gt;  &lt;path d="M413.1 222.5l22.2 22.2c9.4 9.4 9.4 24.6 0 33.9L241 473c-9.4 9.4-24.6 9.4-33.9 0L12.7 278.6c-9.4-9.4-9.4-24.6 0-33.9l22.2-22.2c9.5-9.5 25-9.3 34.3.4L184 343.4V56c0-13.3 10.7-24 24-24h32c13.3 0 24 10.7 24 24v287.4l114.8-120.5c9.3-9.8 24.8-10 34.3-.4z"&gt;&lt;/path&gt;&lt;/svg&gt;
+]
+
+Optimale Stichprobengröße: Wenn die Grenzkosten der Erhebung eines zusätzlichen Merkmalsträgers, den Grenznutzen eines zusätzlichen Merkmalsträgers übersteigen.
+
+Zeit, die in die Datenerhebung und Codierung gesteckt wird, steht nicht für Datenauswertung und Anfertigen des Berichts zur Verfügung.
+
+---
+
+## Konfidenzintervall in Abhängigkeit von der Stichprobengröße
+
+`\(p = .5\)`, `\(se_p = \sqrt{\frac{p\times(1-p)}{n}}\)`, `\(ci = \pm 1,96 \times se_p\)`
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-5-1.png" width="648" /&gt;
+
+---
+class: inverse
+
+## Software für die *Power Calculation*
+
+.pull-left[
+- Berechnungen zum Stichprobenumfang und Teststärkeberechnungen (*Power Calculation*)
+- Entsprechende Berechnungen können für vielerlei Tests mittels Software berechnet werden
+    - z.B: [G\*Power](https://www.psychologie.hhu.de/arbeitsgruppen/allgemeine-psychologie-und-arbeitspsychologie/gpower.html) (verfügbar für Mac und Windows) oder [Stichprobenrechner von SurveyMonkey](https://www.surveymonkey.de/mp/sample-size-calculator/)
+    - Stata: Befehl [`power`](https://www.stata.com/features/power-and-sample-size/)
+    - R: Die [Pakete `pwr` oder `WebPower`](https://med.und.edu/daccota/_files/pdfs/berdc_resource_pdfs/sample_size_r_module.pdf)
+    ]
+
+.pull-right[
+`\(e\)` Fehler, `\(1,96 \times e\)` 95%-Konfidenzintervall
+
+Mit Korrektur für finite Populationen:
+
+`\(n \geq \frac{S^2}{\frac{e^2}{z^2_{1-\alpha/2}} + \frac{S^2}{N}}\)`
+
+Für infinite/sehr große Grundgesamtheiten:
+
+`\(n \geq z^2_{1-\alpha/2} \times \frac{S^2}{e^2}\)`
+
+Bei Anteilen gilt `\(S^2 = p \times (1 - p)\)` und dass die Varianz für `\(p=0.5\)` maximal ist.
+]
+
+---
+class: inverse, center, middle
+
+# Fragebogenkonstruktion
+
+---
+
+## Faustregeln für die Frageformulierung
+
+![](images/schnell_2019_abb1-1.png)
+
+&lt;a name=cite-schnell_survey-interviews_2019&gt;&lt;/a&gt;([Schnell, 2019](#bib-schnell_survey-interviews_2019), S. 21)
+
+- Fragen sollten einfach (ohne Fach- oder Fremdwörter), kurz und konkret formuliert sein. &lt;!--Promotion: Doktorarbeit vs. Werbung--&gt;
+- Suggestivfragen und 'tendenziöse' Begriffe vermeiden &lt;!-- "Bürokrat", "Freiheit" --&gt;
+- Keine doppelten Verneinungen verwenden.
+- Fragen sollten sich nur auf einen Sachverhalt beziehen. &lt;!-- Wie finden Sie unseren Newsletter und Homepage --&gt;
+- Keine hypothetischen Fragen verwenden.
+- Befragte nicht überfordern. &lt;!-- Wieviel Geld geben Sie pro Monat für Essen außer Haus aus--&gt;
+- Fragen sollten balanciert sein. &lt;!-- Sollte unser Verein Mitglieder, die mehrere Monatsbeiträge schulden ausschließen oder sollte er das nicht tun? --&gt;
+
+Konkrete Empfehlungen zur Gestaltung von Fragen mit Beispielen finden sich bei &lt;a name=cite-lenzner_frageformulierung_2015&gt;&lt;/a&gt;[Lenzner and Menold (2015)](#bib-lenzner_frageformulierung_2015). 
+
+---
+
+## Antworten
+
+.pull-left[
+- Fragebogen sollte überwiegend aus geschlossenen Fragen bestehen
+- Antwortvorgaben müssen alle möglichen Antworten umfassen und diese sich gegenseitig ausschließen &lt;!--  --&gt;
+- **Wann immer möglich auf etablierte Items zurückgreifen**
+- [search.gesis.org](https://search.gesis.org/)
+]
+.pull-right[
+![:scale 70%](images/schnell_2019_abb4-4.png)
+]
+
+
+---
+
+## Weiß nicht
+
+Nicht-substanzielle Antworten (wird in der Regel von Software übernommen):
+
+- Frage wurde nicht gestellt (z.B. bei Filterung)
+- Trifft nicht zu
+- "Weiß nicht" (empfehlenswert, um Raten zu vermeiden)
+- Antwortverweigerung
+
+([Schnell, 2019](#bib-schnell_survey-interviews_2019), S. 46f)
+
+
+---
+
+## Fragebogen
+
+.pull-left[
+- Der Fragebogen sollte nicht zu lang sein (Befragungsdauer `\(\leq\)` 15 bis 30 Minuten)
+    - Stark von Zielgruppe, Erhebungsmodus und Thema abhängig
+- Was nicht ausgewertet wird, gehört nicht in den Fragebogen
+- Fragen, die nur für Subsamples relevant sind, ausfiltern &lt;!-- Welcher Studiengang, nur bei Studierenden --&gt;
+- Fragen in thematische Frageblöcke sortieren
+- Mit einer interessanten "ice breaker"-Frage beginnen
+- Demographische und sensible Fragen am Ende
+- **Unbedingt einen Pretest durchführen**
+
+(vgl. [Schnell, 2019](#bib-schnell_survey-interviews_2019), Kap. 5)
+]
+.pull-right[
+![:scale 60%](images/schnell_2019_abb5-2.png)
+]
+
+---
+
+## Pretest
+
+.pull-left[
+**Funktioniert mein Fragebogen?**
+
+Prestests dienen der Überprüfung von...
+
+- Dauer der Befragung
+- Funktionalität (Schreibfehler, fehlende Antwortkategorien, fehlerhafte Filterführung)
+- Verständnis der Fragen durch Befragte
+]
+
+--
+
+.pull-right[
+- **Mindestens mit Kolleg:innen, Bekannten oder Freund:innen durchführen**
+- Besser mit Mitgliedern der Zielgruppe
+
+Ich führe meistens zwei 'Pretests' durch:
+
+1. Kolleg:innen geben Feedback zu Textfassung
+2. Kolleg:innen, Bekannte und Freund:innen klicken sich durch Fragebogen und geben Feedback
+
+]
+
+---
+class: inverse
+
+## Ressourcen zur Fragebogenkonstruktion
+
+"Meet the Experts: Prof. Dr. Michael Braun, Dr. Jette Schröder: Entwicklung eines Fragebogens" auf [YouTube](https://youtu.be/iQ3exEP5I2c)
+
+&lt;p&gt;&lt;p&gt;&lt;cite&gt;&lt;a id='bib-lenzner_frageformulierung_2015'&gt;&lt;/a&gt;&lt;a href="#cite-lenzner_frageformulierung_2015"&gt;Lenzner, T. and N. Menold&lt;/a&gt;
+(2015).
+&amp;ldquo;Frageformulierung&amp;rdquo;.
+In: &lt;em&gt;SDM Survey Guidelines&lt;/em&gt;.
+DOI: &lt;a href="https://doi.org/10.15465/GESIS-SG_017"&gt;10.15465/GESIS-SG_017&lt;/a&gt;.
+URL: &lt;a href="http://www.gesis.org/gesis-survey-guidelines/instruments/fragebogenkonstruktion/frageformulierung/"&gt;http://www.gesis.org/gesis-survey-guidelines/instruments/fragebogenkonstruktion/frageformulierung/&lt;/a&gt; (visited on May. 08, 2021).&lt;/cite&gt;&lt;/p&gt;
+&lt;/p&gt;&lt;p&gt;&lt;p&gt;&lt;cite&gt;&lt;a id='bib-schnell_survey-interviews_2019'&gt;&lt;/a&gt;&lt;a href="#cite-schnell_survey-interviews_2019"&gt;Schnell, R.&lt;/a&gt;
+(2019).
+&lt;em&gt;Survey-Interviews: Methoden standardisierter Befragungen&lt;/em&gt;.
+De.
+Studienskripten zur Soziologie.
+Wiesbaden: Springer Fachmedien Wiesbaden.
+ISBN: 978-3-531-19900-9 978-3-531-19901-6.
+DOI: &lt;a href="https://doi.org/10.1007/978-3-531-19901-6"&gt;10.1007/978-3-531-19901-6&lt;/a&gt;.
+URL: &lt;a href="http://link.springer.com/10.1007/978-3-531-19901-6"&gt;http://link.springer.com/10.1007/978-3-531-19901-6&lt;/a&gt; (visited on May. 08, 2021).&lt;/cite&gt;&lt;/p&gt;
+&lt;/p&gt;
+
+
+---
+class: inverse, center, middle
+
+# Datenschutz
+
+---
+
+## Datenschutz
+
+- Es geht um den Schutz der informationellen Selbstbestimmung eurer (potentiellen) Befragten
+- Personenbezogene Daten sind Informationen, die eine eindeutige Identifikation einer Person zulassen
+- Anonymisierte Daten sind keine personenbezogenen Daten
+- Gesetzliche Grundlagen
+    - Datenschutzgrundverordnung ([DSGVO](https://eur-lex.europa.eu/legal-content/DE/TXT/?uri=CELEX%3A32016R0679))
+    - Bundesdatenschutzgesetz ([BDSG](https://www.gesetze-im-internet.de/bdsg_2018/))
+    - Jeweiliges Landesdatenschutzgesetz
+- Ihr...
+    - habt eine Informations- und Auskunftspflicht gegenüber Befragten
+    - seid verpflichtet personenbezogene Daten auf Wunsch der Betroffenen zu löschen
+
+
+---
+
+## Datenschutz in Befragungen
+
+**Bei der Kontaktaufnahme**
+
+- Darf ich mir zur Verfügung stehende Daten zur Kontaktaufnahme für eine Befragung nutzen?
+- DSGVO sieht hier gewisse Privilegien für wissenschaftliche Forschung vor, die für Befragungen im Auftrag von Non-Profits wahrscheinlich nicht greifen dürften.
+
+--
+
+**Bei der Einwilligung zur Teilnahme**
+
+- Es braucht ggf. eine explizite Einwiligung der Teilnehmenden zur Datenverarbeitung (`opt-in`)
+- Teilnehmer:inneninformationen gemäß Art 13 DSGVO, siehe z.b. die der [Jugendwahlstudie 2019](https://www.polsoz.fu-berlin.de/polwiss/forschung/systeme/empsoz/forschung/informationen_zum_datenschutz_art13.pdf)
+
+--
+
+**Bei der Speicherung und Auswertung der Daten**
+
+- Personenbezogene Daten und Befragungsdaten getrennt speichern und nicht zusammenführen
+- Personenbezogene Daten müssen vor Zugriff Dritter geschützt werden
+- Teilnehmende können Auskunft über und Löschung personenbezogener Daten einfordern
+    - Das betrifft nicht anonymisierte Befragungsdaten
+
+---
+class: inverse
+
+## Ressourcen zum Datenschutz
+
+[Jugendwahlstudie 2019: Informationen zum Datenschutz gemäß Art. 13 DSGVO](https://www.polsoz.fu-berlin.de/polwiss/forschung/systeme/empsoz/forschung/informationen_zum_datenschutz_art13.pdf)
+
+"CorrelAid Projektzyklus: Datenschutz und Datenethik" auf [YouTube](https://youtu.be/bnLceww8qRg)
+
+&lt;p&gt;&lt;p&gt;&lt;cite&gt;RatSWD, R. f. S.
+(2020).
+&lt;em&gt;Datenerhebung mit neuer Informationstechnologie: Empfehlungen zu Datenqualität und -management, Forschungsethik und Datenschutz&lt;/em&gt;.
+Ger.
+Research Report 6 (6).
+RatSWD Output.
+DOI: &lt;a href="https://doi.org/10.17620/02671.47"&gt;10.17620/02671.47&lt;/a&gt;.
+URL: &lt;a href="https://www.econstor.eu/handle/10419/224196"&gt;https://www.econstor.eu/handle/10419/224196&lt;/a&gt; (visited on May. 08, 2021).&lt;/cite&gt;&lt;/p&gt;
+&lt;/p&gt;
+
+---
+class: inverse, center, middle
+
+# Durchführung der Datenerhebung
+
+---
+
+## Erhebungsmodi
+
+- Persönliche Interviews („Face-to-Face“-Befragungen)
+- Telefonische Befragungen
+- Schriftlich-postalische Befragung („Mail-Surveys“ / „Pen-and-paper“)
+- Web-Surveys
+
+---
+
+## Mündliche Befragungen
+
+.small[
+- Befragung wird mündlich durch (professionelle) Interviewer:in persönlich (CAPI&lt;sup&gt;1&lt;/sup&gt;) oder per Telefon (CATI&lt;sup&gt;2&lt;/sup&gt;) durchgeführt
+- Interviewer:in liest Fragen und mögliche Antworten vor und notiert Antworten
+]
+
+--
+
+.small[
+- "Face to Face"
+    - "Goldstandard", da größte Erreichbarkeit und höchste Teilnahmebereitschaft
+    - Allerdings größeres Potential für Interviewer:inneneffekte und soziale Erwünschtheit
+    - Sehr zeit- und personalintensiv und damit auch teuer
+]
+
+--
+
+.small[
+- Telefonische Befragung
+    - Obige Punkte gelten in abgeschwächter Form
+    - Immer mehr Haushalte, die über kein Festnetz verfügen
+-&lt;!-- Sind Adressen oder Nummern bekannt, dürfen diese für Befragung genutzt werden? --&gt;
+
+.footnote[
+[1] Computer Assisted Personal Interview
+
+[2] Computer Assisted Telephone Interview
+]
+]
+
+
+
+---
+
+## Schriftlich
+
+.small[
+
+- Befragte 'kreuzen' ausgedruckten Fragebogen in der Regel zu Hause
+- Setzt keine Technik auf Seiten der Befragten voraus
+- Geringere soziale Erwünschtheit
+]
+
+--
+
+.small[
+- Stellt hohe Anforderungen an Gestaltung
+- Filterführung schwieriger (Anweisungen an Befragte)
+- Fragebögen müssen anschließend digitalisiert
+- Hoher Organisationsaufwand
+
+]
+
+---
+
+
+## Online-Befragung
+
+
+- Schnell und kostengünstig umsetzbar
+- Bilder, Audio und Video können eingebunden werden
+- Einladung per E-Mail kann direkt aus Befragungssoftware heraus geschehen
+- Automatische Generierung von Paradaten (z.B. Befragungsdauer, etc.)
+- Setzt Internetzugang und Endgerät in Zielgruppe voraus
+
+
+--
+
+
+- Verschiedene Anbieter prüfen
+    - Im Blick haben: wie viele (gleichzeitige) Befragungen (insgesamt) sind möglich?
+- DSGVO-Konformität prüfen
+
+
+--
+
+
+- Erzwungene Antworten sehr sparsam verwenden
+- Beim Pre-Test unterschiedlichste Endgeräte und Browser testen
+
+
+---
+
+## "Total Design Method"
+
+„Minimiere die subjektiven Kosten für den Befragten“ 
+
+Unter anderem:
+
+- personalisiertes Anschreiben
+- Ankündigung, Befragung inkl. "Begleitschreiben", ggf. Erinnerung
+- Fragen von interessant (für Befragte!) nach weniger interessant sortieren
+- bei postalischer Befragung: frankierte Rückumschläge
+
+---
+class: inverse
+
+## Lösungen für Online-Befragungen
+
+- [Limesurvey](https://www.limesurvey.org/de)
+- [Unipark](https://www.unipark.com/)
+- [Soscisurvey](https://www.soscisurvey.de/)
+- Google Forms
+
+
+---
+class: inverse
+
+## Ressourcen zur Datenerhebung
+
+&lt;p&gt;&lt;p&gt;&lt;cite&gt;&lt;a id='bib-schnell_survey-interviews_2019'&gt;&lt;/a&gt;&lt;a href="#cite-schnell_survey-interviews_2019"&gt;Schnell, R.&lt;/a&gt;
+(2019).
+&lt;em&gt;Survey-Interviews: Methoden standardisierter Befragungen&lt;/em&gt;.
+De.
+Studienskripten zur Soziologie.
+Wiesbaden: Springer Fachmedien Wiesbaden.
+ISBN: 978-3-531-19900-9 978-3-531-19901-6.
+DOI: &lt;a href="https://doi.org/10.1007/978-3-531-19901-6"&gt;10.1007/978-3-531-19901-6&lt;/a&gt;.
+URL: &lt;a href="http://link.springer.com/10.1007/978-3-531-19901-6"&gt;http://link.springer.com/10.1007/978-3-531-19901-6&lt;/a&gt; (visited on May. 08, 2021).&lt;/cite&gt;&lt;/p&gt;
+&lt;/p&gt;&lt;p&gt;&lt;p&gt;&lt;cite&gt;Wagner-Schelewsky, P. and L. Hering
+(2019).
+&amp;ldquo;Online-Befragung&amp;rdquo;.
+De.
+In: 
+&lt;em&gt;Handbuch Methoden der empirischen Sozialforschung&lt;/em&gt;.
+Ed. by N. Baur and J. Blasius.
+Wiesbaden: Springer Fachmedien, pp. 787&amp;ndash;800.
+ISBN: 978-3-658-21308-4.
+DOI: &lt;a href="https://doi.org/10.1007/978-3-658-21308-4_54"&gt;10.1007/978-3-658-21308-4_54&lt;/a&gt;.
+URL: &lt;a href="https://doi.org/10.1007/978-3-658-21308-4_54"&gt;https://doi.org/10.1007/978-3-658-21308-4_54&lt;/a&gt; (visited on May. 08, 2021).&lt;/cite&gt;&lt;/p&gt;
+&lt;/p&gt;
+
+Konsultiert das Handbuch der von euch verwendeten Software!
+
+---
+class: inverse, center, middle
+
+# Datenbereinigung und -auswertung
+
+---
+
+## Datensicherung
+
+- Befragungsdaten nach Abschluss der Befragung herunterladen und Sicherungskopie anlegen
+    - in allen gängigen Formaten
+- Personenbezogene Daten und Befragungsdaten separat speichern
+- Sicherstellen, dass alle benötigten Daten auch gespeichert werden
+    - Werden Paradaten benötigt?
+    - Statuscodes gespeichert?
+- Codebuch abspeichern
+
+---
+
+## Datenqualität prüfen und Recodierung
+
+- Überblick über Unit- und Item-Non-Response sowie Abbrüche verschaffen
+- Unplausible Werte identifizieren
+- 'Speeder' anhand der Paradaten identifizieren 
+- Codes für *missing values* (Antwort verweigert, Frage nicht gestellt, oft auch 'Weiß nicht') durch von Statistiksoftware dafür genutzten Werte (R: `NA`, Stata: `.`) ersetzen
+- Items, wo nötig, invertieren
+
+---
+
+
+
+## Gewichtung
+
+**Designgewichte**
+
+Gleichen aus, dass bestimmte Segmente der Grundgesamtheit werden bewusst über oder unter ihrem Anteil an der Grundgesamtheit gesamplet (disproportional geschichtete Stichprobe).
+
+**Kalibrierungs- und Anpassungsgewichte**
+
+Im Prozess der Datenerhebung kommt es durch Unit- oder Item-Nonresponse oder andere Fehlerquellen zu Abweichungen zwischen Verteilungen in Grundgesamtheit und Nettostichprobe. Dafür kann ex-post korrigiert werden.
+
+&lt;a name=cite-baur_gewichtung_2019&gt;&lt;/a&gt;&lt;a name=cite-sand_gewichtung_2020&gt;&lt;/a&gt;(vgl. [Kiesl, 2019](#bib-baur_gewichtung_2019); [Sand and Kunz, 2020](#bib-sand_gewichtung_2020))
+
+---
+
+## Gewichtung
+
+.pull-left[
+`\(Population \% = Schicht \% \times Gewicht\)`
+
+`\(Gewicht = \frac{Population \%}{Schicht \%} =\)` `\(d_h^* = \frac{N_h}{N}\frac{n}{n_h}\)`&lt;sup&gt;*&lt;/sup&gt;
+
+
+
+]
+
+.pull-right[
+.small[
+Äquivalent:
+
+`\(d_i = \frac{1}{\pi_i}\)`, wobei `\(\pi_i = \frac{n_h}{N_h}\)` für `\(i\)` aus Schicht `\(h\)`
+
+`\(d_i^* = \frac{d_i}{\sum_{i=1}^nd_i} \times n\)`
+]]
+
+.small[
+.small[
+- Merkmalsträger die einer Schicht angehören, die in der Stichprobe unterrepräsentiert ist, erhalten ein Gewicht &gt; 1.
+- Merkmalsträger die einer Schicht angehören, die in der Stichprobe überrepräsentiert ist, erhalten ein Gewicht &lt; 1.
+- Die Summe der normierten Gewichte entspricht der Fallzahl `\(n\)` der Stichprobe.
+
+Designgewichte lassen sich einfach händisch oder mittels Packages in `R`, `Stata` berechnen, das ggf. schon zur Stichprobenziehung zum Einsatz kam.
+]]
+
+.footnote[.small[
+[*] `\(N\)` steht für Fallzahlen in der Population und `\(n\)` in der Stichprobe; Subskript `\(h\)` steht für eine Schicht.
+]]
+
+---
+class: inverse
+
+## Praktische Anwendung (normierter) Gewichte
+
+Aus
+
+`\(\bar{y} = \frac{1}{n}\sum_{i=1}^n x_i\)`
+
+wird
+
+`\(\bar{y} = \frac{1}{n}\sum_{i=1}^n d_i x_i\)`
+
+wobei `\(d_i\)` die individuelle Gewichtung eines Merkmalsträgers abbildet, die kleiner, gleich oder größer 1 ist.
+
+- Anwendung von Gewichten ist in Stata (über Option [weight]) und R (über eigenen Funktionen wie `weighted.mean()` oder zusätzliche Argumente wie `weights` in `lm()`) direkt implementierbar
+- Außerdem über `svyset` und verbundene Kommandos in Stata sowie bspw. das Paket `survey` in R
+
+---
+
+## Dokumentation
+
+Dokumentation sollte von Beginn des Projekts an mitlaufen.
+
+Die Dokumentation sollte enthalten:
+
+- Forschungsinteresse
+- Durchführende und Finanzierung
+- Zielpopulation und Stichprobenziehung
+- Art der Erhebung, Feldzeit, 
+- Bruttostichprobe, Ausfälle, Nettostichprobe, Rücklaufquote
+- Fragebogen
+- Datenbearbeitung
+
+Siehe [GESIS Survey Guidelines &gt; Open Science &gt; Dokumentation Feldarbeit](
+Survey Guidelines)
+
+Beispiel: [Studienbeschreibung "Vorwahl-Querschnitt (GLES 2017)"](https://dbk.gesis.org/dbksearch/download.asp?id=64488) 
+
+---
+class: inverse, center, middle
+
+# Ressourcen zum Nachschlagen
+
+---
+
+
+## Online-Ressourcen
+
+*[GESIS](https://www.gesis.org/home) ist die Antwort auf alle eure Fragen. ;)*
+
+["GESIS Survey Guidelines"](https://www.gesis.org/gesis-survey-guidelines/home) Sammlung verschiedener Handreichungen von GESIS rund um das Thema Bevölkerungsbefragungen.
+
+["Meet the Experts: Best-Practice-Methoden in Umfrageforschung"](https://www.youtube.com/playlist?list=PLv4AV-dc1b8WxulTcakAeKX8HdKz3mNcn) Video-Reihe auf YouTube von GESIS
+
+[search.gesis.org](https://search.gesis.org) Datenbank von GESIS, welche Fragebögen, Codebücher, Befragungsdaten, Messinstrumente etc. tausender Befragungen umfasst
+
+---
+
+## Literatur
+
+- Baur, Nina, und Jörg Blasius, Hrsg. 2019. Handbuch Methoden der empirischen Sozialforschung. Wiesbaden: Springer Fachmedien.
+- Döring, Nicola, und Jürgen Bortz, Hrsg. 2016. Forschungsmethoden und Evaluation in den Sozial- und Humanwissenschaften. Wiesbaden: Springer.
+    - insbesondere Kapitel 9 (Stichprobenziehung)
+- Lavrakas, Paul, Hrsg. 2008. Encyclopedia of Survey Research Methods. 2455 Teller Road, Thousand Oaks: Sage Publications. https://doi.org/10.4135/9781412963947.
+- Schnell, Rainer. 2019. Survey-Interviews: Methoden standardisierter Befragungen. Studienskripten zur Soziologie. Wiesbaden: Springer Fachmedien Wiesbaden. https://doi.org/10.1007/978-3-531-19901-6.
+
+---
+class: inverse, center, middle
+
+#Literaturnachweise
+
+---
+
+## Literaturnachweise
+
+&lt;a name=bib-doring_stichprobenziehung_2016&gt;&lt;/a&gt;[Döring, N. and J.
+Bortz](#cite-doring_stichprobenziehung_2016) (2016a).
+"Stichprobenziehung". De. In: _Forschungsmethoden und Evaluation in den
+Sozial- und Humanwissenschaften_. Ed. by N. Döring and J. Bortz.
+Springer-Lehrbuch. Berlin, Heidelberg: Springer, pp. 291-319. ISBN:
+978-3-642-41089-5. DOI:
+[10.1007/978-3-642-41089-5_9](https://doi.org/10.1007%2F978-3-642-41089-5_9).
+URL:
+[https://doi.org/10.1007/978-3-642-41089-5_9](https://doi.org/10.1007/978-3-642-41089-5_9)
+(visited on Dec. 25, 2020).
+
+&lt;a name=bib-hartmann_hypothesen_2015&gt;&lt;/a&gt;[Hartmann, F. G. and D.
+Lois](#cite-hartmann_hypothesen_2015) (2015b). _Hypothesen Testen: Eine
+Einführung für Bachelorstudierende sozialwissenschaftlicher Fächer_.
+De. essentials. Wiesbaden: Springer Fachmedien. ISBN:
+978-3-658-10461-0. DOI:
+[10.1007/978-3-658-10461-0_5](https://doi.org/10.1007%2F978-3-658-10461-0_5).
+URL:
+[https://doi.org/10.1007/978-3-658-10461-0_5](https://doi.org/10.1007/978-3-658-10461-0_5)
+(visited on Dec. 25, 2020).
+
+&lt;a name=bib-kauermann_stichproben_2011&gt;&lt;/a&gt;[Kauermann, G. and H.
+Küchenhoff](#cite-kauermann_stichproben_2011) (2011). _Stichproben.
+Methoden und praktische Umsetzung mit R_. De. Springer-Lehrbuch.
+Berlin, Heidelberg: Springer Berlin Heidelberg. ISBN: 978-3-642-12317-7
+978-3-642-12318-4. DOI:
+[10.1007/978-3-642-12318-4](https://doi.org/10.1007%2F978-3-642-12318-4).
+URL:
+[http://link.springer.com/10.1007/978-3-642-12318-4](http://link.springer.com/10.1007/978-3-642-12318-4)
+(visited on Dec. 25, 2020).
+
+---
+
+## Literaturnachweise
+
+&lt;a name=bib-baur_gewichtung_2019&gt;&lt;/a&gt;[Kiesl,
+H.](#cite-baur_gewichtung_2019) (2019). "Gewichtung". De. In: _Handbuch
+Methoden der empirischen Sozialforschung_. Ed. by N. Baur and J.
+Blasius. Wiesbaden: Springer Fachmedien Wiesbaden, pp. 405-412. ISBN:
+978-3-658-21307-7 978-3-658-21308-4. DOI:
+[10.1007/978-3-658-21308-4_28](https://doi.org/10.1007%2F978-3-658-21308-4_28).
+URL:
+[http://link.springer.com/10.1007/978-3-658-21308-4_28](http://link.springer.com/10.1007/978-3-658-21308-4_28)
+(visited on Feb. 18, 2021).
+
+&lt;a name=bib-lenzner_frageformulierung_2015&gt;&lt;/a&gt;[Lenzner, T. and N.
+Menold](#cite-lenzner_frageformulierung_2015) (2015).
+"Frageformulierung". In: _SDM Survey Guidelines_. DOI:
+[10.15465/GESIS-SG_017](https://doi.org/10.15465%2FGESIS-SG_017). URL:
+[http://www.gesis.org/gesis-survey-guidelines/instruments/fragebogenkonstruktion/frageformulierung/](http://www.gesis.org/gesis-survey-guidelines/instruments/fragebogenkonstruktion/frageformulierung/)
+(visited on May. 08, 2021).
+
+&lt;a name=bib-sand_gewichtung_2020&gt;&lt;/a&gt;[Sand, M. and T.
+Kunz](#cite-sand_gewichtung_2020) (2020). _Gewichtung in der Praxis
+(Version 1.0)_. De. GESIS Survey Guidelines. Mannheim: GESIS -
+Leibniz-Institut für Sozialwissenschaften. DOI:
+[10.15465/gesis-sg_030](https://doi.org/10.15465%2Fgesis-sg_030).
+
+&lt;a name=bib-schnell_survey-interviews_2019&gt;&lt;/a&gt;[Schnell,
+R.](#cite-schnell_survey-interviews_2019) (2019). _Survey-Interviews:
+Methoden standardisierter Befragungen_. De. Studienskripten zur
+Soziologie. Wiesbaden: Springer Fachmedien Wiesbaden. ISBN:
+978-3-531-19900-9 978-3-531-19901-6. DOI:
+[10.1007/978-3-531-19901-6](https://doi.org/10.1007%2F978-3-531-19901-6).
+URL:
+[http://link.springer.com/10.1007/978-3-531-19901-6](http://link.springer.com/10.1007/978-3-531-19901-6)
+(visited on May. 08, 2021).
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script src="macros.js"></script>
+<script>var slideshow = remark.create({
+"slideNumberFormat": "%current%",
+"highlightStyle": "github",
+"highlightLines": true,
+"ratio": "16:9",
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
