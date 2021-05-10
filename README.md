@@ -80,8 +80,16 @@ Registrierung für die April Termine ist bereits möglich über unseren [Pretix 
 ## Anwendungsfall 1: Gestaltung eines Surveys (Umfrage) 
 
 
-## Anwedungsfall 2: Daten aus dem Web 
+## Anwedungsfall 2: Daten aus dem Web
+**Referent**: Jan Dix
 
+### Inhaltlicher Input
+- [Folien](https://projektzyklus.correlaid.org/07_datenmanagement-webdaten/2021-05-09_Datenzugriff_im_WWW.pdf)
+- [API Quellen](https://projektzyklus.correlaid.org/07_datenmanagement-webdaten/api-list.md)
+
+### Praktische Übung
+- [R Code](https://github.com/CorrelAid/projektzyklus-workshops/tree/main/07_datenmanagement-webdaten/rpdf)
+- [Python Code](https://github.com/CorrelAid/projektzyklus-workshops/tree/main/07_datenmanagement-webdaten/python)
 
 ## Anwendungsfall 3: Erstellen einer Datenbank 
 # Modul Datenanalyse
