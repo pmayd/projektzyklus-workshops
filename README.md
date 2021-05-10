@@ -79,6 +79,12 @@ Registrierung für die April Termine ist bereits möglich über unseren [Pretix 
 
 ## Anwendungsfall 1: Gestaltung eines Surveys (Umfrage) 
 
+**Referent**: Arndt Leininger
+
+### Inhaltlicher Input
+
+- [Folien](https://projektzyklus.correlaid.org/06_datenmanagement-surveys/slides.html)
+- [Lizenzinformationen](https://github.com/CorrelAid/projektzyklus-workshops/tree/main/06_datenmanagement-surveys)
 
 ## Anwedungsfall 2: Daten aus dem Web
 **Referent**: Jan Dix
