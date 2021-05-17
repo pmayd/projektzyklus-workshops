@@ -2,3 +2,6 @@
 .Rproj.user
 .Rhistory
 .Rprofile
+
+# temp pptx files
+~$*.pptx

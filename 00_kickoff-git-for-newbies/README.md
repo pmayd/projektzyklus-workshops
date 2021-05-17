@@ -1,6 +1,8 @@
 
 # Git for newbies
 
+[![License: CC BY 4.0](https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
+
 Live workshop at the project cycle kickoff event.
 
 Please follow the [setup instructions](https://github.com/CorrelAid/git-newbie-playground) in the days before the workshop - otherwise you won't be able to participate in the hands-on exercises!

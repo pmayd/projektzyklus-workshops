@@ -1,4 +1,5 @@
 # Einführung in Veracrypt
+[![License: CC BY 4.0](https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
 
 [Folien](https://correlaid.github.io/projektzyklus-workshops/00_kickoff-datensicherheit-veracrypt/intro_veracrypt_slides.html)
 
