@@ -1,9 +1,3 @@
-### To-Do:
-### Debug - leider keine Idee, was da alles nicht stimmt
-### Warnung abstellen?
-
-
-
 # INTERAKTIVE VISUALISIERUNGEN MIT (R) SHINY
 
 ### Dieses Codescript hilft Euch Eure erste Shiny Web-Applikation zu bauen. 
@@ -182,12 +176,12 @@ barplot <- function(daten, xvariable, farbvariable, farbpalette, titel) {
   ggplot(daten, aes(x = xvariable, fill = factor(farbvariable))) +
     scale_fill_brewer(palette = farbpalette) + # Farbpalette
     theme_classic() + # Layout
-    theme(legend.position = "none", axis.text.x = element_text(angle = 45, vjust = 0.1)) + # Legende ausblenden, da hier nicht notwendig
+    theme(legend.position = "none", axis.text.x = element_text(angle = 45, vjust = 0.5)) + # Legende ausblenden, da hier nicht notwendig
     ggtitle(paste(titel)) + # fügt einen Titel hinzu
     xlab('') + # x-Achsenbeschriftung
     ylab('Prozent der Antworten') + #y-Achsenbeschriftung
     scale_y_continuous(labels = scales::percent) +
-    geom_text(aes(label = scales::percent(..prop..), y = ..prop.., group = 1), stat= "count", vjust = - 0.3, size = 3) + # Beschriftung
+    geom_text(aes(label = scales::percent(..prop..), y = ..prop.., group = 1), stat= "count", vjust = 0.011, size = 3) + # Beschriftung
     geom_bar(aes(y = ..prop.., fill = factor(..x..), group = 1), stat="count") # Graphtyp und y-Achse in Prozent
   }
 
@@ -242,9 +236,9 @@ server <- function(input, output, session){
     
     # Verteilungsplot für Spenden
     plot_spenden <- daten %>% 
-      ggplot(aes(x=daten$`Spende (p.a. in EUR)`)) + # Plot initialisieren
+      ggplot(aes(x=`Spende (p.a. in EUR)`)) + # Plot initialisieren
       geom_density(fill='#027F88', color = '#027F88') + # Verteilungsplot erstellen
-      geom_vline(aes(xintercept=mean(daten$`Spende (p.a. in EUR)`))) + # Mittelwert hinzufügen
+      geom_vline(aes(xintercept=mean(`Spende (p.a. in EUR)`))) + # Mittelwert hinzufügen
       theme_classic() + # Layout auswählen
       xlab('Spendenhöhe p.a. in EUR') + # x-Achse beschriften
       ylab('Verteilung') +  # y-Achse beschriften
@@ -285,11 +279,19 @@ server <- function(input, output, session){
     
     # Karte erstellen
     karte <- daten %>%
-    mutate(Lat = as.numeric(Lat), Long = as.numeric(Long)) %>%
-    leaflet() %>% 
-    addProviderTiles(providers$CartoDB.DarkMatter) %>% # Layout wählen
-    setView(10.4541194, 51.1642292, zoom = 5.25) %>% # Standard-Zoom festsetzen
-    addCircles(~Long, ~Lat, popup= daten$Wohnort, weight = 3, radius= 40, color="#67A9CF", stroke = TRUE, fillOpacity = 0.8)
+      select(`Mitglieds-ID`, Wohnort, Beitrittsdatum, Austrittsdatum, Lat, Long) %>% # Spalten auswählen
+      mutate('Eintritt' = 1, 'Austritt' = ifelse(is.na(Austrittsdatum), 0,1)) %>% #  Eintritt, Austritt und Aktivitätsstatus codieren
+      mutate('Aktives Mitglied' = Eintritt - Austritt) %>%
+      group_by(`Mitglieds-ID`, Wohnort, Lat, Long) %>% # Individuelle Mitglieder heraussuchen
+      summarise('Eintritte' = sum(unique(Eintritt)), 'Austritte' = sum(unique(Austritt)), 'Aktive Mitglieder' = sum(unique(`Aktives Mitglied`))) %>% # Anzahl berechnen
+      group_by(Wohnort, Lat, Long) %>% # Pro Ort gruppieren
+      summarise(Eintritte = sum(Eintritte), Austritte = sum(Austritte), 'Aktive Mitglieder' = sum(`Aktive Mitglieder`)) %>% # Zusammenfassung berechnen
+      mutate(Lat = as.numeric(Lat), Long = as.numeric(Long)) %>%
+      leaflet() %>% 
+      addProviderTiles(providers$CartoDB.Positron) %>% # Layout wählen - wir empfehlen die Layouts von CartoDB (auch verfügbar ohne Labels und in schwarz)
+      setView(10.4541194, 51.1642292, zoom = 5.25) %>% # Standard-Zoom festsetzen
+      addCircleMarkers(~Long, ~Lat, radius = karten_daten$`Aktive Mitglieder`, color="#027F88", # Radius nach Anzahl der aktiven Mitglieder
+                       popup= paste(karten_daten$Wohnort, '-', karten_daten$`Aktive Mitglieder`, "Aktive Mitglieder", sep =' ')) # Popup mit Stadtnamen und Anzahl
   })
   
   # Einfügen der Feedback-Visualisierung in die Applikation

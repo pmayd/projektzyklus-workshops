@@ -195,9 +195,9 @@ barplot <- function(daten, xvariable, farbvariable, farbpalette, titel) {
     xlab('') + # x-Achsenbeschriftung
     ylab('Prozent der Antworten') + #y-Achsenbeschriftung
     scale_y_continuous(labels = scales::percent) +
-    geom_text(aes(label = scales::percent(..prop..), y = ..prop.., group = 1), stat= "count", vjust = - 0.1, size = 2) + # Beschriftung
-geom_bar(aes(y = ..prop.., fill = factor(..x..), group = 1), stat="count") # Graphtyp und y-Achse in Prozent
-}
+    geom_text(aes(label = scales::percent(..prop..), y = ..prop.., group = 1), stat= "count", vjust = 0.011, size = 1.75) + # Beschriftung
+    geom_bar(aes(y = ..prop.., fill = factor(..x..), group = 1), stat="count") # Graphtyp und y-Achse in Prozent
+  }
 # Funktion anwenden
 plot_status <- barplot(daten, daten$Beschäftigungsstatus, daten$Beschäftigungsstatus, 'PuBuGn', 'Beschäftigung')
 ```
