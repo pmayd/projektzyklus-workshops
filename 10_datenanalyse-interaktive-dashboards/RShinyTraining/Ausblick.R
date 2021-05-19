@@ -146,8 +146,11 @@ ui <- fluidPage(
       # Textoutput für Autor:in
       textOutput('autor'), 
       
-    # Einfügen eines Download-Buttons
-      downloadButton('downloadbutton', label = "Download")
+      # Einfügen eines Download-Buttons
+      downloadButton('downloadbutton', label = "Download"),
+    
+    # Einfügen eines Hilfefensters
+      actionButton("hilfe", "Hilfe")
     ),
     
     # Hier kreiieren wir den Hauptteil der Applikation. 
@@ -277,8 +280,8 @@ server <- function(input, output, session){
       daten <- alle_daten_long
     }
     
-    # Karte erstellen
-    karte <- daten %>%
+    # Daten vorbereiten
+    karten_daten <- daten %>%
       select(`Mitglieds-ID`, Wohnort, Beitrittsdatum, Austrittsdatum, Lat, Long) %>% # Spalten auswählen
       mutate('Eintritt' = 1, 'Austritt' = ifelse(is.na(Austrittsdatum), 0,1)) %>% #  Eintritt, Austritt und Aktivitätsstatus codieren
       mutate('Aktives Mitglied' = Eintritt - Austritt) %>%
@@ -286,7 +289,10 @@ server <- function(input, output, session){
       summarise('Eintritte' = sum(unique(Eintritt)), 'Austritte' = sum(unique(Austritt)), 'Aktive Mitglieder' = sum(unique(`Aktives Mitglied`))) %>% # Anzahl berechnen
       group_by(Wohnort, Lat, Long) %>% # Pro Ort gruppieren
       summarise(Eintritte = sum(Eintritte), Austritte = sum(Austritte), 'Aktive Mitglieder' = sum(`Aktive Mitglieder`)) %>% # Zusammenfassung berechnen
-      mutate(Lat = as.numeric(Lat), Long = as.numeric(Long)) %>%
+      mutate(Lat = as.numeric(Lat), Long = as.numeric(Long))
+    
+    # Karte erstellen
+    karte <- karten_daten %>%
       leaflet() %>% 
       addProviderTiles(providers$CartoDB.Positron) %>% # Layout wählen - wir empfehlen die Layouts von CartoDB (auch verfügbar ohne Labels und in schwarz)
       setView(10.4541194, 51.1642292, zoom = 5.25) %>% # Standard-Zoom festsetzen
@@ -301,7 +307,18 @@ server <- function(input, output, session){
   
   # Einfügen des/der Autor(s):in in die Applikation
   output$autor <- renderText({
-    paste('Hinweis: Die Filter Bewertungskriterium und Erhebungsjahr sind nur für den zweiten Tab relevant. ','Auszug erstellt von ', input$name, ' am ', format(Sys.time(), " %d.%m.%Y"), '.', sep ='')
+    paste('Auszug erstellt von ', input$name, ' am ', format(Sys.time(), " %d.%m.%Y"), '.', sep ='')
+  })
+  
+  # Bedienungshilfe
+  hilfe_text <- "Über die Auswahl der Orte könnt Ihr die Reiter Mitglieder, Feedback, Standorte und die Datentabelle erforschen.
+      Die Filter Bewertungskriterium und Erhebungsjahr sind nur für den zweiten Tab (Feedback) relevant.
+      Die Ortskreise auf der Karte werden mit der Anzahl der Mitglieder größer. 
+      Wenn Ihr auf sie klickt, findet Ihr mehr Informationen zu dem Ort.
+      Wenn Ihr auf Download klickt, speichert Ihr Eure derzeitige Auswahl als PDF.
+      Bei Anmerkungen oder Fragen wendet Euch an: nina.h@correlaid.org"
+  observeEvent(input$hilfe, {
+    showModal(modalDialog(hilfe_text, title = "Bedienungshilfe", footer = modalButton("Verstanden!")))
   })
   
   # Einfügen der Tabelle in in die Applikation
