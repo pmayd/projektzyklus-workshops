@@ -78,8 +78,10 @@ colnames(mitglieder)
 summary(mitglieder)
 
 
+############################################
 
-
+# 4) DATEN BEREINIGEN
+### Hier könntet Ihr noch Änderungen an den Daten vornehmen oder sog. "joins", also Verknüpfungen zwischen Daten vornehmen.
 
 ############################################
 

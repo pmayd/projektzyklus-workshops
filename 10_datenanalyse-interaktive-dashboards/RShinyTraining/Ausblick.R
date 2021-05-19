@@ -75,7 +75,7 @@ geocoordinaten <- readxl::read_xlsx(here::here("Daten", "Geocodierung.xlsx"))
 alle_daten_short <- dplyr::full_join(left_join(mitglieder, geocoordinaten, by = 'Wohnort'), feedback, by = "Mitglieds-ID")
 
 ### Die Variablennamen sind nicht noch nicht so schön oder zu lang? Mit dem Snippet colnames(datensatz) <- c("Name1", "Name2", ...) lässt sich das ändern.
-colnames(alle_daten_short) <- c("Mitglieds-ID", "Geschlecht", "Geburtsdatum", "Wohnort", "Bundesland", 
+colnames(alle_daten_short) <- c("Mitglieds-ID", "Name", "Geschlecht", "Geburtsdatum", "Wohnort", "Bundesland", 
                                 "Beitrittsdatum", "Austrittsdatum", "Beschäftigungsstatus", "Spende (p.a. in EUR)", "Lat", "Long", 
                                 "Kursangebot insgesamt", "An welchem Kursniveau nimmst Du teil?", "Mentor:in", 
                                 "Materialien", "Anmeldung", "Beratungsstelle", "Räumlichkeiten", "Erhebungsjahr")
@@ -157,14 +157,14 @@ ui <- fluidPage(
     mainPanel(
       # Wir haben uns für das Layout mit Tabs (zu dt. Reitern) entschieden.
       tabsetPanel(
-        # # Tab mit Mitglieder-Visualisierung einfügen. 
-        tabPanel('Mitglieder', plotOutput('Mitglieder')),
-        # Tab mit Feedback-Visualisierung einfügen. Das Package plotly sorgt für die Interaktivität der Visualisierung.
-        tabPanel('Feedback', plotly::plotlyOutput('Feedback')),
         # Tab mit Karte einfügen. Wir nutzen das Package Leaflet.
         tabPanel('Standorte', leafletOutput('Karte')),
-        # Tab mit Tabelle und allen Daten einfügen. Das Package DT macht die Datentabelle durchsuch- und navigierbar.
-        tabPanel('Daten', DT::DTOutput('Daten'))
+        # # Tab mit Mitglieder-Visualisierung einfügen. 
+        tabPanel('Mitglieder', plotOutput('Mitglieder')),
+        # Tab mit Tabelle und allen Mitgliedsdaten einfügen. Das Package DT macht die Datentabelle durchsuch- und navigierbar.
+        tabPanel('Mitgliedsdaten', DT::DTOutput('Mitgliedsdaten')),
+        # Tab mit Feedback-Visualisierung einfügen. Das Package plotly sorgt für die Interaktivität der Visualisierung.
+        tabPanel('Feedback', plotly::plotlyOutput('Feedback'))
       ),
     )
   )
@@ -190,6 +190,83 @@ barplot <- function(daten, xvariable, farbvariable, farbpalette, titel) {
 
 ### Tabs gestalten
 server <- function(input, output, session){
+  
+  # Einfügen des/der Autor(s):in in die Applikation
+  output$autor <- renderText({
+    paste('Auszug erstellt von ', input$name, ' am ', format(Sys.time(), " %d.%m.%Y"), '.', sep ='')
+  })
+  
+  # Bedienungshilfe
+  hilfe_text <- "Über die Auswahl der Orte könnt Ihr die Reiter Mitglieder, Feedback, Standorte und die Datentabelle erforschen.
+      Die Filter Bewertungskriterium und Erhebungsjahr sind nur für den zweiten Tab (Feedback) relevant.
+      Die Ortskreise auf der Karte werden mit der Anzahl der Mitglieder größer. 
+      Wenn Ihr auf sie klickt, findet Ihr mehr Informationen zu dem Ort.
+      Wenn Ihr auf Download klickt, speichert Ihr Eure derzeitige Auswahl als PDF.
+      Bei Anmerkungen oder Fragen wendet Euch an: nina.h@correlaid.org"
+  observeEvent(input$hilfe, {
+    showModal(modalDialog(hilfe_text, title = "Bedienungshilfe", footer = modalButton("Verstanden!")))
+  })
+  
+  # Download-Report
+  output$downloadbutton <- downloadHandler(
+    filename = paste0(format(Sys.Date(), '%d.%m.%Y'), '_MitgliederzahlenUndFeedback', '.pdf'),
+    
+    content = function(file) {
+      src <- normalizePath('report_ausblick.Rmd')
+      
+      # Wechselt in ein temporäres Directory und definiert Zugangsberechtigungen
+      owd <- setwd(tempdir())
+      on.exit(setwd(owd))
+      file.copy(src, 'report_ausblick.Rmd', overwrite = TRUE)
+      
+      library(rmarkdown)
+      out <- render('report_ausblick.Rmd', quiet = TRUE, params = list(autor = input$name, erhebungsjahr = input$erhebungsjahr, frage = input$frage, ort = input$ort))
+      file.rename(out, file)
+  })
+  
+  # Standort-Karte visualisieren 
+  output$Karte <- renderLeaflet({
+    if (input$ort != "Alle Orte"){ # Erster Fall: Ein Ort wird ausgewählt.
+      daten <- alle_daten_long %>% filter(Wohnort == input$ort)
+    } else { # Zweiter Fall: Der/die Nutzer:in möchte alle Orte ansehen.
+      daten <- alle_daten_long
+    }
+    
+    # Daten vorbereiten
+    karten_daten <- daten %>%
+      select(`Mitglieds-ID`, Wohnort, Beitrittsdatum, Austrittsdatum, Lat, Long) %>% # Spalten auswählen
+      mutate('Eintritt' = 1, 'Austritt' = ifelse(is.na(Austrittsdatum), 0,1)) %>% #  Eintritt, Austritt und Aktivitätsstatus codieren
+      mutate('Aktives Mitglied' = Eintritt - Austritt) %>%
+      group_by(`Mitglieds-ID`, Wohnort, Lat, Long) %>% # Individuelle Mitglieder heraussuchen
+      summarise('Eintritte' = sum(unique(Eintritt)), 'Austritte' = sum(unique(Austritt)), 'Aktive Mitglieder' = sum(unique(`Aktives Mitglied`))) %>% # Anzahl berechnen
+      group_by(Wohnort, Lat, Long) %>% # Pro Ort gruppieren
+      summarise(Eintritte = sum(Eintritte), Austritte = sum(Austritte), 'Aktive Mitglieder' = sum(`Aktive Mitglieder`)) %>% # Zusammenfassung berechnen
+      mutate(Lat = as.numeric(Lat), Long = as.numeric(Long))
+    
+    # Karte erstellen
+    karte <- karten_daten %>%
+      leaflet() %>% 
+      addProviderTiles(providers$CartoDB.Positron) %>% # Layout wählen - wir empfehlen die Layouts von CartoDB (auch verfügbar ohne Labels und in schwarz)
+      setView(10.4541194, 51.1642292, zoom = 5.25) %>% # Standard-Zoom festsetzen
+      addCircleMarkers(~Long, ~Lat, radius = karten_daten$`Aktive Mitglieder`, color="#027F88", # Radius nach Anzahl der aktiven Mitglieder
+                       popup= paste(karten_daten$Wohnort, '-', karten_daten$`Aktive Mitglieder`, "Aktive Mitglieder", sep =' ')) # Popup mit Stadtnamen und Anzahl
+  })
+  
+  # Einfügen der Mitglieder-Tabelle in in die Applikation
+  output$Mitgliedsdaten <- DT::renderDT({
+    if (input$ort != "Alle Orte"){ # Erster Fall: Ein Ort wird ausgewählt.
+      daten <- mitglieder %>% filter(Wohnort == input$ort) %>%
+        mutate(Geburtsdatum = format(Geburtsdatum, "%d.%m.%Y")) %>% # Formatieren des Datums
+        mutate(Beitrittsdatum = format(Beitrittsdatum, "%d.%m.%Y")) %>%
+        mutate(Austrittsdatum = format(Austrittsdatum, "%d.%m.%Y"))
+    } else { # Zweiter Fall: Der/die Nutzer:in möchte alle Orte ansehen.
+      daten <- mitglieder %>%
+        mutate(Geburtsdatum = format(Geburtsdatum, "%d.%m.%Y")) %>% # Formatieren des Datums
+        mutate(Beitrittsdatum = format(Beitrittsdatum, "%d.%m.%Y")) %>%
+        mutate(Austrittsdatum = format(Austrittsdatum, "%d.%m.%Y"))
+    }
+  })
+  
   # Mitglieder-Visualisierung gestalten
   mitglieder_plot_ergebnisse <- reactive({ # Hier können wir unseren Output reaktiv gestalten.
     if (input$ort != "Alle Orte"){ # Erster Fall: Ein Ort wird ausgewählt.
@@ -272,87 +349,10 @@ server <- function(input, output, session){
     barplot(daten, daten$Antwort, daten$Antwort, 'PiYG', '')
   })
   
-  # Karte visualisieren 
-  output$Karte <- renderLeaflet({
-    if (input$ort != "Alle Orte"){ # Erster Fall: Ein Ort wird ausgewählt.
-      daten <- alle_daten_long %>% filter(Wohnort == input$ort)
-    } else { # Zweiter Fall: Der/die Nutzer:in möchte alle Orte ansehen.
-      daten <- alle_daten_long
-    }
-    
-    # Daten vorbereiten
-    karten_daten <- daten %>%
-      select(`Mitglieds-ID`, Wohnort, Beitrittsdatum, Austrittsdatum, Lat, Long) %>% # Spalten auswählen
-      mutate('Eintritt' = 1, 'Austritt' = ifelse(is.na(Austrittsdatum), 0,1)) %>% #  Eintritt, Austritt und Aktivitätsstatus codieren
-      mutate('Aktives Mitglied' = Eintritt - Austritt) %>%
-      group_by(`Mitglieds-ID`, Wohnort, Lat, Long) %>% # Individuelle Mitglieder heraussuchen
-      summarise('Eintritte' = sum(unique(Eintritt)), 'Austritte' = sum(unique(Austritt)), 'Aktive Mitglieder' = sum(unique(`Aktives Mitglied`))) %>% # Anzahl berechnen
-      group_by(Wohnort, Lat, Long) %>% # Pro Ort gruppieren
-      summarise(Eintritte = sum(Eintritte), Austritte = sum(Austritte), 'Aktive Mitglieder' = sum(`Aktive Mitglieder`)) %>% # Zusammenfassung berechnen
-      mutate(Lat = as.numeric(Lat), Long = as.numeric(Long))
-    
-    # Karte erstellen
-    karte <- karten_daten %>%
-      leaflet() %>% 
-      addProviderTiles(providers$CartoDB.Positron) %>% # Layout wählen - wir empfehlen die Layouts von CartoDB (auch verfügbar ohne Labels und in schwarz)
-      setView(10.4541194, 51.1642292, zoom = 5.25) %>% # Standard-Zoom festsetzen
-      addCircleMarkers(~Long, ~Lat, radius = karten_daten$`Aktive Mitglieder`, color="#027F88", # Radius nach Anzahl der aktiven Mitglieder
-                       popup= paste(karten_daten$Wohnort, '-', karten_daten$`Aktive Mitglieder`, "Aktive Mitglieder", sep =' ')) # Popup mit Stadtnamen und Anzahl
-  })
-  
   # Einfügen der Feedback-Visualisierung in die Applikation
   output$Feedback <- plotly::renderPlotly({
     fb_plot_ergebnisse()
   })
-  
-  # Einfügen des/der Autor(s):in in die Applikation
-  output$autor <- renderText({
-    paste('Auszug erstellt von ', input$name, ' am ', format(Sys.time(), " %d.%m.%Y"), '.', sep ='')
-  })
-  
-  # Bedienungshilfe
-  hilfe_text <- "Über die Auswahl der Orte könnt Ihr die Reiter Mitglieder, Feedback, Standorte und die Datentabelle erforschen.
-      Die Filter Bewertungskriterium und Erhebungsjahr sind nur für den zweiten Tab (Feedback) relevant.
-      Die Ortskreise auf der Karte werden mit der Anzahl der Mitglieder größer. 
-      Wenn Ihr auf sie klickt, findet Ihr mehr Informationen zu dem Ort.
-      Wenn Ihr auf Download klickt, speichert Ihr Eure derzeitige Auswahl als PDF.
-      Bei Anmerkungen oder Fragen wendet Euch an: nina.h@correlaid.org"
-  observeEvent(input$hilfe, {
-    showModal(modalDialog(hilfe_text, title = "Bedienungshilfe", footer = modalButton("Verstanden!")))
-  })
-  
-  # Einfügen der Tabelle in in die Applikation
-  output$Daten <- DT::renderDT({
-    if (input$ort != "Alle Orte"){ # Erster Fall: Ein Ort wird ausgewählt.
-      daten <- alle_daten_short %>% filter(Wohnort == input$ort) %>%
-        mutate(Geburtsdatum = format(Geburtsdatum, "%d.%m.%Y")) %>% # Formatieren des Datums
-        mutate(Beitrittsdatum = format(Beitrittsdatum, "%d.%m.%Y")) %>%
-        mutate(Austrittsdatum = format(Austrittsdatum, "%d.%m.%Y"))
-    } else { # Zweiter Fall: Der/die Nutzer:in möchte alle Orte ansehen.
-      daten <- alle_daten_short %>%
-        mutate(Geburtsdatum = format(Geburtsdatum, "%d.%m.%Y")) %>% # Formatieren des Datums
-        mutate(Beitrittsdatum = format(Beitrittsdatum, "%d.%m.%Y")) %>%
-        mutate(Austrittsdatum = format(Austrittsdatum, "%d.%m.%Y"))
-    }
-  })
-  
-  # Download-Report
-  output$downloadbutton <- downloadHandler(
-    filename = paste0(format(Sys.Date(), '%d.%m.%Y'), '_MitgliederzahlenUndFeedback', '.pdf'),
-    
-    content = function(file) {
-      src <- normalizePath('report_ausblick.Rmd')
-      
-      # temporarily switch to the temp dir, in case you do not have write
-      # permission to the current working directory
-      owd <- setwd(tempdir())
-      on.exit(setwd(owd))
-      file.copy(src, 'report_ausblick.Rmd', overwrite = TRUE)
-      
-      library(rmarkdown)
-      out <- render('report_ausblick.Rmd', quiet = TRUE, params = list(autor = input$name, erhebungsjahr = input$erhebungsjahr, frage = input$frage, ort = input$ort))
-      file.rename(out, file)
-    })
 }
 
 ############################################

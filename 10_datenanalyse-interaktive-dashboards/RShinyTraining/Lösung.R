@@ -83,6 +83,11 @@ summary(feedback)
 
 ############################################
 
+# 4) DATEN BEREINIGEN
+### Hier könntet Ihr noch Änderungen an den Daten vornehmen oder sog. "joins", also Verknüpfungen zwischen Daten vornehmen.
+
+############################################
+
 # 5) USER INTERFACE
 ### Hier definieren wir, was die Nutzer:innen (und wir) sehen.
 ### Hinweis: Nach jedem Element (textInput, textOutput, etc.) müsst Ihr ein Komma setzen.
