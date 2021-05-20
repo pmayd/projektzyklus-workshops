@@ -4,7 +4,7 @@
 
 Recorded workshop in the CorrelAid project cycle.
 
-The slides can be found [here](https://correlaid.github.io/projektzyklus-workshops/00_kickoff-git-for-newbies/slides.html)
+The slides can be found [here](https://correlaid.github.io/projektzyklus-workshops/06_datenmanagement-surveys/slides.html)
 
 ## License
 
