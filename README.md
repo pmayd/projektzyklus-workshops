@@ -107,9 +107,8 @@ Registrierung für die April Termine ist bereits möglich über unseren [Pretix 
 
 - [Info](https://projektzyklus.correlaid.org/09_datenanalyse-grundlagen/Install_R.pdf)
 - [Skript](https://projektzyklus.correlaid.org/09_datenanalyse-grundlagen/Skript_RWorkshop.R)
-- [Handout](https://projektzyklus.correlaid.org/09_datenanalyse-grundlagen/Handout_RWorkshop.R)
-- [Daten](https://projektzyklus.correlaid.org/09_datenanalyse-grundlagen/student_pisa.csv)
-- [Daten](https://projektzyklus.correlaid.org/09_datenanalyse-grundlagen/student_pisa.rda
+- [Handout](https://projektzyklus.correlaid.org/09_datenanalyse-grundlagen/Handout_RWorkshop)
+- [Daten](https://projektzyklus.correlaid.org/09_datenanalyse-grundlagen/student_pisa.rda)
 
 ## Anwendungsfall 1: interaktive Dashboards 
 ## Anwendungsfall 2: Automatisieren von Reports (Berichten)
