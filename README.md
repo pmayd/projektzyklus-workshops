@@ -111,6 +111,15 @@ Registrierung für die April Termine ist bereits möglich über unseren [Pretix 
 ## Anwendungsfall 1: interaktive Dashboards 
 ## Anwendungsfall 2: Automatisieren von Reports (Berichten)
 
+[![License: CC BY 4.0](https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
+
+**Referent**: Markus Steiner
+
+- [Übersichtsseite](https://therbootcamp.github.io/Rmd_CorrelAid_2021/)
+- [Slides](https://therbootcamp.github.io/Rmd_CorrelAid_2021/_sessions/Markdown/Markdown.html)
+- [Übungen](https://therbootcamp.github.io/Rmd_CorrelAid_2021/_sessions/Markdown/Markdown_practical.html)
+- [Lizenzinformationen](https://projektzyklus.correlaid.org/11_datenanalyse-automatisierte-reports/)
+
 ## Anwendungsfall 3: Weitere Beispiele 
 
 
