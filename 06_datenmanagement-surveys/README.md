@@ -4,7 +4,7 @@
 
 Recorded workshop in the CorrelAid project cycle.
 
-The slides can be found [here](https://correlaid.github.io/projektzyklus-workshops/06_datenmanagement-surveys/slides.html)
+The slides can be found [here](https://correlaid.github.io/projektzyklus-workshops/06_datenmanagement-surveys/slides.pdf). Due to copyright considerations, images to reproduce the slides are not uploaded in the repository.
 
 ## License
 
