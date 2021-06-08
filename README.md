@@ -83,7 +83,7 @@ Registrierung für die April Termine ist bereits möglich über unseren [Pretix 
 
 ### Inhaltlicher Input
 
-- [Folien](https://projektzyklus.correlaid.org/06_datenmanagement-surveys/slides.html)
+- [Folien](https://projektzyklus.correlaid.org/06_datenmanagement-surveys/slides.pdf)
 - [Lizenzinformationen](https://github.com/CorrelAid/projektzyklus-workshops/tree/main/06_datenmanagement-surveys)
 
 ## Anwedungsfall 2: Daten aus dem Web
