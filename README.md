@@ -83,7 +83,7 @@ Registrierung für die April Termine ist bereits möglich über unseren [Pretix 
 
 ### Inhaltlicher Input
 
-- [Folien](https://projektzyklus.correlaid.org/06_datenmanagement-surveys/slides.html)
+- [Folien](https://projektzyklus.correlaid.org/06_datenmanagement-surveys/slides.pdf)
 - [Lizenzinformationen](https://github.com/CorrelAid/projektzyklus-workshops/tree/main/06_datenmanagement-surveys)
 
 ## Anwedungsfall 2: Daten aus dem Web
@@ -101,8 +101,24 @@ Registrierung für die April Termine ist bereits möglich über unseren [Pretix 
 # Modul Datenanalyse
 ## Grundlagen Datenanalyse 
 
+**Referentin**: Mirka Henninger
+
+- [Info](https://projektzyklus.correlaid.org/09_datenanalyse-grundlagen/Install_R.pdf)
+- [Skript](https://projektzyklus.correlaid.org/09_datenanalyse-grundlagen/Skript_RWorkshop.R)
+- [Handout](https://projektzyklus.correlaid.org/09_datenanalyse-grundlagen/Handout_RWorkshop.pdf)
+- [Daten](https://projektzyklus.correlaid.org/09_datenanalyse-grundlagen/student_pisa.rda)
+
 ## Anwendungsfall 1: interaktive Dashboards 
 ## Anwendungsfall 2: Automatisieren von Reports (Berichten)
+
+[![License: CC BY-SA 4.0](https://licensebuttons.net/l/by-sa/4.0/80x15.png)](https://creativecommons.org/licenses/by-sa/4.0/)
+
+**Referent**: Markus Steiner
+
+- [Übersichtsseite](https://therbootcamp.github.io/Rmd_CorrelAid_2021/)
+- [Slides](https://therbootcamp.github.io/Rmd_CorrelAid_2021/_sessions/Markdown/Markdown.html)
+- [Übungen](https://therbootcamp.github.io/Rmd_CorrelAid_2021/_sessions/Markdown/Markdown_practical.html)
+- [Lizenzinformationen](https://projektzyklus.correlaid.org/11_datenanalyse-automatisierte-reports/)
 
 ## Anwendungsfall 3: Weitere Beispiele 
 
