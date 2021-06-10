@@ -33,8 +33,8 @@ install.packages(c(
 ))
 
 tinytex::install_tinytex()
-
 "
+
 
 ############################################
 
@@ -70,12 +70,13 @@ library(tinytex) # Dieses Latex-Package gibt uns die Option, den Report als PDF 
 mitglieder <- readxl::read_xlsx(here::here("Daten", "Mitgliederdaten.xlsx"))
 
 ##### Übung 3: Ladet nun hier auch den Feedback-Datensatz.
-
+feedback <- readxl::read_xlsx(here::here("Daten", "Feedbackumfrage.xlsx"))
 
 ##### Übung 4: Schaut nun beide Datensätze an. Dazu gibt es einige nütztliche Funktionen: view(), colnames() und summary().
 View(mitglieder)
 colnames(mitglieder)
 summary(mitglieder)
+
 
 
 ############################################
@@ -91,7 +92,7 @@ summary(mitglieder)
 ui <- fluidPage(
     
     # Übung 5: Ersetzt den Beispieltitel mit einem von Euch gewählten Titel. Lasst die Anführungszeichen stehen!
-    titlePanel("Beispieltitel"),
+    titlePanel("CorrelAid e.V."),
     
     # Hiermit legen wir unser Layout fest - wir haben uns für das SidebarLayout entschieden, damit wir links Filter einfügen können.
     sidebarLayout(
@@ -103,7 +104,7 @@ ui <- fluidPage(
             
             ##### Übung 6a: Fügt der UI einen Radiobutton für das Beitrittsjahr hinzu. Ändert das auch im Server!
             # Tipp: Das Jahr könnt Ihr aus dem Beitrittsdatum mit dem folgenden Codesnippet extrahieren: format(mitglieder$Beitrittsdatum, "%Y"). Damit ersetzt Ihr nun das Argument choices.
-            
+
         ),
         
         # Hier kreiieren wir den Hauptteil der Applikation. 

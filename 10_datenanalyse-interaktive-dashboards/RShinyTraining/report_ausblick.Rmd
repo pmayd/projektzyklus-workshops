@@ -57,7 +57,7 @@ geocoordinaten <- readxl::read_xlsx(here::here("Daten", "Geocodierung.xlsx"))
 alle_daten_short <- dplyr::full_join(left_join(mitglieder, geocoordinaten, by = 'Wohnort'), feedback, by = "Mitglieds-ID")
 
 ### Die Variablennamen sind nicht noch nicht so schön oder zu lang? Mit dem Snippet colnames(datensatz) <- c("Name1", "Name2", ...) lässt sich das ändern.
-colnames(alle_daten_short) <- c("Mitglieds-ID", "Geschlecht", "Geburtsdatum", "Wohnort", "Bundesland", 
+colnames(alle_daten_short) <- c("Mitglieds-ID", "Name", "Geschlecht", "Geburtsdatum", "Wohnort", "Bundesland", 
                                 "Beitrittsdatum", "Austrittsdatum", "Beschäftigungsstatus", "Spende (p.a. in EUR)", "Lat", "Long", 
                                 "Kursangebot insgesamt", "An welchem Kursniveau nimmst Du teil?", "Mentor:in", 
                                 "Materialien", "Anmeldung", "Beratungsstelle", "Räumlichkeiten", "Erhebungsjahr")
