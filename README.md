@@ -61,6 +61,8 @@ Registrierung für die April Termine ist bereits möglich über unseren [Pretix 
 
 # Datenmanagement 
 ## Grundlagen Datenmanagement 
+[![License: CC BY 4.0](https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
+
 **Referentinnen**: Nina Hauser & Frie Preu
 
 - [Lizenzinformationen](https://projektzyklus.correlaid.org/05_grundlagen-datenmanagement/)
@@ -78,6 +80,7 @@ Registrierung für die April Termine ist bereits möglich über unseren [Pretix 
 
 
 ## Anwendungsfall 1: Gestaltung eines Surveys (Umfrage) 
+[![License: CC BY 4.0](https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
 
 **Referent**: Arndt Leininger
 
@@ -86,7 +89,9 @@ Registrierung für die April Termine ist bereits möglich über unseren [Pretix 
 - [Folien](https://projektzyklus.correlaid.org/06_datenmanagement-surveys/slides.pdf)
 - [Lizenzinformationen](https://github.com/CorrelAid/projektzyklus-workshops/tree/main/06_datenmanagement-surveys)
 
-## Anwedungsfall 2: Daten aus dem Web
+## Anwedungsfall 2: Daten aus dem Web 
+[![License: CC BY 4.0](https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
+
 **Referent**: Jan Dix
 
 ### Inhaltlicher Input
@@ -100,6 +105,8 @@ Registrierung für die April Termine ist bereits möglich über unseren [Pretix 
 ## Anwendungsfall 3: Erstellen einer Datenbank 
 # Modul Datenanalyse
 ## Grundlagen Datenanalyse 
+[![License: CC BY 4.0](https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
+
 
 **Referentin**: Mirka Henninger
 
@@ -109,6 +116,9 @@ Registrierung für die April Termine ist bereits möglich über unseren [Pretix 
 - [Daten](https://projektzyklus.correlaid.org/09_datenanalyse-grundlagen/student_pisa.rda)
 
 ## Anwendungsfall 1: interaktive Dashboards 
+[![License: CC BY 4.0](https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 **Referentin**: Nina Hauser
 
 - [Folien](https://projektzyklus.correlaid.org/10_datenanalyse-interaktive-dashboards/RShinyTraining/interaktive_dashboards.pdf)
