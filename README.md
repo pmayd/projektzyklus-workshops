@@ -109,6 +109,12 @@ Registrierung für die April Termine ist bereits möglich über unseren [Pretix 
 - [Daten](https://projektzyklus.correlaid.org/09_datenanalyse-grundlagen/student_pisa.rda)
 
 ## Anwendungsfall 1: interaktive Dashboards 
+**Referentin**: Nina Hauser
+
+- [Folien](https://projektzyklus.correlaid.org/10_datenanalyse-interaktive-dashboards/RShinyTraining/interaktive_dashboards.pdf)
+- [Folien (pptx)](https://projektzyklus.correlaid.org/10_datenanalyse-interaktive-dashboards/RShinyTraining/interaktive_dashboards.pptx)
+- [zip Datei mit Übungs-, Lösungs- und Ausblicks-App](https://projektzyklus.correlaid.org/10_datenanalyse-interaktive-dashboards/RShinyTraining.zip)
+- [Lizenzinformationen](https://projektzyklus.correlaid.org/10_datenanalyse-interaktive-dashboards/RShinyTraining)
 ## Anwendungsfall 2: Automatisieren von Reports (Berichten)
 
 [![License: CC BY-SA 4.0](https://licensebuttons.net/l/by-sa/4.0/80x15.png)](https://creativecommons.org/licenses/by-sa/4.0/)
