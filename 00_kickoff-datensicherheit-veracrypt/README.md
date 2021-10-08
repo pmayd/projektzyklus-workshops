@@ -3,6 +3,8 @@
 
 [Folien](https://correlaid.github.io/projektzyklus-workshops/00_kickoff-datensicherheit-veracrypt/intro_veracrypt_slides.html)
 
+[Slides](https://correlaid.github.io/projektzyklus-workshops/00_kickoff-datensicherheit-veracrypt/intro_veracrypt_slides_en.html)
+
 ## Lizenz
 Folien sind lizensiert unter [Creative Commons Attribution 4.0 International](https://creativecommons.org/licenses/by/4.0/legalcode.de). Attribution ist in der folgenden Form erfolgen:
 

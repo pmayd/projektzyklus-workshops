@@ -184,90 +184,80 @@ Wir haben die folgenden Szenarien noch nicht exzessiv in der Praxis getestet.
 #### Nachteile
 - Container muss immer gemountet werden, selbst wenn nicht mit Daten gearbeitet wird
 
----
-## Szenario 2: GitHub, nur DSGVO-Daten im Container
 
-- jede:r Analyst:in hat einen eigenen Veracrypt Container ✅
-- die Container Datei liegt im Repository Ordner `data` 
-  - container enthält Ordner `raw`, `cleaned`, etc. 
-  - ausreichend aggregierte Daten können außerhalb des Veracrypt Containers abgelegt werden
-- Container ist im `.gitignore` und wird nicht über GitHub synchronisiert
-
---
-
-#### Vorteile
-- ab einem gewissen Punkt des Projekts kann ggf. auf Veracrypt verzichtet werden (wenn Daten soweit aggregiert)
-
-#### Nachteile
-- Pfade zu Daten sind absolut (z.B. `/Volumes/TESTPROJECT/test_project/data/raw/rawdata.csv`) und ggf. unterschiedlich je Analyst:in (Windows &lt;-&gt; Mac) -&gt; **schlechtere Reproduzierbarkeit** / zusätzlicher Coding-Aufwand
 ---
 ## Szenario 3: wenig / ohne Code, CorrelCloud
 - Projekte ohne Code / mit wenig Code, aber mit DSVGO-relevanten Daten, können ausschließlich über die CorrelCloud synchronisiert werden
-- die Kombination mit Veracrypt ist allerdings **ziemlich unpraktisch**. 😭
+- die Kombination mit Veracrypt ist allerdings **ziemlich unpraktisch**. 😞
 
+---
+## Optionen
 ### Option 1
 - Der CorrelCloud-Ordner muss lokal in dem durch VeraCrypt eingebundenen Laufwerk angelegt werden
 - D.h. du musst VeraCrypt immer starten bevor du NextCloud startest und dabei den gleichen Laufwerksbuchstaben wie immer zuweisen - sonst findet NextCloud den Ordner nicht
 - ❓ ❓
 
+--&gt; zu unpraktisch/verwirrend ❌
 --
 
 ### Option 2
-- Ablage der Container Datei in der CorrelCloud -&gt; nur praktisch, wenn alleine / asynchron gearbeitet wird
+- Ablage einer gemeinsamen Container Datei (nur für Daten!) in der CorrelCloud 
+  - Präsentationen etc. außerhalb des Containers
+  - Updates durch Team Lead
+  - Passwort wird über sicheren Channel (z.B. Signal oder mündlich) geteilt.
+  
+--&gt; weniger kompliziert, aber nur gut, wenn Daten nicht häufig geupdatet werden (nehmen wir jetzt mal an!)
 
 
 ---
-## Szenario 3, Option 2: Konfiguration NextCloud 
+## Szenario 2, Option 2: Konfiguration NextCloud 
 
 - *Auf [https://correlcloud.org](https://correlcloud.org/) einloggen*
-    - *Passwort ändern*
     - *NextCloud-Client herunterladen*
-- NextCloud installieren
+- [NextCloud Client]([NextCloud Client](https://nextcloud.com/install/) herunterladen und installieren
 - Account einrichten
     - obige URL eingeben
     - Namen und Passwort eingeben
-    - Bei "Local Folder" einen Ort im verschlüsselten Heimverzeichnis oder im durch VeraCrypt eingebundenen virtuellen Laufwerk auswählen
 - Warten bis NextCloud synchronisiert
 - Prüfen, ob alle Ordner synchronisiert wurden
     - sehr große Ordner müssen nochmal explizit bestätigt werden
-
+- **nur Team Lead**: Container-Datei mit Daten in Projektordner verschieben
 
 ---
 ## Workflow 
 
-1. In dem für das Projekt angelegten Account auf deinem PC einloggen
+1. **Szenario 2**: NextCloud starten und warten bis die NextCloud synchronisiert hat
 2. *VeraCrypt starten und Container als Laufwerk einbinden*
     - Warte bis der Container als Laufwerk eingebunden wurde
-3. **Szenario 3**: NextCloud starten und warten bis die NextCloud synchronisiert hat
-4. Arbeiten, arbeiten, arbeiten ... und dabei natürlich Spaß haben  ;-)
-5. **Szenario 3**: Warten bis die NextCloud synchronisiert hat
-6. **Szenario 3**: NextCloud stoppen
-7. VeraCrypt: "Dismount"
-8. VeraCrypt schließen
-9. Andere Programme schließen und abmelden und herunterfahren
-10. Feierabend
+3. Arbeiten, arbeiten, arbeiten ... und dabei natürlich Spaß haben  ;-)
+4. VeraCrypt: "Dismount"
+5. VeraCrypt schließen
+6. **Szenario 2**: Warten bis die NextCloud synchronisiert hat
+7. **Szenario 2**: NextCloud stoppen
+8. Andere Programme schließen und abmelden und herunterfahren
+9. Feierabend
 
 ---
 ## Fazit
 
-- Für Projekte mit Code ist Szenario 1 Szenario 2 vorzuziehen wegen der besseren Reproduzierbarkeit
-- Für Projekte ohne / mit wenig Code kann die CorrelCloud verwendet werden, am besten die Container Datei ablegen (Option 2)
-  - dies ist bis jetzt nur für kleine Teams geeignet
+- Für Projekte mit Code arbeiten wir mit GitHub und haben das ganze Projekt im VeraCrypt Container
+- Für Projekte ohne / mit wenig Code kann die CorrelCloud verwendet werden. wir benutzen eine gemeinsame Container-Datei für die Daten
 
 
 ---
 ## Hands On: Projektsetup
 
-setzt euer Projekt im Container auf 
 - Code (Szenario 1): 
   - Container mounten 
   - git clone 
   - später: Rohdaten in `data/raw` kopieren
-- wenig / kein Code (Szenario 3, Option 2)
+- wenig / kein Code (Szenario 2, Option 2)
   - ggf. NextCloud einrichten
-  - Container Datei in CorrelCloud Ordner verschieben
+  - Team Lead: Container Datei in CorrelCloud Ordner verschieben
   - Container mounten
   - Dateien in Container verschieben
+  - Container dismounten
+  
 
 ---
 ## Fragen?
