@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>CorrelAid Project Infrastructure</title>
+    <meta charset="utf-8" />
+    <script src="intro_veracrypt_slides_en_files/header-attrs/header-attrs.js"></script>
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+    <link rel="stylesheet" href="custom.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# CorrelAid Project Infrastructure
+## Introduction to Veracrypt
+
+---
+
+
+
+
+
+
+
+
+## Our project infrastructure
+
+- Communication
+![](images/slack.png) 
+
+- **encryption**
+![](images/veracrypt.png)
+
+- **data exchange**
+![](images/nextcloud.png)
+
+---
+## Data privacy agreement
+
+- You should've received it (e.g. over Slack or Email), otherwise please see [here](https://correlcloud.org/index.php/s/7PSskX9yN7RKmoi?path=%2Ftemplate_data_privacy)
+- the agreement defines scenarios that don't all have to apply to your project
+  - everyone: confidentiality, data privacy
+  - data security requirements can vary depending on type of processed data (personal data or not, confidential data or not)
+
+---
+class: middle, center, inverse 
+
+# Data security and encryption
+
+---
+
+## Personal data 
+
+personal data from a project must not be stored in an _unencrypted manner over a longer period of time_.
+
+--
+
+⚠️ pseudonymised data (e.g. without names and email addresses) are still considered personal data most of the time. &lt;sup&gt;1&lt;/sup&gt;
+
+--
+
+Exceptions: 
+
+- synthetic ("fake") data: can be left unencrypted
+- initial transfer via CorrelCloud: data are temporarily unencrypted (in your `Downloads` folder) -&gt; encrypt/move as soon as possible 
+
+.footnote[
+[1] The GDPR has high requirements for the complete anonymization of data
+
+]
+
+---
+## Encryption
+
+**Options**: encrypted home folder or Veracrypt
+
+| encrypted home folder                          | no encrypted home folder                    |
+|---------------------------------------------------------|---------------------------------------------------------|
+| VeraCrypt is not needed                           | VeraCrypt is needed                              |
+| deletion of data after project | deletion of data after project |
+
+---
+## Encrypted home folder
+
+- possible for:
+    - Windows Pro and Enterprise -&gt; unfortunatly not generally available for Home
+    - _some_ Windows 10 Home devices: [Device Encryption](https://support.microsoft.com/en-gb/windows/device-encryption-in-windows-ad5dcf4b-dbe0-2331-228f-7925c2a3012d#ID0EBBD=Windows_10)
+    - Mac OS from Mac-OS X 10.4: [FileVault](https://support.apple.com/en-us/HT204837)
+    - most  Linux distributions&lt;sup&gt;1&lt;/sup&gt;
+- **The admin user of the machine needs to be password protected as well**
+
+.footnote[
+[1] for most distributions, it is not possible to enable encryption after setup. if your drive is not encrypted, please use veracrypt. 
+]
+
+---
+class: middle, center, inverse
+
+# 5 minute check, whether one of the built-in options is available for you 
+
+---
+## VeraCrypt
+- encryption program and TrueCrypt successor
+- a VeraCrypt container is a password-protected _file_ which can only be read by VeraCrypt after entering the password 
+- VeraCrypt _mounts_ the file as a _drive_ in your operating system (after entering the password)
+- This way, other programs can access the files in the container
+- The drive is only available as long VeraCrypt is running
+
+---
+## VeraCrypt Workflow
+.center[
+]
+
+.center[
+**Container file**
+
+![VeraCrypt Container](images/veracrypt_container.png)
+
+⬇️
+
+![Veracrypt logo](images/veracrypt.png)
+
+⬇️
+
+**Container is mounted as a drive and files within it can be accessed**
+
+![Veracrypt mounted](images/veracrypt_drive.png)
+![Veracrypt files inside container](images/veracrypt_files_inside_container.png)
+
+]
+
+
+---
+## Creating a VeraCrypt container
+
+- install [VeraCrypt](https://www.veracrypt.fr/en/Downloads.html) and start it
+
+--
+
+### Create a new container
+
+- if not specified differently: confirm default settings
+  - encrypted **file container** (not partition!)
+- set name and location for file container (needs to be within the home folder)  -&gt; **put the file where you'd normally put the project folder** (e.g. `home/frie/correlaid/projects/`)
+- set the size of the file container  (1GB (1024 MB) should suffice)
+- set the password: use a password which was created by your password manager&lt;sup&gt;1&lt;/sup&gt; or use a  [passphrase](https://www.useapassphrase.com/) with at least 4 words
+
+.footnote[
+[1] e.g. [bitwarden](https://bitwarden.com) has a free plan.
+]
+
+
+---
+## Mounting a VeraCrypt container
+- select the container file 
+- select one of the drive letters (windows) respectively slots (mac/linux)
+- "dismount" once you are finished working on the project for today
+
+---
+class: inverse, center, middle
+
+# What do we do with the container now?
+
+---
+## Disclaimer
+
+We haven't excessively tested those scenarios and workflows in "the real life"
+
+**Feedback is very welcome!**
+
+
+
+---
+## Szenario 1: GitHub, whole repo in container
+
+- every analyst has their own VeraCrypt container ✅
+- the whole repository is in the container
+- (raw) data / non anonymized data are not synchronized over GitHub (`.gitignore`)!
+- raw data is initially downloaded from the CorrelCloud and then moved into the `data/raw` folder of the repository. 
+
+--
+
+#### advantages
+- uncomplicated workflow when using RStudio projects  (or similar in Python): mount container, double click on `.Rproj`, let's go
+- paths when reading the data stay relative
+
+#### disadvantages
+- container always needs to be mounted even if you don't work with the data itself
+
+
+---
+## Szenario 2: low/no code project, CorrelCloud
+- low code / no code projects with GDPR relevant data can be synced exclusively over the CorrelCloud (no GitHub required)
+- unfortunately, the combination with VeraCrypt is _not so straightforward_ 😢
+
+---
+## Options
+
+### Option 1
+- the CorrelCloud folder needs to be created within the drive of the VeraCrypt container
+- this means that you always need to start VeraCrypt before starting NextCloud. Plus, you always need to select the same drive / slot - otherwise, NextCloud won't find the folder
+- ❓ ❓
+
+--&gt;  way too complicated/impractical! ❌
+--
+
+### Option 2
+- one (shared) container file in the CorrelCloud with the GDPR relevant data. 
+  - Rest of the project (presentations, Text, ...) happens outside of the container. 
+  - The **team lead** updates the container if new data is added.
+  - share password over a secure channel (e.g. Signal or verbally)
+  
+--&gt;  less complicated but only works well if data is not frequently updated (which we assume for now)
+
+---
+
+## Setting up NextCloud
+- Log in to [https://correlcloud.org](https://correlcloud.org/)
+- Download and Install [NextCloud Client](https://nextcloud.com/install/)
+- Set up account
+    - enter above URL
+    - Enter name and password
+- Wait until NextCloud synchronizes
+- Check if all folders are synchronized
+    - very large folders must be confirmed again explicitly
+- **team lead only**: move the container file into the project folder 
+
+---
+## Overview: Workflow 
+
+1. **Scenario 2**: Start NextCloud and wait until NextCloud has synchronized
+2. *Start VeraCrypt and mount container as drive*.
+    - Wait until the container is mounted as a drive
+3. work, work, work ... and of course have fun ;-)
+4. **Scenario 2**: Wait until NextCloud has synchronized
+5. VeraCrypt: "Dismount
+6. close VeraCrypt
+7. **Scenario 2**: Stop NextCloud
+8. close other programs and log off and shut down
+10. quit
+
+---
+## Conclusion
+
+- For projects with code, we put the whole project into a container; GDPR relevant data is not synced to GitHub
+- For projects without / with little code, CorrelCloud can be used, best to use a common "data" container file (option 2)
+  - best if data is not updated a lot!
+
+
+---
+## Hands On: Project Setup
+
+- Code (Scenario 1): 
+  - Mount container 
+  - `git clone` 
+  - later: copy raw data to `data/raw`
+- low / no code (scenario 2, option 2)
+  - set up NextCloud (everyone)
+  - move container file to CorrelCloud folder (Team Lead)
+  - mount container
+  - move data files into container
+  - dismount container 
+  
+---
+## Questions?
+
+Questions!
+
+- If you have any questions while using the software and you are unsure how to proceed, please contact your project manager or project coordinator.
+- if you have other tool ideas (cross operating system), feedback / constructive criticism on the usability of the scenarios 👀 --&gt; let Frie know
+- *Don't just try anything that could potentially compromise the security of your data or your system*.
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"slideNumberFormat": "%current%",
+"highlightStyle": "github",
+"highlightLines": true,
+"ratio": "16:9",
+"countIncrementalSlides": true
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

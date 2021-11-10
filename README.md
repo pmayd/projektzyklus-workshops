@@ -35,6 +35,7 @@ Registrierung für die April Termine ist bereits möglich über unseren [Pretix 
 
 
 - [Folien](https://projektzyklus.correlaid.org/00_kickoff-datensicherheit-veracrypt/intro_veracrypt_slides.html)
+- [Slides](https://projektzyklus.correlaid.org/00_kickoff-datensicherheit-veracrypt/intro_veracrypt_slides_en.html)
 - [Lizenzinformationen](https://projektzyklus.correlaid.org/00_kickoff-datensicherheit-veracrypt/)
 
 # Datenstrategie
