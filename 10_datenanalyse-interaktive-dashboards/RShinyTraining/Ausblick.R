@@ -128,7 +128,50 @@ calc_age <- function(birthDate, refDate = Sys.Date(), unit = "year") {
 ui <- fluidPage(
   
   # Titel einfügen
-  titlePanel("Ergebnisse der Feedbackumfrage 2021 - Fantasie e.V."),
+  titlePanel(fluidRow(
+    column(10, tags$h2("Mitglieder und Feedbackumfrage - Fantasie e.V."), HTML('<h5><em>Eine Übung zum Erlernen von Shiny Web Apps mit fiktiven Daten von und für die Zivilgesellschaft mit CorrelAid e.V. Lizenziert nach CC-BY</h5></em>')),
+    column(1, HTML('<center><img src="https://betterplace-assets.betterplace.org/uploads/organisation/profile_picture/000/033/251/crop_original_bp1613490681_Logo.jpg" width="75"></center>'))
+  )),
+  
+  # HTML-Code für erweitertes Layout (für Fortgeschrittene)
+  tags$head(
+    tags$link(rel = "icon", type = "image/png", sizes = "32x32", href = "https://correlaid.org/favicons/favicon-32x32.png"),
+    tags$style(
+      HTML("
+            <script>
+          var socket_timeout_interval
+          var n = 0
+          $(document).on('shiny:connected', function(event) {
+          socket_timeout_interval = setInterval(function(){
+          Shiny.onInputChange('count', n++)
+          }, 15000)
+          });
+          $(document).on('shiny:disconnected', function(event) {
+          clearInterval(socket_timeout_interval)
+          });
+          </script>
+          
+         .well {
+            background-color: #8FAFC1;
+        }
+             
+        .selectize-input.full {
+            background-color: #FFFFFF;
+        }
+        .selectize-dropdown {
+            background-color: #FFFFFF;
+        }
+        #name {
+            background-color: #FFFFFF;
+        }
+        
+        #ergebnisse {
+            background-color: #FFFFFF;
+        }
+        
+        #hilfe {
+            background-color: #FFFFFF;
+        }"))),
   
   # Hiermit legen wir unser Layout fest - wir haben uns für das SidebarLayout entschieden, damit wir links Filter einfügen können.
   sidebarLayout(
@@ -294,12 +337,12 @@ server <- function(input, output, session){
       group_by(Geschlecht) %>% # Pro Geschlecht gruppieren
       summarise('Anzahl' = n(), 'Prozent' = n()/nrow(daten)) %>% # Bei Gruppierung Anzahlung und Prozent bestimmen
       ggplot(aes(x='', y=Prozent, fill=Geschlecht)) +
-      geom_bar(stat="identity", width=1) + # Basislayout definieren (Hinweis: Das ist ein Barchart)
-      coord_polar("y", start=0) + # Kuchendiagramm ausrichten
-      theme_void() + # Grid entfernen
-      ggtitle('Geschlecht') + # Titel hinzügen
-      scale_fill_brewer(palette='PuBuGn') + # Farbe festlegen
-      geom_text(aes(label = paste0(round(Prozent*100), "%")), position = position_stack(vjust = 0.5)) # Beschriftungen kreiieren
+        geom_bar(stat="identity", width=1) + # Basislayout definieren (Hinweis: Das ist ein Barchart)
+        coord_polar("y", start=0) + # Kuchendiagramm ausrichten
+        theme_void() + # Grid entfernen
+        ggtitle('Geschlecht') + # Titel hinzügen
+        scale_fill_brewer(palette='PuBuGn') + # Farbe festlegen
+        geom_text(aes(label = paste0(round(Prozent*100), "%")), position = position_stack(vjust = 0.5)) # Beschriftungen kreiieren
     
     # Barplot zur Beschäftigung kreiieren
     plot_status <- barplot(daten, daten$Beschäftigungsstatus, daten$Beschäftigungsstatus, 'PuBuGn', 'Beschäftigung')
@@ -308,21 +351,21 @@ server <- function(input, output, session){
     plot_alter <- daten %>% 
       mutate('Alter' = calc_age(Geburtsdatum)) %>% # Alter berechnen (Funktion unter Daten bereinigen)
       ggplot(aes(x=Alter)) + # Plot initialisieren
-      geom_density(fill='#027F88', color = '#027F88') + # Verteilungsplot erstellen
-      geom_vline(aes(xintercept=mean(Alter))) + # Mittelwert hinzufügen
-      theme_classic() + # Layout auswählen
-      ylab('Verteilung') +  # y-Achse beschriften
-      ggtitle('Alter') # Titel hinzufügen
+        geom_density(fill='#027F88', color = '#027F88') + # Verteilungsplot erstellen
+        geom_vline(aes(xintercept=mean(Alter))) + # Mittelwert hinzufügen
+        theme_classic() + # Layout auswählen
+        ylab('Verteilung') +  # y-Achse beschriften
+        ggtitle('Alter') # Titel hinzufügen
     
     # Verteilungsplot für Spenden
     plot_spenden <- daten %>% 
       ggplot(aes(x=`Spende (p.a. in EUR)`)) + # Plot initialisieren
-      geom_density(fill='#027F88', color = '#027F88') + # Verteilungsplot erstellen
-      geom_vline(aes(xintercept=mean(`Spende (p.a. in EUR)`))) + # Mittelwert hinzufügen
-      theme_classic() + # Layout auswählen
-      xlab('Spendenhöhe p.a. in EUR') + # x-Achse beschriften
-      ylab('Verteilung') +  # y-Achse beschriften
-      ggtitle('Spendenhöhe') # Titel hinzufügen
+        geom_density(fill='#027F88', color = '#027F88') + # Verteilungsplot erstellen
+        geom_vline(aes(xintercept=mean(`Spende (p.a. in EUR)`))) + # Mittelwert hinzufügen
+        theme_classic() + # Layout auswählen
+        xlab('Spendenhöhe p.a. in EUR') + # x-Achse beschriften
+        ylab('Verteilung') +  # y-Achse beschriften
+        ggtitle('Spendenhöhe') # Titel hinzufügen
     
     # Plots arrangieren
     lay <- rbind(c(1,1,5,5,5,5), # Layout festlegen: Eine Zahl steht für eine Graphik (1 für die erste Graphik in grid.arrange)

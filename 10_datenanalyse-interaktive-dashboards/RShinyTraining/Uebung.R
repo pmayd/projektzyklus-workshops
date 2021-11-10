@@ -92,7 +92,7 @@ summary(mitglieder)
 ui <- fluidPage(
     
     # Übung 5: Ersetzt den Beispieltitel mit einem von Euch gewählten Titel. Lasst die Anführungszeichen stehen!
-    titlePanel("CorrelAid e.V."),
+    titlePanel("Beispieltitel"),
     
     # Hiermit legen wir unser Layout fest - wir haben uns für das SidebarLayout entschieden, damit wir links Filter einfügen können.
     sidebarLayout(
